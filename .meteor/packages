@@ -18,5 +18,21 @@ es5-shim@4.6.15                # ECMAScript 5 compatibility for older browsers.
 ecmascript@0.6.1              # Enable ECMAScript2015+ syntax in app code
 shell-server@0.2.1            # Server-side component of the `meteor shell` command
 
-autopublish@1.0.7             # Publish all data to the clients (for prototyping)
+accounts-base                  # Base Accounts package for Meteor
+accounts-password             # Accounts password handling package
+useraccounts:unstyled           # an unstyled user accounts package
+raix:handlebar-helpers          # helpers inside handlebars vs in js file
 insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
+kadira:flow-router
+kadira:blaze-layout
+momentjs:moment
+alanning:roles
+meteortoys:allthings
+fortawesome:fontawesome
+noahvlncrt:milligram
+
+aldeed:template-extension
+aldeed:collection2          # define a schema for the data to adhere to with reactivity.
+sacha:spin                  # spinner for loading
+teamon:tinymce              # tinyMCE Editor plugin for meteor
+mizzao:autocomplete         # for the @mentions functionality
