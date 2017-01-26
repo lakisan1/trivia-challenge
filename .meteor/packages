@@ -36,3 +36,4 @@ aldeed:collection2          # define a schema for the data to adhere to with rea
 sacha:spin                  # spinner for loading
 teamon:tinymce              # tinyMCE Editor plugin for meteor
 mizzao:autocomplete         # for the @mentions functionality
+npm-bcrypt
