@@ -14,7 +14,7 @@
 			"incorrect_answers": ["Apollo 10", "Apollo 9", "Apollo 13"]
 		}
 
-Game Views:
+### Game Views:
 	- Login
 	- Select Game
 		- Create Game URL (automatically)
@@ -38,8 +38,9 @@ Game Views:
 		- Mixed
 		Category
 		- choose 1, multiple categories
+			- Choose number of questions to pull from each category (optional)
+			- Random number from each category
 		- Mixed
-
 	- Distribute URL or Invite Users
 	- Join Game view
 		- Choose Team name
@@ -51,7 +52,18 @@ Game Views:
 			1. Question and answer options on same screen
 			2. Question on main screen with devices as answer pads only
 
-New System Setup:
+### Game History View:
+	- Game Settings selected
+	- Date started
+	- Date finished
+	- Participants
+		- Participant Answers to each Question
+	- Questions Asked
+		- Correct answers
+		- Incorrect answers
+	- Winning Team / Participant
+
+### New System Setup:
 	- Import of Questions and Answers from CSV
 	- Manual entry of questions and answers
 	- Allow users to create their own question categories to choose from during game settings.
