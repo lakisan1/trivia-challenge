@@ -1,0 +1,9 @@
+.navLeft {
+    position: relative;
+    float: left;
+}
+
+.navRight {
+    position: relative;
+    float: right;
+}

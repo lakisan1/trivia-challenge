@@ -1,1 +1,57 @@
 /* CSS declarations go here */
+header {
+    background: #00366b;
+    color: white;
+}
+
+.middleHead {
+    text-align: center;
+    inline: block;
+}
+
+.navHead {
+    position: relative;
+    float: left;
+    margin-top: 7px;
+    margin-right: 4px;
+    margin-left: 5px;
+    color: white;
+}
+
+button.primary {
+    background: #93b7d6;
+    color: white;
+    float: right;
+}
+
+button.cancel {
+    background: orange;
+    color: black;
+}
+
+button.blue {
+    background: blue;
+    color: white;
+}
+
+button.delete {
+    background: red;
+    color: white;
+}
+
+/* style the image upload input */
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    display: inline-block;
+    padding: 6px 12px;
+    cursor: pointer;
+}
+
+.custom-file-upload:hover {
+    background: #ADD8E6;
+}
