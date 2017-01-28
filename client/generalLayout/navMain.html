@@ -1,0 +1,12 @@
+<template name="navMain">
+    <div id="mySidenav" class="sidenav">
+        <a href="#"><i class="fa fa-close faWhite closebtn"></i></a>
+            {{#if currentUser}}
+                <a href="#" class="signOut"><i class="fa fa-sign-out fa-fw myNav signOut" aria-hidden="true"></i>&nbsp; Logout</a>
+                <a href="#" class="navBtn mainMenu" id="mainMenu"><i class="fa fa-clone fa-fw navBtn mainMenu" aria-hidden="true"></i>&nbsp; Main Menu</a>
+                <a href="#" class="navBtn exitGame" id="exitGame"><i class="fa fa-plus fa-fw navBtn exitGame" aria-hidden="true"></i>&nbsp; Exit Game</a>
+            {{else}}
+                <a href="#" class="signIn"><i class="fa fa-sign-in fa-fw myNav signIn" aria-hidden="true"></i>&nbsp; Sign-In</a>
+            {{/if}}
+    </div>
+</template>
