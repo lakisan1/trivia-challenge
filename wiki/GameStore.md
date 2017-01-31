@@ -3,6 +3,7 @@
 			"gameId": <random 6 digit alphanumeric>,
 			"mode": "timed", // other options "All Answered", "All with Time Limit"
 			"timeLimitPerQuestion": <w>, // in seconds
+			"timeLimitForGame": <z>, // in minutes
 			"startDate": new Date(),
 			"timeLimit": <x>, // in minutes
 			"numberOfQuestions": <y>, // max 50
