@@ -1,0 +1,9 @@
+.splashHeader {
+    text-align: center;
+}
+
+.loginBtn {
+    margin:0 auto;
+    display:block;
+    background: orange;
+}
