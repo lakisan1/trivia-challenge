@@ -4,33 +4,29 @@
         <div class="row">
             <div class="column">
                 <label>Game Type
-                    <select id="gameType">
-                        <option value="" disabled selected>Choose a Type...</option>
-                        <option value="timed">Timed Game</option>
-                        <option value="allA">All Answered</option>
-                        <option value="allATimed">All Answered with Time Limit</option>
-                    </select>
+                <select id="gameType">
+                    <option value="" disabled selected>Choose a Type...</option>
+                    <option value="timed">Timed Game</option>
+                    <option value="allA">All Answered</option>
+                    <option value="allATimed">All Answered with Time Limit</option>
+                </select>
                 </label>
             </div>
             <div class="column">
-                <label>Time LImit Type:
-                    <select id="timeLimitType">
-                        <option value="" disabled selected>Time Limit Type...</option>
-                        <option value="timedGame">Timed Game</option>
-                        <option value="timedQuestions">Timed Questions</option>
-                    </select>
-                </label>
+                <select id="timeLimitType">
+                    <option value="" disabled selected>Time Limit Type...</option>
+                    <option value="timedGame">Timed Game</option>
+                    <option value="timedQuestions">Timed Questions</option>
+                </select>
             </div>
             <div class="column">
-                <label>Enter a Time Limit for the Gaem:
-                    <input type="text" id="timeLimit" />
-                    <div id="secondsQuestion">
-                        seconds / question
-                    </div>
-                    <div id="minutesGame">
-                        minutes
-                    </div>
-                </label>
+                <input type="text" id="timeLimit" placeholder="Time Limit" />
+                <div id="secondsQuestion">
+                    seconds / question
+                </div>
+                <div id="minutesGame">
+                    minutes
+                </div>
             </div>
         </div>
     </div>
