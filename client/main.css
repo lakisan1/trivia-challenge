@@ -55,3 +55,7 @@ input[type="file"] {
 .custom-file-upload:hover {
     background: #ADD8E6;
 }
+
+.pushDown {
+    top: 60px;
+}

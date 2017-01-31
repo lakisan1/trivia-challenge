@@ -5,7 +5,6 @@
 			"timeLimitPerQuestion": <w>, // in seconds
 			"timeLimitForGame": <z>, // in minutes
 			"startDate": new Date(),
-			"timeLimit": <x>, // in minutes
 			"numberOfQuestions": <y>, // max 50
 			"categories": ["Animals", "family", "science" ],
 			"type": "trueFalse", // other options "multChoice" or "mixed",
