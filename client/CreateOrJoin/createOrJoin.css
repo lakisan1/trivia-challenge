@@ -1,0 +1,21 @@
+.gameSelect {
+    height: 20vh;
+    width: 40vw;
+    font-size: 2vw;
+}
+
+#joinGame {
+    background: green;
+}
+
+#createGame {
+    background: blue;
+}
+
+.gameSelect:hover {
+    background: purple !important;
+}
+
+.gameSelect:active {
+    background: red !important;
+}
