@@ -1,6 +1,8 @@
 <template name="MainLayout">
     {{> headerBar}}
     {{#if currentUser}}
-        {{> Template.dynamic template=main}}
+        <div class="container">
+            {{> Template.dynamic template=main}}
+        </div>
     {{/if}}
 </template>

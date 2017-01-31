@@ -4,8 +4,12 @@ Template.navMain.events({
         var clickedTarget = event.target.id;
         console.log("User clicked: " + clickedTarget);
         closeSide();
-        FlowRouter.go('/' + clickedTarget);
-        document.getElementById("mySidenav").style.width = "0";
+        if (clickedTarget == 'mainMenu') {
+            FlowRouter.go('/');
+        } else {
+            FlowRouter.go('/' + clickedTarget);
+            document.getElementById("mySidenav").style.width = "0";
+        }
     },
     'click .signIn': () => {
         closeSide();
