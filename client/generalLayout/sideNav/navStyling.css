@@ -1,4 +1,7 @@
-/* this is the css for the slideout navigation */
+body {
+    font-family: "Lato", sans-serif;
+    transition: background-color .5s;
+}
 
 .sidenav {
     height: 100%;
@@ -15,11 +18,11 @@
     background: linear-gradient(to bottom,  #1e5799 0%,#207cca 52%,#2989d8 76%,#2989d8 76%,#7db9e8 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#1e5799', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
 
-
     filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#3b679e', endColorstr='#7db9e8',GradientType=0 ); /* IE6-9 */
+
     overflow-x: hidden;
-    transition: 0.25s;
-    padding-top: 45px;
+    transition: 0.5s;
+    padding-top: 60px;
 }
 
 .sidenav a {
@@ -39,11 +42,17 @@
     position: absolute;
     top: 8px;
     right: 25px;
+    font-size: 18px;
     margin-left: 50px;
 }
 
 .menuBtn {
     color: white;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
 }
 
 @media screen and (max-height: 450px) {

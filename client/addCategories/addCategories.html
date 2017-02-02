@@ -1,0 +1,54 @@
+<template name="addCategories">
+    <div class="row">
+        <div class="column">
+            <label>Enter a New Category:
+                <input type="text" id="addCategory" placeholder="Add a Category..." />
+            </label>
+        </div>
+        <div class="column">
+            <label>Enter a Category Description:
+                <textarea id="addDescription" placeholder="Add a Category Description"></textarea>
+            </label>
+        </div>
+    </div>
+    {{#if getCategories}}
+    <div id="categoryList">
+        Categories:
+        <table>
+            <tr>
+                <th>
+                    Category Name
+                </th>
+                <th>
+                    Category Description
+                </th>
+                <th>
+                    Delete
+                </th>
+            </tr>
+            {{#each getCategories}}
+            <tr>
+                <td>
+                    {{category}}
+                </td>
+                <td>
+                    {{description}}
+                </td>
+                <td>
+                    <i class="fa fa-trash navBtn deleteCategory" aria-hidden="true"></i>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+    {{/if}}
+    <div class="row">
+        <div class="column">
+            <button class="button cancel" id="cancelAddCategory">Cancel</button>
+        </div>
+        <div class="column">
+            <button class="button primary" id="saveCategory">Save</button>
+        </div>
+    </div>
+    {{> snackbar}}
+</template>

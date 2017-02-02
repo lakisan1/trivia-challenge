@@ -1,10 +1,12 @@
 <template name="MainLayout">
     {{> headerBar}}
-    {{#if currentUser}}
-        <div class="container pushDown">
-            {{> Template.dynamic template=main}}
-        </div>
-    {{else}}
-        {{> splashScreen}}
-    {{/if}}
+    <div id="main">
+        {{#if currentUser}}
+            <div class="container pushDown">
+                {{> Template.dynamic template=main}}
+            </div>
+        {{else}}
+            {{> splashScreen}}
+        {{/if}}
+    </div>
 </template>
