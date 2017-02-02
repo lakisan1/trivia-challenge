@@ -15,7 +15,9 @@
             {{> questionDifficulty}}
         </div>
         <div class="column">
+        {{#if Template.subscriptionsReady}}
             {{> questionCategories}}
+        {{/if}}
         </div>
     </div>
     <div class="row">

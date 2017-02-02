@@ -2,7 +2,7 @@ import { Categories } from '../../imports/api/categories.js';
 
 Template.addCategories.onCreated(function() {
     this.subscribe("categories");
-})
+});
 
 
 Template.addCategories.helpers({
