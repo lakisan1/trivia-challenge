@@ -1,3 +1,9 @@
 .questionCategories {
     height: 80pt;
 }
+
+.gameCode {
+    font-size: 32px;
+    font-family: courier;
+    text-align: center;
+}

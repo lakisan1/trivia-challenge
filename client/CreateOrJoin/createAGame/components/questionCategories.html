@@ -1,13 +1,11 @@
 <template name="questionCategories">
     <label>Question Categories:
     <select multiple id="questionCategories" class="questionCategories">
-        <option value="" disabled selected>Choose a Category...</option>
+        <option value="mixed" selected>Mixed</option>
 
             {{#each getCategories}}
                 <option value="{{category}}">{{category}}</option>
             {{/each}}
-
-            <option value="mixed">Mixed</option>
     </select>
     </label>
 </template>

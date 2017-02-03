@@ -1,4 +1,8 @@
 /* CSS declarations go here */
+input, select {
+    font-size: 16px;
+}
+
 header {
     background: #00366b;
     color: white;
