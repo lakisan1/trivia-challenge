@@ -22,7 +22,7 @@ accounts-base                  # Base Accounts package for Meteor
 accounts-password             # Accounts password handling package
 useraccounts:unstyled           # an unstyled user accounts package
 raix:handlebar-helpers          # helpers inside handlebars vs in js file
-insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
+# insecure@1.0.7                # Allow all DB writes from clients (for prototyping)
 kadira:flow-router
 kadira:blaze-layout
 momentjs:moment
