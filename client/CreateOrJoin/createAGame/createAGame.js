@@ -1,3 +1,9 @@
+import { Games } from '../../../imports/api/games.js';
+
+Template.createAGame.onCreated(function() {
+    this.subscribe('games');
+})
+
 Template.createAGame.helpers({
 
 });
@@ -19,25 +25,63 @@ Template.createAGame.events({
         randomString(6);
 
         // check that certain fields are filled out
+        qCat = [];
+        var gameName = $("#gameName").val();
         var gameType = $("#gameType").val();
-        var numOfQs = $("#numberOfQuestions").val();
+        var numOfQs = parseInt($("#numberOfQuestions").val());
         var qType = $("#questionType").val();
         var qDifficulty = $("#questionDifficulty").val();
-        var qCat = $("#questonCategories").val();
+        var qCat = $("#questionCategories").val();
 
         console.log('game type is ' + gameType);
+        console.log('question category is + ');
+        console.log(qCat);
+
+        // need to add logic to pull the requested number of questions
+        // from the questions collection, and add them to the game.
+        // in order to avoid duplication, just grab the question ids.
+
+
+
+
 
         if (gameType == '' || gameType == null) {
             showSnackbar("You must choose a Game Type.", "red");
             document.getElementById('gameType').style.borderColor = "red";
+        } else if (gameName == '' || gameName == null) {
+            showSnackbar("You need a Game Name.", "red");
+            document.getElementbyId('gameName').style.borderColor = "red";
         } else {
-            $("#gameCodeSpace").append("Game Code is: " + gameCode);
+            if (qCat == '' || qCat == null) {
+                showSnackbar("You must choose at least one Question Category.", "red");
+                document.getElementById('questionCategories').style.borderColor = "red";
+            } else {
+                $("#gameCodeSpace").append("Game Code is: " + gameCode);
+                Meteor.call('newGame.insert', gameType, gameName, numOfQs, qType, qDifficulty, qCat, gameCode, function(err, result) {
+                    if (err) {
+                        showSnackbar("An error occurred saving the Game.", "red");
+                        console.log("Save Error: " + err);
+                    } else {
+                        showSnackbar("Game Created Successfully!", "green");
+                        var clrFormBtn = document.getElementById('clearFormBtn');
+                        clrFormBtn.style.display = "block";
+                        var saveForm = document.getElementById('saveCreateGame');
+                        saveForm.style.display = "none";
+                    }
+                });
+            }
         }
-
-        // need to get all form information
-
     },
     'click #cancelCreateGame' (event) {
-
+        event.preventDefault();
+        document.getElementById("createGameForm").reset();
     },
+    'click #clearFormBtn' (event) {
+        event.preventDefault();
+        document.getElementById("createGameForm").reset();
+        var clrFormBtn = document.getElementById('clearFormBtn');
+        clrFormBtn.style.display = "none";
+        var saveForm = document.getElementById('saveCreateGame');
+        saveForm.style.display = "block";
+    }
 });

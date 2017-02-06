@@ -1,3 +1,125 @@
 <template name="addQuestions">
-    
+    <h3>Question Entry</h3>
+    <p>
+        Use this form to add new questions to the system.  Before adding a new question, it may be useful to look for questions that already exist.
+    </p>
+    <br />
+    <form id="questionEntryForm">
+        <div class="row">
+            <div class="column">
+                <label>Question Category
+                    <select id="questionCategoryEntry">
+                        <option value="" disabled selected>Choose one...</option>
+                        {{#each getCategories}}
+                            <option value="{{category}}">
+                                {{category}}
+                            </option>
+                        {{/each}}
+                    </select>
+                </label>
+            </div>
+            <div class="column">
+                <label>Set Difficulty
+                    <select id="questionDiffEntry">
+                        <option value="" disabled selected>Choose one...</option>
+                        <option value="easy">Easy</option>
+                        <option value="medium">Medium</option>
+                        <option value="hard">Hard</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <label>Question Type
+                    <select id="questionTypeEntry">
+                        <option value="" disabled selected>Choose one...</option>
+                        <option value="trueFalse">True / False</option>
+                        <option value="multipleChoice">Multiple Choice</option>
+                    </select>
+                </label>
+            </div>
+            <div class="column">
+                <label>Private Game Question
+                    <select id="privateGameQuestion">
+                        <option value="public" selected>Public</option>
+                        <option value="private">Private</option>
+                    </select>
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <label>Question
+                    <textarea id="mainQuestion" rows="4" ></textarea>
+                </label>
+            </div>
+        </div>
+        <br />
+        <h4>Answer Entry</h4>
+        <div id="answerEntryMC">
+            <div class="row">
+                <div class="column">
+                    <label>Enter Correct Answer
+                        <input type="text" id="correctMCAnswer" />
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label>Enter 1st Incorrect yet Plausible Answer
+                        <input type="text" id="incorrectMCAnswer1" />
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label>Enter 2nd Incorrect yet Plausible Answer
+                        <input type="text" id="incorrectMCAnswer2" />
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label>Enter 3rd Incorrect yet Plausible Answer
+                        <input type="text" id="incorrectMCAnswer3" />
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="answerEntryTF">
+            <div class="row">
+                <div class="column">
+                    <label>Select the Correct Answer:
+                        <select id="tFAnswer">
+                            <option value="" disabled selected>Choose one...</option>
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div id="falseAnswerFull">
+            <div class="row">
+                <div class="column">
+                    <label>Please enter the <bold>True</bold> information for this question
+                        <input type="text" id="trueAnswer" />
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <button class="cancel" id="cancelAddQuestion">Cancel</button>
+            </div>
+            <div class="column">
+                <button class="primary" id="saveAddQuestion">Save</button>
+            </div>
+        </div>
+        <div id="automatedQuestionSeqNumber" class="hideForMe">
+            Next Question Number: {{getLastQuestionSeq}}
+        </div>
+    </form>
+    {{> snackbar}}
 </template>

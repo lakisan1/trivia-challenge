@@ -7,3 +7,7 @@
     font-family: courier;
     text-align: center;
 }
+
+.clearForm {
+    display: none;
+}

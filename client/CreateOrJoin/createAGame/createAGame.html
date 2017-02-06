@@ -1,33 +1,41 @@
 <template name="createAGame">
-    <div>
-        {{> gameTypeSelection}}
-    </div>
-    <div class="row">
-        <div class="column">
-            {{> numberOfQuestions}}
+    <form id="createGameForm">
+        <h3>Game Options:</h3>
+        <div class="row">
+            <div class="column">
+                {{> gameTypeSelection}}
+            </div>
+            <div class="column">
+                {{> gameName}}
+            </div>
         </div>
-        <div class="column">
-            {{> questionType}}
+        <div class="row">
+            <div class="column">
+                {{> numberOfQuestions}}
+            </div>
+            <div class="column">
+                {{> questionType}}
+            </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="column">
-            {{> questionDifficulty}}
+        <div class="row">
+            <div class="column">
+                {{> questionDifficulty}}
+            </div>
+            <div class="column">
+            {{#if Template.subscriptionsReady}}
+                {{> questionCategories}}
+            {{/if}}
+            </div>
         </div>
-        <div class="column">
-        {{#if Template.subscriptionsReady}}
-            {{> questionCategories}}
-        {{/if}}
-        </div>
-    </div>
-    <div id="gameCodeSpace" class="gameCode">
+        <div id="gameCodeSpace" class="gameCode">
 
-    </div>
-    <br />
-    <div class="row">
-        <div class="column">
-            {{> createGameActionBtns}}
         </div>
-    </div>
+        <br />
+        <div class="row">
+            <div class="column">
+                {{> createGameActionBtns}}
+            </div>
+        </div>
+    </form>
     {{> snackbar}}
 </template>
