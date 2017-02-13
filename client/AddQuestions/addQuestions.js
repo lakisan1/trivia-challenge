@@ -11,17 +11,25 @@ Template.addQuestions.helpers({
         return Categories.find({});
     },
     getLastQuestionSeq: function() {
+        console.log("this user is: " + Meteor.user().username);
         var lastSeqNo = Questions.findOne({}, { sort: { addedOn: -1 }, limit: 1 });
+        var myLastNo = Questions.findOne({ owner: Meteor.user().username }, { sort: { addedOn: -1 }, limit: 1 });
+        console.log("My Last No = ");
+        console.dir(myLastNo);
         if (lastSeqNo != null) {
             console.log("seq no found: ")
             console.log(lastSeqNo.seqNo);
             var nextSeqNo = lastSeqNo.seqNo + 1;
+            var mySeqNo = myLastNo.mySeqNo + 1;
             Session.set("nextSeqNo", nextSeqNo);
+            Session.set("mySeqNo", mySeqNo);
             return nextSeqNo;
         } else {
             console.log('no seq no found.');
             var nextSeqNo = 0;
+            var mySeqNo = 0;
             Session.set("nextSeqNo", nextSeqNo);
+            Session.set("mySeqNo", mySeqNo);
             return nextSeqNo;
         }
     },
@@ -59,6 +67,7 @@ Template.addQuestions.events({
     'click #saveAddQuestion' (event) {
         event.preventDefault();
         var nextSeqNo = parseInt(Session.get("nextSeqNo"));
+        var mySeqNo = parseInt(Session.get("mySeqNo"));
         var questionCat = $("#questionCategoryEntry").val();
         var questionDiff = $("#questionDiffEntry").val();
         var questionType = $("#questionTypeEntry").val();
@@ -100,7 +109,7 @@ Template.addQuestions.events({
 
                 console.log("All Good on TF type.");
 
-                Meteor.call('newQuestionTF.insert', questionCat, questionDiff, questionType, private, question, tOrF, trueAnswer, nextSeqNo, function(err, result) {
+                Meteor.call('newQuestionTF.insert', questionCat, questionDiff, questionType, private, question, tOrF, trueAnswer, nextSeqNo, mySeqNo, function(err, result) {
                     if (err) {
                         showSnackbar("An Error Occurred while Saving This Question.", "red");
                         console.log("Error: " + err);
@@ -142,7 +151,7 @@ Template.addQuestions.events({
                     document.getElementById('incorrectMCAnswer3').style.borderColor = "red";
                 }
 
-                Meteor.call('newQuestionMC.insert', questionCat, questionDiff, questionType, private, question, correctAnswer, incorrect1, incorrect2, incorrect3, nextSeqNo, function(err, result) {
+                Meteor.call('newQuestionMC.insert', questionCat, questionDiff, questionType, private, question, correctAnswer, incorrect1, incorrect2, incorrect3, nextSeqNo, mySeqNo, function(err, result) {
                     if (err) {
                         showSnackbar("An Error Occurred while Saving This Question.", "red");
                         console.log("Error: " + err);

@@ -37,9 +37,27 @@ Meteor.methods({
                 questionDifficulty: qDiff,
                 questionCategory: qCat,
                 gameCode: gameCode,
+                gameStatus: '',
                 active: 'Yes',
-                createdOn: new Date(),
-                createdBy: Meteor.users.findOne(this.userId).username,
+                addedOn: new Date(),
+                addedBy: Meteor.users.findOne(this.userId).username,
             });
+    },
+    'setGameWaiting' (gameCode) {
+        check(gameCode, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to add a category');
+        }
+
+        var owner = Meteor.users.findOne(this.userId).username;
+
+        return Games.update({ gameCode: gameCode, owner: owner, active: "Yes" },
+            {
+                $set: {
+                    gameStatus: "Waiting",
+                }
+            }
+        )
     },
 });

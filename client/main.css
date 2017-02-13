@@ -61,6 +61,6 @@ input[type="file"] {
 }
 
 .pushDown {
-    top: 60px;
+    top: 5vh;
     z-index: 0;
 }

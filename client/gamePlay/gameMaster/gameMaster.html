@@ -1,0 +1,16 @@
+<template name="gameMaster">
+    <div class="row">
+        <div class="column centerMe">
+            <h4>All teams are waiting for you to start the game...<br /> <strong>{{gameName}}</strong> with code <strong>{{gameCode}}</strong></h4>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <button id="cancelStartGame" class="button warning">Cancel this Game</button>
+        </div>
+        <div class="column">
+            <button id="startGame" class="button primary">Start Game!</button>
+        </div>
+    </div>
+    {{> snackbar}}
+</template>

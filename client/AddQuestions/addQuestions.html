@@ -4,6 +4,7 @@
         Use this form to add new questions to the system.  Before adding a new question, it may be useful to look for questions that already exist.
     </p>
     <br />
+    {{#if Template.subscriptionsReady}}
     <form id="questionEntryForm">
         <div class="row">
             <div class="column">
@@ -121,5 +122,6 @@
             Next Question Number: {{getLastQuestionSeq}}
         </div>
     </form>
+    {{/if}}
     {{> snackbar}}
 </template>

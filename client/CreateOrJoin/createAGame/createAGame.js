@@ -1,8 +1,10 @@
 import { Games } from '../../../imports/api/games.js';
+import { Questions } from '../../../imports/api/questions.js';
 
 Template.createAGame.onCreated(function() {
     this.subscribe('games');
-})
+    this.subscribe('questions');
+});
 
 Template.createAGame.helpers({
 
@@ -41,8 +43,18 @@ Template.createAGame.events({
         // from the questions collection, and add them to the game.
         // in order to avoid duplication, just grab the question ids.
 
-
-
+        // first get the highest question number in the system at the time.
+        var count = Questions.find({}).count();
+        console.log("Number of questions is: " + count);
+        var uniqueQuestions = [];
+        while (uniqueQuestions.length < numOfQs) {
+            var questionToUse = parseInt(Math.floor((Math.random() * count)));
+            if (uniqueQuestions.indexOf(questionToUse) == -1) {
+                uniqueQuestions.push(questionToUse);
+            }
+        }
+        // TODO: now start making sure the question selected meets the criteria entered
+        // by the user in the while loop above as well.
 
 
         if (gameType == '' || gameType == null) {
@@ -57,16 +69,15 @@ Template.createAGame.events({
                 document.getElementById('questionCategories').style.borderColor = "red";
             } else {
                 $("#gameCodeSpace").append("Game Code is: " + gameCode);
+                Session.set("gameCode", gameCode);
+                Session.set("gameName", gameName);
                 Meteor.call('newGame.insert', gameType, gameName, numOfQs, qType, qDifficulty, qCat, gameCode, function(err, result) {
                     if (err) {
                         showSnackbar("An error occurred saving the Game.", "red");
                         console.log("Save Error: " + err);
                     } else {
                         showSnackbar("Game Created Successfully!", "green");
-                        var clrFormBtn = document.getElementById('clearFormBtn');
-                        clrFormBtn.style.display = "block";
-                        var saveForm = document.getElementById('saveCreateGame');
-                        saveForm.style.display = "none";
+                        FlowRouter.go('/gameMaster');
                     }
                 });
             }
@@ -76,12 +87,4 @@ Template.createAGame.events({
         event.preventDefault();
         document.getElementById("createGameForm").reset();
     },
-    'click #clearFormBtn' (event) {
-        event.preventDefault();
-        document.getElementById("createGameForm").reset();
-        var clrFormBtn = document.getElementById('clearFormBtn');
-        clrFormBtn.style.display = "none";
-        var saveForm = document.getElementById('saveCreateGame');
-        saveForm.style.display = "block";
-    }
 });
