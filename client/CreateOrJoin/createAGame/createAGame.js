@@ -53,8 +53,23 @@ Template.createAGame.events({
                 uniqueQuestions.push(questionToUse);
             }
         }
+
         // TODO: now start making sure the question selected meets the criteria entered
         // by the user in the while loop above as well.
+
+        // figure out how to set 'mixed' in each option so it doesn't get
+        // factored into the if statement below.
+        
+        for (i = 0; i < uniqueQuestions.length; i++) {
+            var question = Questions.findOne({ mySeqNo: uniqueQuestions[i] });
+            console.log("Question #" + uniqueQuestions[i]);
+            if (question.type == qType && question.category == qCat && question.difficulty == qDifficulty) {
+                console.log('Question is good');
+            } else {
+                console.log('Question not good');
+                return;
+            }
+        }
 
 
         if (gameType == '' || gameType == null) {

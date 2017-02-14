@@ -12,7 +12,8 @@ Template.gamePlay.helpers({
         return gameCode = Session.get("gameCode");
     },
     multChoice: function() {
-
+        var gameCode = Session.get("gameCode");
+        var game = Games.findOne({ active: "Yes", gameCode: gameCode });
     },
 
 });
