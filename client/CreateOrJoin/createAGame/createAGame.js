@@ -35,43 +35,15 @@ Template.createAGame.events({
         var qDifficulty = $("#questionDifficulty").val();
         var qCat = $("#questionCategories").val();
 
-        console.log('game type is ' + gameType);
-        console.log('question category is + ');
-        console.log(qCat);
+        Session.set("gameCode", gameCode);
+        Session.set("gameName", gameName);
+        Session.set("qCat", qCat);
+        Session.set("gameType", gameType);
+        Session.set("numOfQs", numOfQs);
+        Session.set("qType", qType);
+        Session.set("qDifficulty", qDifficulty);
 
-        // need to add logic to pull the requested number of questions
-        // from the questions collection, and add them to the game.
-        // in order to avoid duplication, just grab the question ids.
-
-        // first get the highest question number in the system at the time.
-        var count = Questions.find({}).count();
-        console.log("Number of questions is: " + count);
-        var uniqueQuestions = [];
-        while (uniqueQuestions.length < numOfQs) {
-            var questionToUse = parseInt(Math.floor((Math.random() * count)));
-            if (uniqueQuestions.indexOf(questionToUse) == -1) {
-                uniqueQuestions.push(questionToUse);
-            }
-        }
-
-        // TODO: now start making sure the question selected meets the criteria entered
-        // by the user in the while loop above as well.
-
-        // figure out how to set 'mixed' in each option so it doesn't get
-        // factored into the if statement below.
-        
-        for (i = 0; i < uniqueQuestions.length; i++) {
-            var question = Questions.findOne({ mySeqNo: uniqueQuestions[i] });
-            console.log("Question #" + uniqueQuestions[i]);
-            if (question.type == qType && question.category == qCat && question.difficulty == qDifficulty) {
-                console.log('Question is good');
-            } else {
-                console.log('Question not good');
-                return;
-            }
-        }
-
-
+        // form field validation
         if (gameType == '' || gameType == null) {
             showSnackbar("You must choose a Game Type.", "red");
             document.getElementById('gameType').style.borderColor = "red";
@@ -83,23 +55,112 @@ Template.createAGame.events({
                 showSnackbar("You must choose at least one Question Category.", "red");
                 document.getElementById('questionCategories').style.borderColor = "red";
             } else {
-                $("#gameCodeSpace").append("Game Code is: " + gameCode);
-                Session.set("gameCode", gameCode);
-                Session.set("gameName", gameName);
-                Meteor.call('newGame.insert', gameType, gameName, numOfQs, qType, qDifficulty, qCat, gameCode, function(err, result) {
-                    if (err) {
-                        showSnackbar("An error occurred saving the Game.", "red");
-                        console.log("Save Error: " + err);
-                    } else {
-                        showSnackbar("Game Created Successfully!", "green");
-                        FlowRouter.go('/gameMaster');
-                    }
-                });
+                console.log("call find questions function.");
+                findQuestionsMatchingCriteria();
             }
         }
     },
     'click #cancelCreateGame' (event) {
         event.preventDefault();
         document.getElementById("createGameForm").reset();
+
     },
 });
+
+function writeGameToDB(gameCode, gameName, gameType, numOfQs, qType, qDifficulty, qCat) {
+    var gameCode = Session.get("gameCode");
+    var gameName = Session.get("gameName");
+    var gameType = Session.get("gameType");
+    var numOfQs = Session.get("numOfQs");
+    var qType = Session.get("qType");
+    var qDifficulty = Session.get("qDifficulty");
+    var qCat = Session.get("qCat");
+
+    $("#gameCodeSpace").append("Game Code is: " + gameCode);
+    Session.set("gameCode", gameCode);
+    Session.set("gameName", gameName);
+    Meteor.call('newGame.insert', gameType, gameName, numOfQs, qType, qDifficulty, qCat, gameCode, function(err, result) {
+        if (err) {
+            showSnackbar("An error occurred saving the Game.", "red");
+            console.log("Save Error: " + err);
+        } else {
+            showSnackbar("Game Created Successfully!", "green");
+            FlowRouter.go('/gameMaster');
+        }
+    });
+}
+
+function findQuestionsMatchingCriteria() {
+    var qType = Session.get("qType");
+    console.log("Type = " + qType)
+    var qDifficulty = Session.get("qDifficulty");
+    console.log("Diff = " + qDifficulty);
+    var qCat = Session.get("qCat");
+    console.log("Category = " + qCat);
+
+    console.log("Finding Questions to Match Criteria.")
+
+    var theSeqNo = [];
+    if (qType == 'mixed' && qDifficulty == 'mixed') {
+        console.log("Find Questions mixed set diff and type.");
+        var questions = Questions.find({ category: qCat }).fetch();
+        console.log(questions);
+        for (i = 0; i < questions.length; i++) {
+            theSeqNo[i] = questions[i].mySeqNo;
+        }
+    } else if (qType == 'mixed' && qDifficulty != 'mixed') {
+        console.log("Find Questions mixed set type.");
+        var questions = Questions.find({ category: qCat, difficulty: qDifficulty }).fetch();
+        console.log(questions);
+        for (i = 0; i < questions.length; i++) {
+            theSeqNo[i] = questions[i].mySeqNo;
+        }
+    } else if (qDifficulty == 'mixed' && qType != 'mixed') {
+        console.log("Find Questions mixed set diff.");
+        var questions = Questions.find({ type: qType, category: qCat }).fetch();
+        console.log(questions);
+        for (i = 0; i < questions.length; i++) {
+            theSeqNo[i] = questions[i].mySeqNo;
+        }
+    } else {
+        console.log("Find Questions no mixed sets.");
+        var questions = Questions.find({ type: qType, category: qCat, difficulty: qDifficulty }).fetch();
+        console.log(questions);
+        for (i = 0; i < questions.length; i++) {
+            theSeqNo[i] = questions[i].mySeqNo;
+        }
+    }
+
+    console.log("Questions are: " + theSeqNo);
+    Session.set("theSeqNo", theSeqNo);
+    if (theSeqNo != []) {
+        lineUpQuestions();
+    }
+
+}
+
+function lineUpQuestions() {
+    // first get the highest question number in the system at the time.
+    var theSeqNo = Session.get("theSeqNo");
+    var numOfQs = Session.get("numOfQs");
+    var count = Questions.find({}).count();
+    console.log("Number of questions is: " + count);
+    var uniqueQuestions = [];
+    for (i=0; i < theSeqNo.length; i++) {
+        var uniqueQuestions = theSeqNo[i];
+        if (uniqueQuestions.indexOf(theSeqNo) == -1) {
+            Session.set("uniqueQuestions", uniqueQuestions);
+            var questionSet = 'good';
+        } else {
+            console.log("Unique Question set not found: Trying Again.");
+            var questionSet = 'bad';
+            break;
+        }
+    }
+
+    if (questionSet == 'good') {
+        writeGameToDB();
+    } else if (questionSet == 'bad') {
+        findQuestionsMatchingCriteria();
+    }
+}
