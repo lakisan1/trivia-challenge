@@ -15,7 +15,6 @@ Template.gamePlay.helpers({
         var gameCode = Session.get("gameCode");
         var game = Games.findOne({ active: "Yes", gameCode: gameCode });
     },
-
 });
 
 Template.gamePlay.events({

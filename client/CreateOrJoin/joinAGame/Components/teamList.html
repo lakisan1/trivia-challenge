@@ -1,0 +1,20 @@
+<template name="teamList">
+    <div id="teaamListDiv">
+        <table id="teamListTable">
+            <tr>
+                <th>
+                    Team Name
+                </th>
+            </tr>
+            {{#each teamWaiting}}
+                {{#each players}}
+                    <tr>
+                        <td>
+                            {{name}}
+                        </td>
+                    </tr>
+                {{/each}}
+            {{/each}}
+        </table>
+    </div>
+</template>

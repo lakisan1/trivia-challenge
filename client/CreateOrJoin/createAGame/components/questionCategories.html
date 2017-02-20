@@ -1,7 +1,7 @@
 <template name="questionCategories">
     <label>Question Categories:
     <select multiple id="questionCategories" class="questionCategories">
-
+        <option value="" disabled selected>Choose one...</option>
             {{#each getCategories}}
                 <option value="{{category}}">{{category}}</option>
             {{/each}}

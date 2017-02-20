@@ -62,7 +62,11 @@ Template.createAGame.events({
     },
     'click #cancelCreateGame' (event) {
         event.preventDefault();
-        document.getElementById("createGameForm").reset();
+        // document.getElementById("createGameForm").reset();
+        var qCat = $("#questionCategories").val();
+        console.log("Category is: " + qCat);
+        var questions = Questions.find({ category: qCat }).fetch();
+        console.log(questions);
 
     },
 });
@@ -75,11 +79,20 @@ function writeGameToDB(gameCode, gameName, gameType, numOfQs, qType, qDifficulty
     var qType = Session.get("qType");
     var qDifficulty = Session.get("qDifficulty");
     var qCat = Session.get("qCat");
+    var uniqueQuestions = Session.get("uniqueQuestions");
+    var thisGameQuestion = [];
+
+    for (i = 0; i<uniqueQuestions.length; i++) {
+        questionNo = parseInt(uniqueQuestions[i]);
+        var eachQuestion = Questions.find({ mySeqNo: questionNo }).fetch();
+        thisGameQuestion.push(eachQuestion[0]._id);
+        Session.set("thisGameQuestion", thisGameQuestion);
+    }
 
     $("#gameCodeSpace").append("Game Code is: " + gameCode);
     Session.set("gameCode", gameCode);
     Session.set("gameName", gameName);
-    Meteor.call('newGame.insert', gameType, gameName, numOfQs, qType, qDifficulty, qCat, gameCode, function(err, result) {
+    Meteor.call('newGame.insert', gameType, gameName, numOfQs, qType, qDifficulty, qCat, gameCode, thisGameQuestion, function(err, result) {
         if (err) {
             showSnackbar("An error occurred saving the Game.", "red");
             console.log("Save Error: " + err);
@@ -103,28 +116,28 @@ function findQuestionsMatchingCriteria() {
     var theSeqNo = [];
     if (qType == 'mixed' && qDifficulty == 'mixed') {
         console.log("Find Questions mixed set diff and type.");
-        var questions = Questions.find({ category: qCat }).fetch();
+        var questions = Questions.find({ category: { $in: qCat }}).fetch();
         console.log(questions);
         for (i = 0; i < questions.length; i++) {
             theSeqNo[i] = questions[i].mySeqNo;
         }
     } else if (qType == 'mixed' && qDifficulty != 'mixed') {
         console.log("Find Questions mixed set type.");
-        var questions = Questions.find({ category: qCat, difficulty: qDifficulty }).fetch();
+        var questions = Questions.find({ category: { $in: qCat }, difficulty: qDifficulty }).fetch();
         console.log(questions);
         for (i = 0; i < questions.length; i++) {
             theSeqNo[i] = questions[i].mySeqNo;
         }
     } else if (qDifficulty == 'mixed' && qType != 'mixed') {
         console.log("Find Questions mixed set diff.");
-        var questions = Questions.find({ type: qType, category: qCat }).fetch();
+        var questions = Questions.find({ type: qType, category: { $in: qCat }}).fetch();
         console.log(questions);
         for (i = 0; i < questions.length; i++) {
             theSeqNo[i] = questions[i].mySeqNo;
         }
     } else {
         console.log("Find Questions no mixed sets.");
-        var questions = Questions.find({ type: qType, category: qCat, difficulty: qDifficulty }).fetch();
+        var questions = Questions.find({ type: qType, category: { $in: qCat }, difficulty: qDifficulty }).fetch();
         console.log(questions);
         for (i = 0; i < questions.length; i++) {
             theSeqNo[i] = questions[i].mySeqNo;
@@ -134,7 +147,12 @@ function findQuestionsMatchingCriteria() {
     console.log("Questions are: " + theSeqNo);
     Session.set("theSeqNo", theSeqNo);
     if (theSeqNo != []) {
+        console.log('would call the next function.');
         lineUpQuestions();
+    } else {
+        console.log("seq no did not get any values.");
+
+        // TODO: Add a message that no questions were open.
     }
 
 }
@@ -142,13 +160,15 @@ function findQuestionsMatchingCriteria() {
 function lineUpQuestions() {
     // first get the highest question number in the system at the time.
     var theSeqNo = Session.get("theSeqNo");
-    var numOfQs = Session.get("numOfQs");
-    var count = Questions.find({}).count();
-    console.log("Number of questions is: " + count);
+    var numOfQs = parseInt(Session.get("numOfQs"));
+    var count = theSeqNo.length;
+    console.log("Number of questions available is: " + count);
     var uniqueQuestions = [];
-    for (i=0; i < theSeqNo.length; i++) {
-        var uniqueQuestions = theSeqNo[i];
-        if (uniqueQuestions.indexOf(theSeqNo) == -1) {
+    for (i=0; i < numOfQs; i++) {
+        randPick = Math.floor(Math.random() * count);
+        if (uniqueQuestions.indexOf(theSeqNo[randPick]) == -1) {
+            uniqueQuestions.push(theSeqNo[randPick]);
+            console.log("Unique Question set is " + uniqueQuestions);
             Session.set("uniqueQuestions", uniqueQuestions);
             var questionSet = 'good';
         } else {

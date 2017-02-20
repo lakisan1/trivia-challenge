@@ -10,7 +10,7 @@ Template.questionCategories.helpers({
     },
 });
 
-Template.questionCategories.events({
+/* Template.questionCategories.events({
     'mousedown #questionCategories' (event) {
         event.preventDefault();
 
@@ -24,3 +24,4 @@ Template.questionCategories.events({
         $(select ).focus();
     },
 });
+*/

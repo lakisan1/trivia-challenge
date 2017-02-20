@@ -12,7 +12,7 @@ Games.allow({
 });
 
 Meteor.methods({
-    'newGame.insert' (gameType, gameName, numOfQs, qType, qDiff, qCat, gameCode) {
+    'newGame.insert' (gameType, gameName, numOfQs, qType, qDiff, qCat, gameCode, thisGameQuestions) {
         // check the values for proper / expected type
         check(gameType, String);
         check(gameName, String);
@@ -21,6 +21,7 @@ Meteor.methods({
         check(qDiff, String);
         check(qCat, [String]);
         check(gameCode, String);
+        check(thisGameQuestions, [String]);
 
         // verify the user is logged in before allowing game insert
         if(!this.userId) {
@@ -41,6 +42,7 @@ Meteor.methods({
                 active: 'Yes',
                 addedOn: new Date(),
                 addedBy: Meteor.users.findOne(this.userId).username,
+                qAndAs: thisGameQuestions,
             });
     },
     'setGameWaiting' (gameCode) {
@@ -60,4 +62,20 @@ Meteor.methods({
             }
         )
     },
+    'game.addPlayers' (teamName, gameId) {
+        check(teamName, String);
+        check(gameId, String);
+
+
+        return Games.update({ _id: gameId }, {
+            $addToSet: {
+                players:
+                    {
+                        name: teamName,
+                        points: 0,
+                        questionsCorrect: 0,
+                    },
+            }
+        });
+    }
 });

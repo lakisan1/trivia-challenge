@@ -32,9 +32,11 @@ Template.joinAGame.events({
                 if (currentGame == null) {
                     showSnackbar("No Active Game for this Name and Owner", "red");
                 } else {
-                    var gameId = currentGame.gameCode;
-                    console.log("Game Id found is: " + gameId);
-                    Session.set("gameCode", gameId);
+                    var gameCode = currentGame.gameCode;
+                    var gameId = currentGame._id;
+                    console.log("Game code found is: " + gameCode);
+                    Session.set("gameCode", gameCode);
+                    Session.set("gameId", gameId);
                     validateGameCode();
                 }
             }
@@ -49,12 +51,23 @@ Template.joinAGame.events({
 // the user to the game view.
 function validateGameCode() {
     var gameCode = Session.get("gameCode");
+    var gameId = Session.get("gameId");
     var currentGame = Games.findOne({ gameCode: gameCode, active: "Yes" });
     console.log(currentGame);
     if (currentGame != null) {
+        var gameId = currentGame._id;
+        console.log("GAME ID is " + gameId);
         console.log("Found Active Game!  Success!");
-        FlowRouter.go("/gamePlay");
+        Meteor.call('game.addPlayers', Meteor.user().username, gameId, function(err, result){
+            if (err) {
+                showSnackbar("Something went wrong joining the game.", "red");
+            } else {
+                showSnackbar("Game Joined!", "green");
+                FlowRouter.go("/gamePlay");
+            }
+        });
     } else {
+        showSnackbar("Unable to find an Active Game!", "red");
         console.log('Did not Find an Active Game! Fail!!!');
     }
 }
