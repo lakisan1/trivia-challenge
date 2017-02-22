@@ -1,6 +1,7 @@
 import { Categories } from '../imports/api/categories.js';
 import { Games } from '../imports/api/games.js';
 import { Questions} from '../imports/api/questions.js';
+import { GameQuestions } from '../imports/api/gameQuestions.js';
 
 Meteor.publish('categories', function() {
     return Categories.find({});
@@ -17,4 +18,8 @@ Meteor.publish('questions', function() {
 
 Meteor.publish('questionsCounter', function() {
     return Questions.find({});
+});
+
+Meteor.publish('gameQuestions', function() {
+    return GameQuestions.find({});
 });

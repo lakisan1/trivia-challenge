@@ -54,7 +54,7 @@ Meteor.methods({
 
         var owner = Meteor.users.findOne(this.userId).username;
 
-        return Games.update({ gameCode: gameCode, owner: owner, active: "Yes" },
+        return Games.update({ gameCode: gameCode, addedBy: owner, active: "Yes" },
             {
                 $set: {
                     gameStatus: "Waiting",
@@ -66,6 +66,10 @@ Meteor.methods({
         check(teamName, String);
         check(gameId, String);
 
+        // verify the user is logged in before allowing game insert
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to set the game waiting.');
+        }
 
         return Games.update({ _id: gameId }, {
             $addToSet: {
@@ -77,5 +81,22 @@ Meteor.methods({
                     },
             }
         });
-    }
+    },
+    'startGame' (gameCode) {
+        check(gameCode, String);
+
+        // verify the user is logged in before allowing game insert
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to start a game.');
+        }
+
+        return Games.update({ gameCode: gameCode, active: "Yes" },
+            {
+                $set: {
+                    gameStatus: "started",
+                }
+            }
+        )
+
+    },
 });

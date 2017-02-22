@@ -7,7 +7,7 @@ Template.gameMaster.onCreated(function() {
 Template.gameMaster.onRendered(function() {
     // set the Game Status to 'Waiting' while players / teams
     // join the game.
-
+    console.log("Game should be in 'Waiting' status.");
     var gameCode = Session.get("gameCode");
     Meteor.call('setGameWaiting', gameCode, function(err, result) {
         if (err) {
@@ -36,5 +36,12 @@ Template.gameMaster.events({
     'click #startGame' (event) {
         event.preventDefault();
         console.log("Start Game clicked.");
+        Meteor.call('startGame', gameCode, function(err, result) {
+            if (err) {
+                showSnackbar("An error occurred starting the game.", "red");
+            } else {
+                showSnackbar("Game Started!", "green");
+            }
+        });
     }
 });

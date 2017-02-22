@@ -5,6 +5,8 @@ Template.gamePlay.onCreated(function() {
     this.subscribe('questions');
     this.subscribe('games');
     var gameCode = Session.get("gameCode");
+    var gameQuestions = Games.find({ active: "Yes", gameCode: gameCode }).fetch();
+    Session.set("questionsToAsk", gameQuestions.questions);
 });
 
 Template.gamePlay.helpers({
@@ -13,7 +15,15 @@ Template.gamePlay.helpers({
     },
     multChoice: function() {
         var gameCode = Session.get("gameCode");
-        var game = Games.findOne({ active: "Yes", gameCode: gameCode });
+        var questions = Questions.find({ _id: currentQuestionId });
+    },
+    currentGameStatus: function() {
+        var gameCode = Session.get("gameCode");
+        return Games.find({ active: "Yes", gameCode: gameCode });
+    },
+    nextQuestion: function() {
+        var gameCode = Session.get("gameCode");
+        return Questions.find({  });
     },
 });
 

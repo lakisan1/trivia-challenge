@@ -1,9 +1,11 @@
 import { Games } from '../../../imports/api/games.js';
 import { Questions } from '../../../imports/api/questions.js';
+import { GameQuestions } from '../../../imports/api/gameQuestions.js';
 
 Template.createAGame.onCreated(function() {
     this.subscribe('games');
     this.subscribe('questions');
+    this.subscribe('gameQuestions');
 });
 
 Template.createAGame.helpers({
@@ -98,7 +100,13 @@ function writeGameToDB(gameCode, gameName, gameType, numOfQs, qType, qDifficulty
             console.log("Save Error: " + err);
         } else {
             showSnackbar("Game Created Successfully!", "green");
-            FlowRouter.go('/gameMaster');
+            Meteor.call('addGameQuestions', thisGameQuestion, gameCode, function(err, result) {
+                if (err) {
+
+                } else {
+                    FlowRouter.go('/gameMaster');
+                }
+            });
         }
     });
 }
