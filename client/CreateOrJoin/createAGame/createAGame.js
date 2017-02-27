@@ -8,13 +8,11 @@ Template.createAGame.onCreated(function() {
     this.subscribe('gameQuestions');
 });
 
-Template.createAGame.helpers({
-
-});
-
 Template.createAGame.events({
     'click #saveCreateGame' (event) {
         event.preventDefault();
+        showSpinner();
+
         var gameCode = "";
         // need to generate a unique game number
         var randomString = function(stringLength) {
@@ -73,6 +71,11 @@ Template.createAGame.events({
     },
 });
 
+function showSpinner() {
+    $("#spinnerSpace").append("Loading Questions - Please Wait ....");
+    return;
+}
+
 function writeGameToDB(gameCode, gameName, gameType, numOfQs, qType, qDifficulty, qCat) {
     var gameCode = Session.get("gameCode");
     var gameName = Session.get("gameName");
@@ -102,7 +105,7 @@ function writeGameToDB(gameCode, gameName, gameType, numOfQs, qType, qDifficulty
             showSnackbar("Game Created Successfully!", "green");
             Meteor.call('addGameQuestions', thisGameQuestion, gameCode, function(err, result) {
                 if (err) {
-
+                    showSnackbar("Error preparing questions for players.", "red");
                 } else {
                     FlowRouter.go('/gameMaster');
                 }

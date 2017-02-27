@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
-import { Question } from './questions.js';
+import { Questions } from './questions.js';
 
 export const GameQuestions = new Mongo.Collection('gameQuestions');
 
@@ -23,16 +23,27 @@ Meteor.methods({
         }
 
         for (i=0; i<questionIds.length; i++) {
-            var questionInfo = Question.find({ _id: questionIds[i]}).fetch();
+            var questionInfo = Questions.find({ _id: questionIds[i] }).fetch();
 
-            GameQuestions.insert({
-                gameCode: gameCode,
-                questionNo: (i + 1),
-                qType: questionInfo.type,
-                qQuet: questionInfo.question,
-                qCorrect: questionInfo.correctAnswer,
-                qIncorrect: questionInfo.inCorrectAnswers,
-            });
+            if(questionInfo[0].type == "trueFalse") {
+                GameQuestions.insert({
+                    gameCode: gameCode,
+                    questionNo: (i + 1),
+                    qType: questionInfo[0].type,
+                    qQuet: questionInfo[0].question,
+                    qCorrect: questionInfo[0].correctAnswer,
+                    qAnswerInfo: questionInfo[0].trueAnswer,
+                });
+            } else {
+                GameQuestions.insert({
+                    gameCode: gameCode,
+                    questionNo: (i + 1),
+                    qType: questionInfo[0].type,
+                    qQuet: questionInfo[0].question,
+                    qCorrect: questionInfo[0].correctAnswer,
+                    qIncorrect: questionInfo[0].inCorrectAnswers,
+                });
+            }
         }
     },
     'gameOver' (gameCode) {
