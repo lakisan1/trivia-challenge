@@ -24,11 +24,17 @@ Meteor.methods({
 
         for (i=0; i<questionIds.length; i++) {
             var questionInfo = Questions.find({ _id: questionIds[i] }).fetch();
-
+            if (i == 0) {
+                currQuestion = "Y";
+            } else {
+                currQuestion = "N";
+            }
             if(questionInfo[0].type == "trueFalse") {
                 GameQuestions.insert({
+                    questionId: questionInfo[0]._id,
                     gameCode: gameCode,
                     questionNo: (i + 1),
+                    currentQuestion: currQuestion,
                     qType: questionInfo[0].type,
                     qQuet: questionInfo[0].question,
                     qCorrect: questionInfo[0].correctAnswer,
@@ -36,8 +42,10 @@ Meteor.methods({
                 });
             } else {
                 GameQuestions.insert({
+                    questionId: questionInfo[0]._id,
                     gameCode: gameCode,
                     questionNo: (i + 1),
+                    currentQuestion: currQuestion,
                     qType: questionInfo[0].type,
                     qQuet: questionInfo[0].question,
                     qCorrect: questionInfo[0].correctAnswer,
@@ -58,5 +66,27 @@ Meteor.methods({
         }
 
         return GameQuestions.remove({ gameCode: gameCode });
+    },
+    'gameQuestions.changeCurrent' (gameCode, questionId, prevQuestionId) {
+        // this is to move the game along from question to question by changing
+        // the current question flag.
+
+        check(gameCode, String);
+        check(questionId, String);
+        check(prevQuestionId, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to change question status.');
+        }
+
+        GameQuestions.update({ gameCode: gameCode, questionId: prevQuestionId },
+            $set: {
+                currentQuestion: "N"
+            });
+
+        GameQuestions.update({ gameCode: gameCode, questionId: questionId},
+            $set: {
+                currentQuestion: "Y"
+            });
     },
 });

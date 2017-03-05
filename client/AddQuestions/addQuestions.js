@@ -13,14 +13,14 @@ Template.addQuestions.helpers({
     getLastQuestionSeq: function() {
         console.log("this user is: " + Meteor.user().username);
         var lastSeqNo = Questions.findOne({}, { sort: { addedOn: -1 }, limit: 1 });
-        var myLastNo = Questions.findOne({ owner: Meteor.user().username }, { sort: { addedOn: -1 }, limit: 1 });
-        console.log("My Last No = ");
-        console.dir(myLastNo);
+        var myLastNo = Questions.findOne({ addedBy: Meteor.user().username }, { sort: { addedOn: -1 }, limit: 1 });
         if (lastSeqNo != null) {
             console.log("seq no found: ")
             console.log(lastSeqNo.seqNo);
             var nextSeqNo = lastSeqNo.seqNo + 1;
             var mySeqNo = myLastNo.mySeqNo + 1;
+            console.log("Next Seq No: " + nextSeqNo);
+            console.log("My Next No: " + mySeqNo);
             Session.set("nextSeqNo", nextSeqNo);
             Session.set("mySeqNo", mySeqNo);
             return nextSeqNo;

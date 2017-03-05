@@ -23,7 +23,7 @@ Template.gamePlay.helpers({
     },
     nextQuestion: function() {
         var gameCode = Session.get("gameCode");
-        return Questions.find({  });
+        return GameQuestions.find({ gameCode: gameCode, currQuestioin: "Y" });
     },
 });
 

@@ -64,3 +64,10 @@ input[type="file"] {
     top: 5vh;
     z-index: 0;
 }
+
+.gameWait {
+    margin-top: 20vh;
+    font-size: 32px;
+    font-family: courier;
+    text-align: center;
+}

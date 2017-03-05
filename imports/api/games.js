@@ -12,16 +12,14 @@ Games.allow({
 });
 
 Meteor.methods({
-    'newGame.insert' (gameType, gameName, numOfQs, qType, qDiff, qCat, gameCode, thisGameQuestions) {
+    'newGame.insert' (gameType, gameName, qType, qDiff, qCat, gameCode) {
         // check the values for proper / expected type
         check(gameType, String);
         check(gameName, String);
-        check(numOfQs, Number);
         check(qType, String);
         check(qDiff, String);
         check(qCat, [String]);
         check(gameCode, String);
-        check(thisGameQuestions, [String]);
 
         // verify the user is logged in before allowing game insert
         if(!this.userId) {
@@ -33,7 +31,6 @@ Meteor.methods({
         return Games.insert({
                 gameType: gameType,
                 gameName: gameName,
-                numberOfQuestions: numOfQs,
                 questionType: qType,
                 questionDifficulty: qDiff,
                 questionCategory: qCat,
@@ -42,7 +39,6 @@ Meteor.methods({
                 active: 'Yes',
                 addedOn: new Date(),
                 addedBy: Meteor.users.findOne(this.userId).username,
-                qAndAs: thisGameQuestions,
             });
     },
     'setGameWaiting' (gameCode) {
@@ -96,7 +92,25 @@ Meteor.methods({
                     gameStatus: "started",
                 }
             }
-        )
+        );
 
     },
+    'gameQuestions' (numOfQs, gameQuestions, gameCode, gameName) {
+        check(numOfQs, Number);
+        check(gameQuestions, [String]);
+        check(gameCode, String);
+        check(gameName, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to add new Questions to the game.');
+        }
+
+        return Games.update({ gameCode: gameCode, gameName: gameName, active: "Yes"},
+            {
+                $addToSet: {
+                    numberofQuestions: numOfQs,
+                    qandAs: gameQuestions
+                }
+            });
+    }
 });

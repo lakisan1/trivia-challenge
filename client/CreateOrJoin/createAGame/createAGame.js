@@ -8,10 +8,14 @@ Template.createAGame.onCreated(function() {
     this.subscribe('gameQuestions');
 });
 
+Template.creatingGameView.onCreated(function() {
+    // findQuestionsMatchingCriteria();
+    setTimeout(findQuestionsMatchingCriteria, 2000);
+});
+
 Template.createAGame.events({
     'click #saveCreateGame' (event) {
         event.preventDefault();
-        showSpinner();
 
         var gameCode = "";
         // need to generate a unique game number
@@ -30,7 +34,6 @@ Template.createAGame.events({
         qCat = [];
         var gameName = $("#gameName").val();
         var gameType = $("#gameType").val();
-        var numOfQs = parseInt($("#numberOfQuestions").val());
         var qType = $("#questionType").val();
         var qDifficulty = $("#questionDifficulty").val();
         var qCat = $("#questionCategories").val();
@@ -39,7 +42,6 @@ Template.createAGame.events({
         Session.set("gameName", gameName);
         Session.set("qCat", qCat);
         Session.set("gameType", gameType);
-        Session.set("numOfQs", numOfQs);
         Session.set("qType", qType);
         Session.set("qDifficulty", qDifficulty);
 
@@ -49,7 +51,7 @@ Template.createAGame.events({
             document.getElementById('gameType').style.borderColor = "red";
         } else if (gameName == '' || gameName == null) {
             showSnackbar("You need a Game Name.", "red");
-            document.getElementbyId('gameName').style.borderColor = "red";
+            document.getElementById('gameName').style.borderColor = "red";
         } else {
             if (qCat == '' || qCat == null) {
                 showSnackbar("You must choose at least one Question Category.", "red");
@@ -68,51 +70,10 @@ Template.createAGame.events({
         var questions = Questions.find({ category: qCat }).fetch();
         console.log(questions);
 
+
+        FlowRouter.go('/noOfQuestions');
     },
 });
-
-function showSpinner() {
-    $("#spinnerSpace").append("Loading Questions - Please Wait ....");
-    return;
-}
-
-function writeGameToDB(gameCode, gameName, gameType, numOfQs, qType, qDifficulty, qCat) {
-    var gameCode = Session.get("gameCode");
-    var gameName = Session.get("gameName");
-    var gameType = Session.get("gameType");
-    var numOfQs = Session.get("numOfQs");
-    var qType = Session.get("qType");
-    var qDifficulty = Session.get("qDifficulty");
-    var qCat = Session.get("qCat");
-    var uniqueQuestions = Session.get("uniqueQuestions");
-    var thisGameQuestion = [];
-
-    for (i = 0; i<uniqueQuestions.length; i++) {
-        questionNo = parseInt(uniqueQuestions[i]);
-        var eachQuestion = Questions.find({ mySeqNo: questionNo }).fetch();
-        thisGameQuestion.push(eachQuestion[0]._id);
-        Session.set("thisGameQuestion", thisGameQuestion);
-    }
-
-    $("#gameCodeSpace").append("Game Code is: " + gameCode);
-    Session.set("gameCode", gameCode);
-    Session.set("gameName", gameName);
-    Meteor.call('newGame.insert', gameType, gameName, numOfQs, qType, qDifficulty, qCat, gameCode, thisGameQuestion, function(err, result) {
-        if (err) {
-            showSnackbar("An error occurred saving the Game.", "red");
-            console.log("Save Error: " + err);
-        } else {
-            showSnackbar("Game Created Successfully!", "green");
-            Meteor.call('addGameQuestions', thisGameQuestion, gameCode, function(err, result) {
-                if (err) {
-                    showSnackbar("Error preparing questions for players.", "red");
-                } else {
-                    FlowRouter.go('/gameMaster');
-                }
-            });
-        }
-    });
-}
 
 function findQuestionsMatchingCriteria() {
     var qType = Session.get("qType");
@@ -158,40 +119,33 @@ function findQuestionsMatchingCriteria() {
     console.log("Questions are: " + theSeqNo);
     Session.set("theSeqNo", theSeqNo);
     if (theSeqNo != []) {
-        console.log('would call the next function.');
-        lineUpQuestions();
+        // lineUpQuestions();
+        writeGameToDB();
     } else {
         console.log("seq no did not get any values.");
 
         // TODO: Add a message that no questions were open.
     }
-
 }
 
-function lineUpQuestions() {
-    // first get the highest question number in the system at the time.
-    var theSeqNo = Session.get("theSeqNo");
-    var numOfQs = parseInt(Session.get("numOfQs"));
-    var count = theSeqNo.length;
-    console.log("Number of questions available is: " + count);
-    var uniqueQuestions = [];
-    for (i=0; i < numOfQs; i++) {
-        randPick = Math.floor(Math.random() * count);
-        if (uniqueQuestions.indexOf(theSeqNo[randPick]) == -1) {
-            uniqueQuestions.push(theSeqNo[randPick]);
-            console.log("Unique Question set is " + uniqueQuestions);
-            Session.set("uniqueQuestions", uniqueQuestions);
-            var questionSet = 'good';
-        } else {
-            console.log("Unique Question set not found: Trying Again.");
-            var questionSet = 'bad';
-            break;
-        }
-    }
+function writeGameToDB() {
+    var gameCode = Session.get("gameCode");
+    var gameName = Session.get("gameName");
+    var gameType = Session.get("gameType");
+    var qType = Session.get("qType");
+    var qDifficulty = Session.get("qDifficulty");
+    var qCat = Session.get("qCat");
 
-    if (questionSet == 'good') {
-        writeGameToDB();
-    } else if (questionSet == 'bad') {
-        findQuestionsMatchingCriteria();
-    }
+    $("#gameCodeSpace").append("Game Code is: " + gameCode);
+    Session.set("gameCode", gameCode);
+    Session.set("gameName", gameName);
+    Meteor.call('newGame.insert', gameType, gameName, qType, qDifficulty, qCat, gameCode, function(err, result) {
+        if (err) {
+            showSnackbar("An error occurred saving the Game.", "red");
+            console.log("Save Error: " + err);
+        } else {
+            showSnackbar("Game Created Successfully!", "green");
+            FlowRouter.go('/noOfQuestions');
+        }
+    });
 }
