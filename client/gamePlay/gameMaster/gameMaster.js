@@ -1,4 +1,5 @@
 import { Games } from '../../../imports/api/games.js';
+import { GameQuestions } from '../../../imports/api/gameQuestions.js';
 
 Template.gameMaster.onCreated(function() {
     this.subscribe("games");
@@ -26,6 +27,10 @@ Template.gameMaster.helpers({
     gameCode: function() {
         return gameCode = Session.get("gameCode");
     },
+    playersInfo: function() {
+        var gameCode = Session.get("gameCode");
+        return Games.find({ gameCode: gameCode, active: "Yes" });
+    },
 });
 
 Template.gameMaster.events({
@@ -40,7 +45,14 @@ Template.gameMaster.events({
             if (err) {
                 showSnackbar("An error occurred starting the game.", "red");
             } else {
-                showSnackbar("Game Started!", "green");
+                Meteor.call('SetCurrentQuestion', gameCode, 1, function(err,result){
+                    if (err) {
+                        showSnackbar("An error occurred setting start question.", "red");
+                    } else {
+                        showSnackbar("Game Started!", "green");
+                        FlowRouter.go('/displayQuestions');
+                    }
+                });
             }
         });
     }

@@ -37,6 +37,7 @@ Meteor.methods({
                 gameCode: gameCode,
                 gameStatus: '',
                 active: 'Yes',
+                numberOfPlayers: 0,
                 addedOn: new Date(),
                 addedBy: Meteor.users.findOne(this.userId).username,
             });
@@ -67,15 +68,9 @@ Meteor.methods({
             throw new Meteor.Error('User is not authorized to set the game waiting.');
         }
 
-        return Games.update({ _id: gameId }, {
-            $addToSet: {
-                players:
-                    {
-                        name: teamName,
-                        points: 0,
-                        questionsCorrect: 0,
-                    },
-            }
+        return Games.update({ _id: gameId },
+            { $addToSet: { players: { name: teamName, points: 0, questionsCorrect: 0, questionsAnswered: 0 }},
+            $inc: { numberOfPlayers: 1 }
         });
     },
     'startGame' (gameCode) {
@@ -112,5 +107,28 @@ Meteor.methods({
                     qandAs: gameQuestions
                 }
             });
-    }
+    },
+    'game.addPoints' (gameCode, answerCorrect) {
+        check(gameCode, String);
+        check(answerCorrect, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to update game points, please login.');
+        }
+
+        if (answerCorrect == "No") {
+            var gamePoints = 0;
+            var numCorrect = 0;
+        } else {
+            var gamePoints = 1;
+            var numCorrect = 1;
+        }
+
+        playerName = Meteor.users.findOne(this.userId).username;
+
+        return Games.update({ gameCode: gameCode, active: "Yes", "players.name": playerName },
+            {
+                $inc: { "players.$.points": gamePoints, "players.$.questionsCorrect": numCorrect, "players.$.questionsAns": 1 }
+            });
+    },
 });

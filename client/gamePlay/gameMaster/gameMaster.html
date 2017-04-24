@@ -1,7 +1,7 @@
 <template name="gameMaster">
     <div class="row">
         <div class="column centerMe">
-            <h4>All teams are waiting for you to start the game...<br /> <strong>{{gameName}}</strong> with code <strong>{{gameCode}}</strong></h4>
+            <h4>All teams are waiting for you to start the game...<br /> <strong>{{gameName}}</strong> with code <strong><gamecode style="font-family:serif;">{{gameCode}}</gamecode></strong></h4>
         </div>
     </div>
     <div class="row">
@@ -10,6 +10,14 @@
         </div>
         <div class="column">
             <button id="startGame" class="button primary">Start Game!</button>
+        </div>
+    </div>
+    <br /><br />
+    <div class="row">
+        <div class="column">
+            {{#each playersInfo}}
+                Number of Players / Teams: {{numberOfPlayers}}
+            {{/each}}
         </div>
     </div>
     <div class="row">

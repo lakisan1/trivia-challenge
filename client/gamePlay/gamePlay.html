@@ -6,40 +6,9 @@
             </div>
         </div>
         {{#if $eq gameStatus "started"}}
-        <div class="row">
-            <div class="column">
-                Question #: {{questionNo}}
-            </div>
-        </div>
-            {{#each nextQuestion}}
-                {{#if isMultChoice}}
-                    <div class="row">
-                        <div class="column">
-                            <button id="optionA" class="button button-option">A {{optionA}}</button>
-                        </div>
-                        <div class="column">
-                            <button id="optionB" class="button button-option">B {{optionB}}</button>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="column">
-                            <button id="optionC" class="button button-option">C {{optionC}}</button>
-                        </div>
-                        <div class="column">
-                            <button id="optionD" class="button button-option">D {{optionD}}</button>
-                        </div>
-                    </div>
-                    {{else}}
-                    <div class="row">
-                        <div class="column">
-                            <button id="trueChoice" class="button button-trueFalse">True</button>
-                        </div>
-                        <div class="column">
-                            <button id="falseChoice" class="button button-trueFalse">False</button>
-                        </div>
-                    </div>
-                {{/if}}
-            {{/each}}
+        {{#each nextQuestion}}
+            {{> activeQuestion}}
+        {{/each}}
         {{else if $eq gameStatus "Waiting"}}
             <div class="row">
                 <div class="column">

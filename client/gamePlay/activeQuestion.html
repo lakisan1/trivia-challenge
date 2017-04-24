@@ -1,0 +1,92 @@
+<template name="activeQuestion">
+    {{#if $eq questionStatus "live"}}
+    <div class="row">
+        <div class="column">
+            Question #: {{questionNo}}
+            <div class="question">
+                {{qQuet}}
+            </div>
+        </div>
+    </div>
+    <div class="AnswerArea">
+        {{#if $eq qType "multipleChoice"}}
+            <div class="row">
+                <div class="column">
+                    {{#if $eq qCorrectLetter "A"}}
+                        <div id="qCorrect" class="button button-option"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter1 "A"}}
+                        <div id="qIncorrect1" class="button button-option"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter2 "A"}}
+                        <div id="qIncorrect2" class="button button-option"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter3 "A"}}
+                        <div id="qIncorrect3" class="button button-option"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
+                    {{/if}}
+                </div>
+                <div class="column">
+                    {{#if $eq qCorrectLetter "B"}}
+                        <div id="qCorrect" class="button button-option"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter1 "B"}}
+                        <div id="qIncorrect1" class="button button-option"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter2 "B"}}
+                        <div id="qIncorrect2" class="button button-option"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter3 "B"}}
+                        <div id="qIncorrect3" class="button button-option"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
+                    {{/if}}
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    {{#if $eq qCorrectLetter "C"}}
+                        <div id="qCorrect" class="button button-option"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter1 "C"}}
+                        <div id="qIncorrect1" class="button button-option"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter2 "C"}}
+                        <div id="qIncorrect2" class="button button-option"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter3 "C"}}
+                        <div id="qIncorrect3" class="button button-option"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
+                    {{/if}}
+                </div>
+                <div class="column">
+                    {{#if $eq qCorrectLetter "D"}}
+                        <div id="qCorrect" class="button button-option"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter1 "D"}}
+                        <div id="qIncorrect1" class="button button-option"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter2 "D"}}
+                        <div id="qIncorrect2" class="button button-option"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
+                    {{/if}}
+                    {{#if $eq qIncorrectLetter3 "D"}}
+                        <div id="qIncorrect3" class="button button-option"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
+                    {{/if}}
+                </div>
+            </div>
+            {{else}}
+            <div class="row">
+                <div class="column">
+                    <button id="trueChoice" class="button button-trueFalse">True</button>
+                </div>
+                <div class="column">
+                    <button id="falseChoice" class="button button-trueFalse">False</button>
+                </div>
+            </div>
+        {{/if}}
+    </div>
+    {{/if}}
+    {{#if $eq questionStatus "waiting"}}
+        <div class="waiting">
+            Please wait while others finish answering the question...The next question will come up automatically when all teams have answered the previous question.
+        </div>
+    {{/if}}
+
+    {{> snackbar}}
+</template>
