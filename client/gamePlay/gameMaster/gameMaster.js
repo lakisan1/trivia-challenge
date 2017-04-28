@@ -44,10 +44,12 @@ Template.gameMaster.events({
         Meteor.call('startGame', gameCode, function(err, result) {
             if (err) {
                 showSnackbar("An error occurred starting the game.", "red");
+                console.log("Error: " + err);
             } else {
                 Meteor.call('SetCurrentQuestion', gameCode, 1, function(err,result){
                     if (err) {
                         showSnackbar("An error occurred setting start question.", "red");
+                        console.log("Error: " + err);
                     } else {
                         showSnackbar("Game Started!", "green");
                         FlowRouter.go('/displayQuestions');

@@ -38,6 +38,7 @@ Meteor.methods({
                 gameStatus: '',
                 active: 'Yes',
                 numberOfPlayers: 0,
+                playersAnswered: 0,
                 addedOn: new Date(),
                 addedBy: Meteor.users.findOne(this.userId).username,
             });
@@ -55,6 +56,21 @@ Meteor.methods({
             {
                 $set: {
                     gameStatus: "Waiting",
+                }
+            }
+        )
+    },
+    'setGameLive' (gameCode) {
+        check(gameCode, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to add a category');
+        }
+
+        return Games.update({ gameCode: gameCode, active: "Yes" },
+            {
+                $set: {
+                    gameStatus: "live",
                 }
             }
         )
@@ -103,8 +119,10 @@ Meteor.methods({
         return Games.update({ gameCode: gameCode, gameName: gameName, active: "Yes"},
             {
                 $addToSet: {
-                    numberofQuestions: numOfQs,
                     qandAs: gameQuestions
+                },
+                $set: {
+                    numberofQuestions: numOfQs,
                 }
             });
     },
@@ -128,7 +146,32 @@ Meteor.methods({
 
         return Games.update({ gameCode: gameCode, active: "Yes", "players.name": playerName },
             {
-                $inc: { "players.$.points": gamePoints, "players.$.questionsCorrect": numCorrect, "players.$.questionsAns": 1 }
+                $inc: { playersAnswered: 1, "players.$.points": gamePoints, "players.$.questionsCorrect": numCorrect, "players.$.questionsAns": 1 }
             });
+    },
+    'resetPlayerAnswerCount' (gameCode) {
+        check(gameCode, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to update player answer count, please login.');
+        }
+
+        return Games.update({ gameCode: gameCode, active: "Yes" },
+            {
+                $set: { playersAnswered: 0, }
+            });
+    },
+    'gameEnd' (gameCode) {
+        check(gameCode, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized remove a game, please login.');
+        }
+
+        return Games.update({ gameCode: gameCode, active: "Yes" }, {
+            $set: {
+                active: "No",
+            }
+        });
     },
 });

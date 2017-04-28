@@ -19,3 +19,21 @@ Template.displayQuestions.helpers({
         return Games.find({ gameCode: gameCode, active: "Yes" });
     },
 });
+
+Template.displayQuestions.events({
+    'click #endGame' (event) {
+        event.preventDefault();
+
+        var gameCode = Session.get("gameCode");
+
+        Meteor.call("gameEnd", gameCode, function(err, result){
+                if (err) {
+                    showSnackbar("Unable to end Game.");
+                    console.log(err)
+                } else {
+                    showSnackbar("Game Over!", "green");
+                    FlowRouter.go('/createAGame');
+                }
+        });
+    }
+});

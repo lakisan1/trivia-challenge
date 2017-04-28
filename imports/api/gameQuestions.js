@@ -108,48 +108,54 @@ Meteor.methods({
 
         return GameQuestions.remove({ gameCode: gameCode });
     },
-    'gameQuestions.changeCurrent' (gameCode, questionId, prevQuestionId, nextQuestionNo) {
+    'SetCurrentQuestion' (gameCode, questionNo) {
+        check(gameCode, String);
+        check(questionNo, Number);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not logged in, cannot set game to start.');
+        }
+
+        return GameQuestions.update({ gameCode: gameCode, questionNo: questionNo },
+        {
+            $set: {
+                currentQuestion: "Y",
+            }
+        });
+    },
+    'gameQuestions.changeCurrent' (gameCode, nextQuestionNo, totalQuestions) {
         // this is to move the game along from question to question by changing
         // the current question flag.
 
         check(gameCode, String);
-        check(questionId, String);
-        check(prevQuestionId, String);
         check(nextQuestionNo, Number);
+        check(totalQuestions, Number);
 
         if(!this.userId) {
             throw new Meteor.Error('User is not authorized to change question status.');
         }
 
         var prevQuestionNo = nextQuestionNo - 1;
+        var questionInfo = GameQuestions.find({ gameCode: gameCode, active: "Yes" }, { sort: { questionNo: +1 }}, { limit: 1 }).fetch();
+        console.log("--------  Total Questions: " + totalQuestions + " ----------");
 
-        GameQuestions.update({ gameCode: gameCode, questionNo: prevQuestionNo },
-            {
-                $set: {
-                    currentQuestion: "N"
-                }
-            });
-
-        GameQuestions.update({ gameCode: gameCode, questionNo: nextQuestionNo},
-            {
-                $set: {
-                    currentQuestion: "Y"
-                }
-            });
-    },
-    'SetCurrentQuestion' (gameCode, currQuestionNo) {
-        check(gameCode, String);
-        check(currQuestionNo, Number);
-
-        if(!this.userId) {
-            throw new Meteor.Error('User is not authorized to change question status.');
+        if (totalQuestions < nextQuestionNo ) {
+            // need to complete the game
+            GameQuestions.remove({ gameCode: gameCode });
+            return "complete";
+        } else {
+            GameQuestions.update({ gameCode: gameCode, questionNo: prevQuestionNo },
+                {
+                    $set: {
+                        currentQuestion: "N"
+                    }
+                });
+            return GameQuestions.update({ gameCode: gameCode, questionNo: nextQuestionNo},
+                {
+                    $set: {
+                        currentQuestion: "Y"
+                    }
+                });
         }
-
-        GameQuestions.update({ gameCode: gameCode, questionNo: currQuestionNo },
-            {
-                $set: {
-                    currentQuestion: "Y"
-                }
-            });
     },
 });
