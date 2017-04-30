@@ -1,6 +1,6 @@
 .button-option {
-    width: 35vw;
-    height:25vh;
+    width: 30vw;
+    height:20vh;
     font-size: 3vh;
     display: table;
 }
@@ -8,5 +8,22 @@
 .button-option p {
     display: table-cell;
     vertical-align: middle;
-    text-align: center; 
+    text-align: center;
+}
+
+.button-trueFalse {
+    width: 30vw;
+    height:20vh;
+    font-size: 3vh;
+    display: table;
+}
+
+.button-trueFalse p {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.question {
+    font-size: 24px;
 }

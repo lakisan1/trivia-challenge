@@ -12,7 +12,7 @@ Questions.allow({
 });
 
 Meteor.methods({
-    'newQuestionTF.insert'(qCat, qDiff, qType, private, question, tOrF, trueAnswer, nextSeqNo, mySeqNo) {
+    'newQuestionTF.insert'(qCat, qDiff, qType, private, question, tOrF, trueAnswer, nextSeqNo) {
         // check that values sent are of expected type
         check(qCat, String);
         check(qDiff, String);
@@ -22,7 +22,6 @@ Meteor.methods({
         check(tOrF, String);
         check(trueAnswer, String);
         check(nextSeqNo, Number);
-        check(mySeqNo, Number);
 
 
         if (private == 'private') {
@@ -40,7 +39,6 @@ Meteor.methods({
             correctAnswer: tOrF,
             trueAnswer: trueAnswer,
             seqNo: nextSeqNo,
-            mySeqNo: mySeqNo,
             addedOn: new Date(),
             addedBy: Meteor.users.findOne(this.userId).username,
             timesUsedInAGame: 0,

@@ -71,14 +71,26 @@
                 </div>
             </div>
             {{else}}
+            {{#if $eq qCorrect "true"}}
             <div class="row">
                 <div class="column">
-                    <button id="trueChoice" class="button button-trueFalse">True</button>
+                    <button id="qCorrect" class="button button-option">True</button>
                 </div>
                 <div class="column">
-                    <button id="falseChoice" class="button button-trueFalse">False</button>
+                    <button id="qIncorrect" class="button button-option">False</button>
                 </div>
             </div>
+            {{/if}}
+            {{#if $eq qCorrect "false"}}
+            <div class="row">
+                <div class="column">
+                    <button id="qIncorrect" class="button button-option">True</button>
+                </div>
+                <div class="column">
+                    <button id="qCorrect" class="button button-option">False</button>
+                </div>
+            </div>
+            {{/if}}
         {{/if}}
     </div>
     {{/if}}

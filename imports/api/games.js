@@ -36,6 +36,7 @@ Meteor.methods({
                 questionCategory: qCat,
                 gameCode: gameCode,
                 gameStatus: '',
+                nextQuestionStatus: '',
                 active: 'Yes',
                 numberOfPlayers: 0,
                 playersAnswered: 0,
@@ -60,17 +61,20 @@ Meteor.methods({
             }
         )
     },
-    'setGameLive' (gameCode) {
+    'setGameLive' (gameCode, status) {
         check(gameCode, String);
+        check(status, String);
 
         if(!this.userId) {
             throw new Meteor.Error('User is not authorized to add a category');
         }
+        console.log("Game Code sent is: " + gameCode);
+        console.log("NQS: " + status + " by " + Meteor.users.findOne(this.userId).username);
 
         return Games.update({ gameCode: gameCode, active: "Yes" },
             {
                 $set: {
-                    gameStatus: "live",
+                    nextQuestionStatus: status,
                 }
             }
         )
@@ -101,6 +105,7 @@ Meteor.methods({
             {
                 $set: {
                     gameStatus: "started",
+                    nextQuestionStatus: "live",
                 }
             }
         );
@@ -171,7 +176,26 @@ Meteor.methods({
         return Games.update({ gameCode: gameCode, active: "Yes" }, {
             $set: {
                 active: "No",
+                nextQuestionStatus: "complete",
             }
         });
+    },
+    'setGameStatus' (gameCode, status) {
+        check(gameCode, String);
+        check(status, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to add a category');
+        }
+        console.log("Game Code sent is: " + gameCode);
+        console.log("NQS: " + status + " by " + Meteor.users.findOne(this.userId).username);
+
+        return Games.update({ gameCode: gameCode, active: "Yes" },
+            {
+                $set: {
+                    gameStatus: status,
+                }
+            }
+        )
     },
 });

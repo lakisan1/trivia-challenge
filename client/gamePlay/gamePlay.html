@@ -15,11 +15,23 @@
                     <h4>Waiting for other users...Please stand by for the game to start.</h4>
                 </div>
             </div>
+            <div class="row">
+                <div class="column">
+                    {{> teamList}}
+                </div>
+            </div>
 
         {{else if $eq gameStatus "paused"}}
             <div class="row">
                 <div class="column">
                     <h4>The Game Master has <strong>Paused</strong> the Game... Please Stand By...</h4>
+                </div>
+            </div>
+
+        {{else if $eq gameStatus "complete"}}
+            <div class="row">
+                <div class="column">
+                    {{> finalScoreCard}}
                 </div>
             </div>
         {{/if}}

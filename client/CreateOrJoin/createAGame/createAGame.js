@@ -91,28 +91,28 @@ function findQuestionsMatchingCriteria() {
         var questions = Questions.find({ category: { $in: qCat }}).fetch();
         console.log(questions);
         for (i = 0; i < questions.length; i++) {
-            theSeqNo[i] = questions[i].mySeqNo;
+            theSeqNo[i] = questions[i].seqNo;
         }
     } else if (qType == 'mixed' && qDifficulty != 'mixed') {
         console.log("Find Questions mixed set type.");
         var questions = Questions.find({ category: { $in: qCat }, difficulty: qDifficulty }).fetch();
         console.log(questions);
         for (i = 0; i < questions.length; i++) {
-            theSeqNo[i] = questions[i].mySeqNo;
+            theSeqNo[i] = questions[i].seqNo;
         }
     } else if (qDifficulty == 'mixed' && qType != 'mixed') {
         console.log("Find Questions mixed set diff.");
         var questions = Questions.find({ type: qType, category: { $in: qCat }}).fetch();
         console.log(questions);
         for (i = 0; i < questions.length; i++) {
-            theSeqNo[i] = questions[i].mySeqNo;
+            theSeqNo[i] = questions[i].seqNo;
         }
     } else {
         console.log("Find Questions no mixed sets.");
         var questions = Questions.find({ type: qType, category: { $in: qCat }, difficulty: qDifficulty }).fetch();
         console.log(questions);
         for (i = 0; i < questions.length; i++) {
-            theSeqNo[i] = questions[i].mySeqNo;
+            theSeqNo[i] = questions[i].seqNo;
         }
     }
 
@@ -142,7 +142,7 @@ function writeGameToDB() {
     Meteor.call('newGame.insert', gameType, gameName, qType, qDifficulty, qCat, gameCode, function(err, result) {
         if (err) {
             showSnackbar("An error occurred saving the Game.", "red");
-            console.log("Save Error: " + err);
+            Meteor.call('Error.Set', "createAGame.js", "line 142", err);
         } else {
             showSnackbar("Game Created Successfully!", "green");
             FlowRouter.go('/noOfQuestions');

@@ -61,6 +61,7 @@ function validateGameCode() {
         Meteor.call('game.addPlayers', Meteor.user().username, gameId, function(err, result){
             if (err) {
                 showSnackbar("Something went wrong joining the game.", "red");
+                Meteor.call('Error.Set', "joinAGame.js", "line 61", err);
             } else {
                 showSnackbar("Game Joined!", "green");
                 FlowRouter.go("/gamePlay");

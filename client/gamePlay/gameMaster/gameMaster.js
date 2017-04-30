@@ -13,7 +13,7 @@ Template.gameMaster.onRendered(function() {
     Meteor.call('setGameWaiting', gameCode, function(err, result) {
         if (err) {
             showSnackbar("Error setting Game to Waiting...", "red");
-            console.log("Error: " + err);
+            Meteor.call('Error.Set', "gameMaster.js", "line 13", err);
         } else {
             showSnackbar("Game is Waiting for Players", "green");
         }
@@ -44,12 +44,12 @@ Template.gameMaster.events({
         Meteor.call('startGame', gameCode, function(err, result) {
             if (err) {
                 showSnackbar("An error occurred starting the game.", "red");
-                console.log("Error: " + err);
+                cMeteor.call('Error.Set', "gameMaster.js", "line 44", err);
             } else {
                 Meteor.call('SetCurrentQuestion', gameCode, 1, function(err,result){
                     if (err) {
                         showSnackbar("An error occurred setting start question.", "red");
-                        console.log("Error: " + err);
+                        Meteor.call('Error.Set', "gameMaster.js", "line 49", err);
                     } else {
                         showSnackbar("Game Started!", "green");
                         FlowRouter.go('/displayQuestions');

@@ -1,6 +1,7 @@
 import { Games } from '../../imports/api/games.js';
 import { Questions } from '../../imports/api/questions.js';
 import { GameQuestions } from '../../imports/api/gameQuestions.js';
+import { ErrorLog } from '../../imports/api/errorLog.js';
 
 Template.gamePlay.onCreated(function() {
     this.subscribe('questions');
@@ -31,6 +32,14 @@ Template.gamePlay.helpers({
 
 Template.activeQuestion.helpers({
     questionStatus: function() {
+        var continueGame = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
+        var statusNow = continueGame[0].nextQuestionStatus;
+        console.log("-----    Status is currently: " + statusNow + "    -----");
+        if (statusNow == "live") {
+            Session.set("questionStatus", "live");
+        } else if (statusNow == "complete") {
+            FlowRouter.go("/finalScoreCard");
+        }
         return Session.get("questionStatus");
     },
 });
@@ -49,6 +58,7 @@ Template.activeQuestion.events({
             Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
                 if (err){
                     showSnackbar("Unable to update score", "red");
+                    Meteor.call('Error.Set', "gamePlay.js", "line 58", err);
                 } else {
                     showSnackbar("Sorry, wrong answer!", "orange");
                     Session.set("questionStatus", "waiting");
@@ -63,6 +73,7 @@ Template.activeQuestion.events({
             Meteor.call('game.addPoints', gameCode, "Yes", function(err, result){
                 if (err) {
                     showSnackbar("Unable to update score", "red");
+                    Meteor.call('Error.Set', "gamePlay.js", "line 72", err);
                 } else {
                     showSnackbar("Correct! Well done.", "green");
                     Session.set("questionStatus", "waiting");
@@ -78,6 +89,11 @@ Template.activeQuestion.events({
 var checkAllAnswered = function() {
     var gameCode = Session.get("gameCode");
     var gameAnswers = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
+    var game_id = gameAnswers[0]._id;
+    Session.set("game_id", game_id);
+    var status = Session.get("questionStatus");
+
+
 
     console.log("No of Players: " + gameAnswers[0].numberOfPlayers + " = Players Answered: " + gameAnswers[0].playersAnswered + " ?");
     if (gameAnswers[0].numberOfPlayers == gameAnswers[0].playersAnswered) {
@@ -91,6 +107,7 @@ var checkAllAnswered = function() {
         console.log("------------------");
         console.log("Changing current question from " + currQuestionNo + " to " + nextQuestionNo);
         console.log("------------------");
+        var status = "live";
 
         var totalQuestions = gameAnswers[0].numberofQuestions;
 
@@ -100,24 +117,41 @@ var checkAllAnswered = function() {
         Meteor.call('gameQuestions.changeCurrent', gameCode, nextQuestionNo, totalQuestions, function(err, result){
             if (err) {
                 showSnackbar("Couldn't move to next Question.", "red");
+                Meteor.call('Error.Set', "gamePlay.js", "line 115", err);
             } else if (result == "complete") {
                 console.log("Game Complete!");
-                FlowRouter.go('/displayQuestions');
-                // Meteor.call("gameEnd", gameCode);
+                Meteor.call('setGameStatus', gameCode, "complete", function(err, result){
+                    if (err) {
+                        Meteor.call('Error.Set', "gamePlay.js", "line 118", err);
+                    }
+                });
             } else {
                 // now set gameStatus back to 'live'
                 Meteor.call('resetPlayerAnswerCount', gameCode, function(err, result){
                     if (err) {
                         showSnackbar("Unable to reset Player Answer Count.", "red");
-                        console.log(err);
+                        Meteor.call('Error.Set', "gamePlay.js", "line 128", err);
                     } else {
                         showSnackbar("Next Question", "green");
-                        Session.set("questionStatus", "live");
+                        Meteor.call('setGameLive', gameCode, status, function(err, result) {
+                            if (err) {
+                                showSnackbar("Unable to set game live again.", "red");
+                                Meteor.call('Error.Set', "gamePlay.js", "line 134", err);
+                            }
+                        });
+                        // Session.set("questionStatus", "live");
                     }
                 });
             }
         });
     } else {
-
+        // call and set game for this player to waiting status until all have Answered
+        // has to be done through db or can't set it back to live for all at once.
+        Meteor.call('setGameLive', gameCode, status, function(err, result){
+            if (err) {
+                showSnackbar("Unable to change Game to Waiting.", "red");
+                Meteor.call('Error.Set', "gamePlay.js", "line 148", err);
+            }
+        });
     }
 }

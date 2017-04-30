@@ -1,0 +1,48 @@
+<template name="finalScoreCard">
+    <div class="row">
+        <div class="column">
+            <h3>Final Scores!</h3>
+            <h4>Game Code: <strong>{{gameCode}}</strong></h4>
+        </div>
+    </div>
+    <div class="playerScores">
+        <div class="ScoresTitle">
+            <h4>Game Scorecard:</h4>
+        </div>
+        <table class="table scoreTitle">
+            <tr>
+                <th>
+                    <strong>Team</strong>
+                </th>
+                <th>
+                    <strong>Points</strong>
+                </th>
+                <th>
+                    <strong>Questions Right</strong>
+                </th>
+                <th>
+                    <strong>Total Answered</strong>
+                </th>
+            </tr>
+            {{#each teamScore}}
+                {{#each players}}
+                    <tr>
+                        <td>
+                            {{name}}
+                        </td>
+                        <td>
+                            {{points}}
+                        </td>
+                        <td>
+                            {{questionsCorrect}}
+                        </td>
+                        <td>
+                            {{questionsAns}}
+                        </td>
+                    </tr>
+                {{/each}}
+            {{/each}}
+        </table>
+    </div>
+    {{> snackbar}}
+</template>

@@ -61,7 +61,7 @@ function writeQuestionsToDB(myQuestionSet, numOfQs) {
     var QuestionSet = [];
 
     for (i=0; i<numOfQs; i++) {
-        var questionIdGet = Questions.find({ mySeqNo: myQuestionSet[i] }).fetch();
+        var questionIdGet = Questions.find({ seqNo: myQuestionSet[i] }).fetch();
         QuestionSet.push(questionIdGet[0]._id);
     }
 
@@ -73,8 +73,8 @@ function writeQuestionsToDB(myQuestionSet, numOfQs) {
             showSnackbar("Questions added to Game.", "green");
             Meteor.call('addGameQuestions', QuestionSet, gameCode, function(err2, result2) {
                 if (err2) {
-                    console.log("Error occurred adding Question Set: " + err2);
                     showSnackbar("Error Occurred while Adding Question Set.", "red");
+                    Meteor.call('Error.Set', "numberOfQuestions.js", "line 74", err);
                 } else {
                     showSnackbar("Game is Ready for Players.", "green");
                     FlowRouter.go('/gameMaster');

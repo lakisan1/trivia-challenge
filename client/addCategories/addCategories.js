@@ -30,7 +30,7 @@ Template.addCategories.events({
             Meteor.call('categories.insert', catName, catDesc, function(err, result){
                 if (err) {
                     showSnackbar("Error Saving Category.", "red");
-                    console.log(err);
+                    Meteor.call('Error.Set', "addCategories.js", "line 30", err);
                 } else {
                     showSnackbar("Saved Category Successfully!", "green");
                     $("#addCategory").val('');
