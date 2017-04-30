@@ -25,7 +25,7 @@ body {
     padding-top: 60px;
 }
 
-.sidenav a {
+.sidenav a, .loggedIn {
     padding: 8px 8px 8px 32px;
     text-decoration: none;
     font-size: 18px;
