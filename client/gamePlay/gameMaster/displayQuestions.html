@@ -34,6 +34,9 @@
                 <th>
                     <strong>Questions Right</strong>
                 </th>
+                <th>
+                    <strong>Questions So Far</strong>
+                </th>
             </tr>
             {{#each teamScore}}
                 {{#each players}}
@@ -46,6 +49,9 @@
                         </td>
                         <td>
                             {{questionsCorrect}}
+                        </td>
+                        <td>
+                            {{questionsAns}}
                         </td>
                     </tr>
                 {{/each}}

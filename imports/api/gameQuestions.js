@@ -39,6 +39,7 @@ Meteor.methods({
                     qQuet: questionInfo[0].question,
                     qCorrect: questionInfo[0].correctAnswer,
                     qAnswerInfo: questionInfo[0].trueAnswer,
+                    playersAnswered: [],
                 });
             } else {
                 // need to take correct and incorrect answers, split them up, and randomly
@@ -91,6 +92,7 @@ Meteor.methods({
                     qIncorrectLetter2: qIncorrectLetter2,
                     qIncorrect3: questionInfo[0].inCorrectAnswers[2],
                     qIncorrectLetter3: qIncorrectLetter3,
+                    playersAnswered: [],
                 });
             }
         }
@@ -158,4 +160,18 @@ Meteor.methods({
                 });
         }
     },
+    'gameQuestion.answered' (gameCode, questionNo) {
+        check(gameCode, String);
+        check(questionNo, Number);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to answer a question, please login.');
+        }
+
+        GameQuestions.update({ gameCode: gameCode, currentQuestion: "Y", questionNo: questionNo}, {
+            $addToSet: {
+                playersAnswered: this.userId,
+            }
+        });
+    }
 });
