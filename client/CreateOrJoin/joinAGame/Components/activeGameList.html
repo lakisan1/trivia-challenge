@@ -1,0 +1,36 @@
+<template name="activeGameList">
+    <div id="gameListDiv">
+        <table id="gameListTable">
+            {{#each activeGames}}
+            <tr>
+                <th>
+                    Game Code
+                </th>
+                <th>
+                    Game Name
+                </th>
+                <th>
+                    Game Owner
+                </th>
+                <th>
+                    Join this Game
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    {{gameCode}}
+                </td>
+                <td>
+                    {{gameName}}
+                </td>
+                <td>
+                    {{addedBy}}
+                </td>
+                <td>
+                    <button class="button primary joinThisGame">Join</button>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+</template>
