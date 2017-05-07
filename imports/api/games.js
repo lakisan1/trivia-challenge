@@ -88,20 +88,26 @@ Meteor.methods({
             throw new Meteor.Error('User is not authorized to set the game waiting.');
         }
 
-        return Games.update({ _id: gameId },
-            { $addToSet: { players: { name: teamName, points: 0, questionsCorrect: 0, questionsAnswered: 0 }},
-            $inc: { numberOfPlayers: 1 }
-        });
+        var teamExists = Games.find({ _id: gameId, "players.name": { $in: [teamName]}}).count();
+
+        if (teamExists > 0) {
+            console.log("Team " + teamName + " has already joined the game.");
+        } else {
+            return Games.update({ _id: gameId },
+                { $addToSet: { players: { name: teamName, points: 0, questionsCorrect: 0, questionsAnswered: 0 }},
+                $inc: { numberOfPlayers: 1 }
+            });
+        }
     },
-    'startGame' (gameCode) {
-        check(gameCode, String);
+    'startGame' (gameId) {
+        check(gameId, String);
 
         // verify the user is logged in before allowing game insert
         if(!this.userId) {
             throw new Meteor.Error('User is not authorized to start a game.');
         }
 
-        return Games.update({ gameCode: gameCode, active: "Yes" },
+        return Games.update({ _id: gameId },
             {
                 $set: {
                     gameStatus: "started",

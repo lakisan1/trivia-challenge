@@ -40,22 +40,10 @@ Template.gameMaster.events({
     },
     'click #startGame' (event) {
         event.preventDefault();
-        console.log("Start Game clicked.");
-        Meteor.call('startGame', gameCode, function(err, result) {
-            if (err) {
-                showSnackbar("An error occurred starting the game.", "red");
-                cMeteor.call('Error.Set', "gameMaster.js", "line 44", err);
-            } else {
-                Meteor.call('SetCurrentQuestion', gameCode, 1, function(err,result){
-                    if (err) {
-                        showSnackbar("An error occurred setting start question.", "red");
-                        Meteor.call('Error.Set', "gameMaster.js", "line 49", err);
-                    } else {
-                        showSnackbar("Game Started!", "green");
-                        FlowRouter.go('/displayQuestions');
-                    }
-                });
-            }
-        });
+        var thisGame = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
+        var game_id = thisGame[0]._id;
+
+        startGameFunc(game_id, gameCode);
+
     }
 });

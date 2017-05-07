@@ -1,0 +1,43 @@
+<template name="activeGameListMstr">
+    <div id="gameListDiv">
+        <table id="gameListTable">
+            {{#each activeGamesMstr}}
+            <tr>
+                <th>
+                    Game Code
+                </th>
+                <th>
+                    Game Name
+                </th>
+                <th>
+                    Game Owner
+                </th>
+                <th>
+                    # Players
+                </th>
+                <th>
+                    Start Game
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    {{gameCode}}
+                </td>
+                <td>
+                    {{gameName}}
+                </td>
+                <td>
+                    {{addedBy}}
+                </td>
+                <td>
+                    {{numberOfPlayers}}
+                </td>
+                <td>
+                    <button class="button cancel endThisGame">End</button> 
+                    <button class="button primary startThisGame">Start</button>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+</template>

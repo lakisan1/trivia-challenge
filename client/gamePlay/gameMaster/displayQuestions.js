@@ -26,14 +26,6 @@ Template.displayQuestions.events({
 
         var gameCode = Session.get("gameCode");
 
-        Meteor.call("gameEnd", gameCode, function(err, result){
-                if (err) {
-                    showSnackbar("Unable to end Game.");
-                    Meteor.call('Error.Set', "displayQuestions.js", "line 29", err);
-                } else {
-                    showSnackbar("Game Over!", "green");
-                    FlowRouter.go('/createAGame');
-                }
-        });
+        endGameFunc(gameCode);
     }
 });
