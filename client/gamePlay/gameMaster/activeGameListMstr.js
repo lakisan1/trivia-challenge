@@ -35,5 +35,17 @@ Template.activeGameListMstr.events({
                 });
             }
         });
+    },
+    "click .endThisGame" (event) {
+        event.preventDefault();
+
+        var game_id = this._id;
+        var myGame = Games.find({ _id: game_id }).fetch();
+        var gameCode = myGame[0].gameCode;
+
+        // find the end game code from the scorecard view, and move it
+        // to a general use function, then call it from both places.
+
+        endGameFunc(gameCode);
     }
 });
