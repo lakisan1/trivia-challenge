@@ -17,14 +17,7 @@ Template.activeGameList.events({
         var game_id = this._id;
         console.log("game id is:" + game_id);
 
-        Meteor.call('game.addPlayers', Meteor.user().username, game_id, function(err, result){
-            if (err) {
-                showSnackbar("Something went wrong joining the game.", "red");
-                Meteor.call('Error.Set', "activeGameList.js", "line 20", err);
-            } else {
-                showSnackbar("Game Joined!", "green");
-                FlowRouter.go("/gamePlay");
-            }
-        });
+        Session.set("gameId", game_id);
+        validateGameCode();
     }
 });

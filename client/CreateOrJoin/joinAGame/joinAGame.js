@@ -49,7 +49,7 @@ Template.joinAGame.events({
 
 // create a function to validate that the Game code is good before sending
 // the user to the game view.
-function validateGameCode() {
+validateGameCode = function() {
     var gameCode = Session.get("gameCode");
     var gameId = Session.get("gameId");
     var currentGame = Games.findOne({ gameCode: gameCode, active: "Yes" });
