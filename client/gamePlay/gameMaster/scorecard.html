@@ -1,15 +1,17 @@
 <template name="scorecard">
-    {{#each players}}
-        <div class="row scoreRow playerScores">
-            <div class="column column-50">
-                {{players.name}}
+    <div class="playerScores">
+        {{#each players}}
+            <div class="row scoreRow">
+                <div class="column column-50">
+                    {{players.name}}
+                </div>
+                <div class="column">
+                    {{players.points}}
+                </div>
+                <div class="column">
+                    {{players.questionsCorrect}}
+                </div>
             </div>
-            <div class="column">
-                {{players.points}}
-            </div>
-            <div class="column">
-                {{players.questionsCorrect}}
-            </div>
-        </div>
-    {{/each}}
+        {{/each}}
+    </div>
 </template>
