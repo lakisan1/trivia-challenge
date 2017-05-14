@@ -64,8 +64,8 @@ Template.activeQuestion.events({
         console.log("the Question No is: " + questionNo);
 
         if (clickedAns != 'qCorrect') {
-            var buttonOptions = document.getElementByClassName('button-option');
-            buttonOptions.classList.remove('answerClick');
+            var buttonOptions = document.getElementsByClassName('button-option');
+            buttonOptions.classList.add('disabled');
             Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
                 if (err){
                     Meteor.call('Error.Set', "gamePlay.js", "line 58", err);
@@ -85,8 +85,8 @@ Template.activeQuestion.events({
                 }
             });
         } else {
-            var buttonOptions = document.getElementByClassName('button-option');
-            buttonOptions.classList.remove('answerClick');
+            var buttonOptions = document.getElementsByClassName('button-option');
+            buttonOptions.classList.add('disabled');
             Meteor.call('game.addPoints', gameCode, "Yes", function(err, result){
                 if (err) {
                     showSnackbar("Unable to update score", "red");
@@ -118,8 +118,8 @@ var checkAllAnswered = function() {
     // var correctAnswer = document.getElementById("qCorrect");
     // correctAnswer.classList.remove('button-correct');
 
-    var buttonOptions = document.getElementByClassName('button-option');
-    buttonOptions.classList.add('answerClick');
+    var buttonOptions = document.getElementsByClassName('button-option');
+    buttonOptions.classList.remove('disabled');
 
     var gameCode = Session.get("gameCode");
     var gameAnswers = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
