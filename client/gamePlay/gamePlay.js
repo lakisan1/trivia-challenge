@@ -51,21 +51,7 @@ Template.activeQuestion.helpers({
             FlowRouter.go("/finalScoreCard");
         }
         return Session.get("questionStatus");
-        // var continueGame = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
-        // var statusNow = continueGame[0].nextQuestionStatus;
-        // console.log("-----    Status is currently: " + statusNow + "    -----");
-        // if (statusNow == "live") {
-        //
-        // } else if (statusNow == "complete") {
-        //     FlowRouter.go("/finalScoreCard");
-        // } else {
-        //     return Session.get("questionStatus");
-        // }
     },
-});
-
-Template.gamePlay.events({
-
 });
 
 Template.activeQuestion.events({
@@ -76,6 +62,8 @@ Template.activeQuestion.events({
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
         var questionNo = questionInfo[0].questionNo;
         console.log("the Question No is: " + questionNo);
+        var buttonOptions = document.getElementByClassName('button-option');
+        buttonOptions.classList.add('disabled');
 
         if (clickedAns != 'qCorrect') {
             Meteor.call('game.addPoints', gameCode, "No", function(err, result) {

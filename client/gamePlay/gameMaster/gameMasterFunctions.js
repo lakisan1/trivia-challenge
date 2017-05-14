@@ -1,11 +1,6 @@
 import { GameQuestions } from '../../../imports/api/gameQuestions.js';
 import { Games } from '../../../imports/api/games.js';
 
-Template.displayQuestions.onCreated(function() {
-    this.subscribe('gameQuestions');
-    this.subscribe('games');
-});
-
 endGameFunc = function(gameCode) {
     Meteor.call("gameEnd", gameCode, function(err, result){
             if (err) {

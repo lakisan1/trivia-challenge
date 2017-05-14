@@ -26,6 +26,7 @@ Template.displayQuestions.events({
 
         var gameCode = Session.get("gameCode");
 
+        // next function --> /client/gamePlay/gameMaster/gameMasterFunctions.js
         endGameFunc(gameCode);
     }
 });
