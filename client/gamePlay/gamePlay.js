@@ -64,8 +64,14 @@ Template.activeQuestion.events({
         console.log("the Question No is: " + questionNo);
 
         if (clickedAns != 'qCorrect') {
-            var buttonOptions = document.getElementById("AnswerArea");
-            buttonOptions.classList.add('disabled');
+            var buttonOption1 = document.getElementById("qCorrect");
+            buttonOption1.classList.add('disabled');
+            var buttonOption2 = document.getElementById("qIncorrect1");
+            var buttonOption3 = document.getElementById("qIncorrect2");
+            var buttonOption4 = document.getElementById("qIncorrect3");
+            buttonOption2.classList.add('disabled');
+            buttonOption3.classList.add('disabled');
+            buttonOption4.classList.add('disabled');
             Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
                 if (err){
                     Meteor.call('Error.Set', "gamePlay.js", "line 58", err);
@@ -85,8 +91,14 @@ Template.activeQuestion.events({
                 }
             });
         } else {
-            var buttonOptions = document.getElementById("AnswerArea");
-            buttonOptions.classList.add('disabled');
+            var buttonOption1 = document.getElementById("qCorrect");
+            buttonOption1.classList.add('disabled');
+            var buttonOption2 = document.getElementById("qIncorrect1");
+            var buttonOption3 = document.getElementById("qIncorrect2");
+            var buttonOption4 = document.getElementById("qIncorrect3");
+            buttonOption2.classList.add('disabled');
+            buttonOption3.classList.add('disabled');
+            buttonOption4.classList.add('disabled');
             Meteor.call('game.addPoints', gameCode, "Yes", function(err, result){
                 if (err) {
                     showSnackbar("Unable to update score", "red");
@@ -113,13 +125,6 @@ Template.activeQuestion.events({
 });
 
 var checkAllAnswered = function() {
-
-    // console.log("Made it to checkAllAnswered function.");
-    // var correctAnswer = document.getElementById("qCorrect");
-    // correctAnswer.classList.remove('button-correct');
-
-    // var buttonOptions = document.getElementById("AnswerArea");
-    // buttonOptions.classList.remove('disabled');
 
     var gameCode = Session.get("gameCode");
     var gameAnswers = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
