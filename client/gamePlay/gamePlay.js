@@ -118,8 +118,8 @@ var checkAllAnswered = function() {
     // var correctAnswer = document.getElementById("qCorrect");
     // correctAnswer.classList.remove('button-correct');
 
-    var buttonOptions = document.getElementById("AnswerArea");
-    buttonOptions.classList.remove('disabled');
+    // var buttonOptions = document.getElementById("AnswerArea");
+    // buttonOptions.classList.remove('disabled');
 
     var gameCode = Session.get("gameCode");
     var gameAnswers = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
