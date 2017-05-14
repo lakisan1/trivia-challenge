@@ -67,10 +67,10 @@ Template.activeQuestion.events({
         if (questionType == 'multipleChoice') {
             if (clickedAns != 'qCorrect') {
                 var buttonOption1 = document.getElementById("qCorrect");
-                buttonOption1.classList.add('disabled');
                 var buttonOption2 = document.getElementById("qIncorrect1");
                 var buttonOption3 = document.getElementById("qIncorrect2");
                 var buttonOption4 = document.getElementById("qIncorrect3");
+                buttonOption1.classList.add('disabled');
                 buttonOption2.classList.add('disabled');
                 buttonOption3.classList.add('disabled');
                 buttonOption4.classList.add('disabled');
@@ -94,10 +94,10 @@ Template.activeQuestion.events({
                 });
             } else {
                 var buttonOption1 = document.getElementById("qCorrect");
-                buttonOption1.classList.add('disabled');
                 var buttonOption2 = document.getElementById("qIncorrect1");
                 var buttonOption3 = document.getElementById("qIncorrect2");
                 var buttonOption4 = document.getElementById("qIncorrect3");
+                buttonOption1.classList.add('disabled');
                 buttonOption2.classList.add('disabled');
                 buttonOption3.classList.add('disabled');
                 buttonOption4.classList.add('disabled');
