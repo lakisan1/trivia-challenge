@@ -64,7 +64,7 @@ Template.activeQuestion.events({
         console.log("the Question No is: " + questionNo);
 
         if (clickedAns != 'qCorrect') {
-            var buttonOptions = document.getElementsById("AnswerArea");
+            var buttonOptions = document.getElementById("AnswerArea");
             buttonOptions.classList.add('disabled');
             Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
                 if (err){
@@ -85,7 +85,7 @@ Template.activeQuestion.events({
                 }
             });
         } else {
-            var buttonOptions = document.getElementsById("AnswerArea");
+            var buttonOptions = document.getElementById("AnswerArea");
             buttonOptions.classList.add('disabled');
             Meteor.call('game.addPoints', gameCode, "Yes", function(err, result){
                 if (err) {
@@ -118,7 +118,7 @@ var checkAllAnswered = function() {
     // var correctAnswer = document.getElementById("qCorrect");
     // correctAnswer.classList.remove('button-correct');
 
-    var buttonOptions = document.getElementsById("AnswerArea");
+    var buttonOptions = document.getElementById("AnswerArea");
     buttonOptions.classList.remove('disabled');
 
     var gameCode = Session.get("gameCode");
