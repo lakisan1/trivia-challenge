@@ -60,73 +60,17 @@ Template.activeQuestion.events({
         correctAnswerVal = $("#qCorrect").text();
         clickedAns = event.currentTarget.id;
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
-        var questionNo = questionInfo[0].questionNo;
-        console.log("the Question No is: " + questionNo);
-        var questionType = questionInfo[0].qType;
-
-        if (questionType == 'multipleChoice') {
-            if (clickedAns != 'qCorrect') {
-                var buttonOption1 = document.getElementById("qCorrect");
-                var buttonOption2 = document.getElementById("qIncorrect1");
-                var buttonOption3 = document.getElementById("qIncorrect2");
-                var buttonOption4 = document.getElementById("qIncorrect3");
-                buttonOption1.classList.add('disabled');
-                buttonOption2.classList.add('disabled');
-                buttonOption3.classList.add('disabled');
-                buttonOption4.classList.add('disabled');
-                Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
-                    if (err){
-                        Meteor.call('Error.Set', "gamePlay.js", "line 58", err);
-                    } else {
-                        showSnackbar("Sorry, answer is " + correctAnswerVal, "orange");
-                        var correctAnswer = document.getElementById("qCorrect");
-                        correctAnswer.classList.add('button-correct');
-                        setTimeout(function(){
-                            Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
-                                if (err) {
-                                    Meteor.call('Error.Set', "gamePlay.js", "line 67", err);
-                                } else {
-                                    checkAllAnswered();
-                                }
-                            });
-                        }, 3000);
-                    }
-                });
-            } else {
-                var buttonOption1 = document.getElementById("qCorrect");
-                var buttonOption2 = document.getElementById("qIncorrect1");
-                var buttonOption3 = document.getElementById("qIncorrect2");
-                var buttonOption4 = document.getElementById("qIncorrect3");
-                buttonOption1.classList.add('disabled');
-                buttonOption2.classList.add('disabled');
-                buttonOption3.classList.add('disabled');
-                buttonOption4.classList.add('disabled');
-                Meteor.call('game.addPoints', gameCode, "Yes", function(err, result){
-                    if (err) {
-                        showSnackbar("Unable to update score", "red");
-                        Meteor.call('Error.Set', "gamePlay.js", "line 72", err);
-                    } else {
-                        showSnackbar("Correct! Well done.", "green");
-                        var correctAnswer = document.getElementById("qCorrect");
-                        correctAnswer.classList.add('button-correct');
-                        setTimeout(function(){
-                            Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
-                                if (err) {
-                                    Meteor.call('Error.Set', "gamePlay.js", "line 87", err);
-                                } else {
-                                    checkAllAnswered();
-                                }
-                            });
-                        }, 3000);
-                    }
-                });
-            }
+        var my_id = Meteor.userId();
+        var playersAnswered = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y", my_id: { $in: [playerAnswered] }}).count();
+        if (playersAnswered > 0) {
+            showSnackbar("You have answered this question already. Please wait.", "red");
         } else {
+            var questionNo = questionInfo[0].questionNo;
+            console.log("the Question No is: " + questionNo);
+            var questionType = questionInfo[0].qType;
+
             if (clickedAns != 'qCorrect') {
-                var buttonOption1 = document.getElementById("qCorrect");
-                buttonOption1.classList.add('disabled');
-                var buttonOption2 = document.getElementById("qIncorrect1");
-                buttonOption2.classList.add('disabled');
+
                 Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
                     if (err){
                         Meteor.call('Error.Set', "gamePlay.js", "line 58", err);
@@ -146,10 +90,7 @@ Template.activeQuestion.events({
                     }
                 });
             } else {
-                var buttonOption1 = document.getElementById("qCorrect");
-                buttonOption1.classList.add('disabled');
-                var buttonOption2 = document.getElementById("qIncorrect");
-                buttonOption2.classList.add('disabled');
+
                 Meteor.call('game.addPoints', gameCode, "Yes", function(err, result){
                     if (err) {
                         showSnackbar("Unable to update score", "red");
@@ -170,10 +111,8 @@ Template.activeQuestion.events({
                     }
                 });
             }
-        }
-
-
         // console.log("Answer chosen is: " + clickedAns);
+        }
     },
 });
 
