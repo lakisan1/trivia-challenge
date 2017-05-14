@@ -62,8 +62,6 @@ Template.activeQuestion.events({
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
         var questionNo = questionInfo[0].questionNo;
         console.log("the Question No is: " + questionNo);
-        var buttonOptions = document.getElementByClassName('button-option');
-        buttonOptions.classList.add('disabled');
 
         if (clickedAns != 'qCorrect') {
             Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
@@ -74,6 +72,8 @@ Template.activeQuestion.events({
                     var correctAnswer = document.getElementById("qCorrect");
                     correctAnswer.classList.add('button-correct');
                     setTimeout(function(){
+                        var buttonOptions = document.getElementByClassName('button-option');
+                        buttonOptions.classList.add('disabled');
                         Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
                             if (err) {
                                 Meteor.call('Error.Set', "gamePlay.js", "line 67", err);
@@ -94,6 +94,8 @@ Template.activeQuestion.events({
                     var correctAnswer = document.getElementById("qCorrect");
                     correctAnswer.classList.add('button-correct');
                     setTimeout(function(){
+                        var buttonOptions = document.getElementByClassName('button-option');
+                        buttonOptions.classList.add('disabled');
                         Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
                             if (err) {
                                 Meteor.call('Error.Set', "gamePlay.js", "line 87", err);
@@ -115,6 +117,9 @@ var checkAllAnswered = function() {
     // console.log("Made it to checkAllAnswered function.");
     // var correctAnswer = document.getElementById("qCorrect");
     // correctAnswer.classList.remove('button-correct');
+
+    var buttonOptions = document.getElementByClassName('button-option');
+    buttonOptions.classList.add('disabled');
 
     var gameCode = Session.get("gameCode");
     var gameAnswers = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
