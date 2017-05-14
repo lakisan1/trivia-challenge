@@ -63,7 +63,7 @@ Template.activeQuestion.events({
         var my_id = Meteor.userId();
         var playersAnswered = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y", my_id: { $in: [playersAnswered] }}).count();
         console.log(playersAnswered + " have answered.");
-        if (playersAnswered > 1) {
+        if (playersAnswered == 1) {
             showSnackbar("You have answered this question already. Please wait.", "red");
         } else {
             var questionNo = questionInfo[0].questionNo;
