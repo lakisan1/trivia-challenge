@@ -78,15 +78,16 @@ Template.activeQuestion.events({
                         showSnackbar("Sorry, answer is " + correctAnswerVal, "orange");
                         var correctAnswer = document.getElementById("qCorrect");
                         correctAnswer.classList.add('button-correct');
-                        setTimeout(function(){
-                            Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
-                                if (err) {
-                                    Meteor.call('Error.Set', "gamePlay.js", "line 67", err);
-                                } else {
-                                    checkAllAnswered();
-                                }
-                            });
-                        }, 3000);
+                        Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
+                            if (err) {
+                                Meteor.call('Error.Set', "gamePlay.js", "line 67", err);
+                            } else {
+                                checkAllAnswered();
+                            }
+                        });
+                        // setTimeout(function(){
+                        //
+                        // }, 3000);
                     }
                 });
             } else {
@@ -99,15 +100,16 @@ Template.activeQuestion.events({
                         showSnackbar("Correct! Well done.", "green");
                         var correctAnswer = document.getElementById("qCorrect");
                         correctAnswer.classList.add('button-correct');
-                        setTimeout(function(){
-                            Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
-                                if (err) {
-                                    Meteor.call('Error.Set', "gamePlay.js", "line 87", err);
-                                } else {
-                                    checkAllAnswered();
-                                }
-                            });
-                        }, 3000);
+                        Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
+                            if (err) {
+                                Meteor.call('Error.Set', "gamePlay.js", "line 87", err);
+                            } else {
+                                checkAllAnswered();
+                            }
+                        });
+                        // setTimeout(function(){
+                        //
+                        // }, 3000);
                     }
                 });
             }
