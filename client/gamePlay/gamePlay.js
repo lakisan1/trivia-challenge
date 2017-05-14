@@ -60,16 +60,15 @@ Template.activeQuestion.events({
         correctAnswerVal = $("#qCorrect").text();
         clickedAns = event.currentTarget.id;
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
+        var questionNo = questionInfo[0].questionNo;
+        console.log("the Question No is: " + questionNo);
+        var questionType = questionInfo[0].qType;
         var my_id = Meteor.userId();
-        var playersAnswered = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y", my_id: { $in: [playersAnswered] }}).count();
+        var playersAnswered = GameQuestions.find({ gameCode: gameCode, questionNo: questionNo, my_id: { $in: [playersAnswered] }}).count();
         console.log(playersAnswered + " have answered.");
         if (playersAnswered == 1) {
             showSnackbar("You have answered this question already. Please wait.", "red");
         } else {
-            var questionNo = questionInfo[0].questionNo;
-            console.log("the Question No is: " + questionNo);
-            var questionType = questionInfo[0].qType;
-
             if (clickedAns != 'qCorrect') {
 
                 Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
