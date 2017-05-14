@@ -61,7 +61,7 @@ Template.activeQuestion.events({
         clickedAns = event.currentTarget.id;
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
         var my_id = Meteor.userId();
-        var playersAnswered = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y", my_id: { $in: [playerAnswered] }}).count();
+        var playersAnswered = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y", my_id: { $in: [playersAnswered] }}).count();
         if (playersAnswered > 0) {
             showSnackbar("You have answered this question already. Please wait.", "red");
         } else {
