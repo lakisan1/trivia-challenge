@@ -71,9 +71,9 @@ Template.activeQuestion.events({
                     showSnackbar("Sorry, answer is " + correctAnswerVal, "orange");
                     var correctAnswer = document.getElementById("qCorrect");
                     correctAnswer.classList.add('button-correct');
+                    var buttonOptions = document.getElementByClassName('button-option');
+                    buttonOptions.classList.add('disabled');
                     setTimeout(function(){
-                        var buttonOptions = document.getElementByClassName('button-option');
-                        buttonOptions.classList.add('disabled');
                         Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
                             if (err) {
                                 Meteor.call('Error.Set', "gamePlay.js", "line 67", err);
@@ -93,9 +93,9 @@ Template.activeQuestion.events({
                     showSnackbar("Correct! Well done.", "green");
                     var correctAnswer = document.getElementById("qCorrect");
                     correctAnswer.classList.add('button-correct');
+                    var buttonOptions = document.getElementByClassName('button-option');
+                    buttonOptions.classList.add('disabled');
                     setTimeout(function(){
-                        var buttonOptions = document.getElementByClassName('button-option');
-                        buttonOptions.classList.add('disabled');
                         Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
                             if (err) {
                                 Meteor.call('Error.Set', "gamePlay.js", "line 87", err);
@@ -119,7 +119,7 @@ var checkAllAnswered = function() {
     // correctAnswer.classList.remove('button-correct');
 
     var buttonOptions = document.getElementByClassName('button-option');
-    buttonOptions.classList.add('disabled');
+    buttonOptions.classList.remove('disabled');
 
     var gameCode = Session.get("gameCode");
     var gameAnswers = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
