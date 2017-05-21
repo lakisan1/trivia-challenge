@@ -11,6 +11,19 @@
     text-align: center;
 }
 
+.answerClick {
+    width: 30vw;
+    height:20vh;
+    font-size: 3vh;
+    display: table;
+}
+
+.answerClick p {
+    display: table-cell;
+    vertical-align: middle;
+    text-align: center;
+}
+
 .button-trueFalse {
     width: 30vw;
     height:20vh;
@@ -28,6 +41,6 @@
     font-size: 24px;
 }
 
-.button-correct {
+.button-correct, button-correct:hover {
     background: #32CD32;
 }

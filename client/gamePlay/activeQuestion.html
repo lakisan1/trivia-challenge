@@ -1,98 +1,98 @@
 <template name="activeQuestion">
     {{#if $eq questionStatus "live"}}
-    <div class="row">
-        <div class="column">
-            Question #: {{questionNo}}
-            <div class="question">
-                {{qQuet}}
+        <div class="row">
+            <div class="column">
+                Question #: {{questionNo}}
+                <div class="question">
+                    {{qQuet}}
+                </div>
             </div>
         </div>
-    </div>
-    <div id="AnswerArea" class="AnswerArea">
-        {{#if $eq qType "multipleChoice"}}
-            <div class="row">
-                <div class="column">
-                    {{#if $eq qCorrectLetter "A"}}
-                        <div id="qCorrect" class="button button-option answerClick"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter1 "A"}}
-                        <div id="qIncorrect1" class="button button-option answerClick"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter2 "A"}}
-                        <div id="qIncorrect2" class="button button-option answerClick"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter3 "A"}}
-                        <div id="qIncorrect3" class="button button-option answerClick"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
-                    {{/if}}
+        <div id="AnswerArea" class="AnswerArea">
+            {{#if $eq qType "multipleChoice"}}
+                <div class="row">
+                    <div class="column">
+                        {{#if $eq qCorrectLetter "A"}}
+                            <div id="qCorrect" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter1 "A"}}
+                            <div id="qIncorrect1" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter2 "A"}}
+                            <div id="qIncorrect2" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter3 "A"}}
+                            <div id="qIncorrect3" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
+                        {{/if}}
+                    </div>
+                    <div class="column">
+                        {{#if $eq qCorrectLetter "B"}}
+                            <div id="qCorrect" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter1 "B"}}
+                            <div id="qIncorrect1" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter2 "B"}}
+                            <div id="qIncorrect2" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter3 "B"}}
+                            <div id="qIncorrect3" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
+                        {{/if}}
+                    </div>
                 </div>
-                <div class="column">
-                    {{#if $eq qCorrectLetter "B"}}
-                        <div id="qCorrect" class="button button-option answerClick"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter1 "B"}}
-                        <div id="qIncorrect1" class="button button-option answerClick"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter2 "B"}}
-                        <div id="qIncorrect2" class="button button-option answerClick"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter3 "B"}}
-                        <div id="qIncorrect3" class="button button-option answerClick"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
-                    {{/if}}
+                <div class="row">
+                    <div class="column">
+                        {{#if $eq qCorrectLetter "C"}}
+                            <div id="qCorrect" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter1 "C"}}
+                            <div id="qIncorrect1" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter2 "C"}}
+                            <div id="qIncorrect2" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter3 "C"}}
+                            <div id="qIncorrect3" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
+                        {{/if}}
+                    </div>
+                    <div class="column">
+                        {{#if $eq qCorrectLetter "D"}}
+                            <div id="qCorrect" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter1 "D"}}
+                            <div id="qIncorrect1" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter2 "D"}}
+                            <div id="qIncorrect2" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
+                        {{/if}}
+                        {{#if $eq qIncorrectLetter3 "D"}}
+                            <div id="qIncorrect3" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
+                        {{/if}}
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="column">
-                    {{#if $eq qCorrectLetter "C"}}
-                        <div id="qCorrect" class="button button-option answerClick"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter1 "C"}}
-                        <div id="qIncorrect1" class="button button-option answerClick"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter2 "C"}}
-                        <div id="qIncorrect2" class="button button-option answerClick"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter3 "C"}}
-                        <div id="qIncorrect3" class="button button-option answerClick"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
-                    {{/if}}
-                </div>
-                <div class="column">
-                    {{#if $eq qCorrectLetter "D"}}
-                        <div id="qCorrect" class="button button-option answerClick"><p>{{qCorrectLetter}}. {{qCorrect}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter1 "D"}}
-                        <div id="qIncorrect1" class="button button-option answerClick"><p>{{qIncorrectLetter1}}. {{qIncorrect1}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter2 "D"}}
-                        <div id="qIncorrect2" class="button button-option answerClick"><p>{{qIncorrectLetter2}}. {{qIncorrect2}}</p></div>
-                    {{/if}}
-                    {{#if $eq qIncorrectLetter3 "D"}}
-                        <div id="qIncorrect3" class="button button-option answerClick"><p>{{qIncorrectLetter3}}. {{qIncorrect3}}</p></div>
-                    {{/if}}
-                </div>
-            </div>
             {{else}}
-            {{#if $eq qCorrect "true"}}
-            <div class="row">
-                <div class="column">
-                    <button id="qCorrect" class="button button-option answerClick">True</button>
-                </div>
-                <div class="column">
-                    <button id="qIncorrect" class="button button-option answerClick">False</button>
-                </div>
-            </div>
+                {{#if $eq qCorrect "true"}}
+                    <div class="row">
+                        <div class="column">
+                            <button id="qCorrect" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick">True</button>
+                        </div>
+                        <div class="column">
+                            <button id="qIncorrect" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick">False</button>
+                        </div>
+                    </div>
+                {{/if}}
+                {{#if $eq qCorrect "false"}}
+                    <div class="row">
+                        <div class="column">
+                            <button id="qIncorrect" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick">True</button>
+                        </div>
+                        <div class="column">
+                            <button id="qCorrect" class="button {{#if $eq questAnswered "no"}}button-option{{/if}} answerClick">False</button>
+                        </div>
+                    </div>
+                {{/if}}
             {{/if}}
-            {{#if $eq qCorrect "false"}}
-            <div class="row">
-                <div class="column">
-                    <button id="qIncorrect" class="button button-option answerClick">True</button>
-                </div>
-                <div class="column">
-                    <button id="qCorrect" class="button button-option answerClick">False</button>
-                </div>
-            </div>
-            {{/if}}
-        {{/if}}
-    </div>
+        </div>
     {{/if}}
     {{#if $eq questionStatus "waiting"}}
         <div class="waiting">

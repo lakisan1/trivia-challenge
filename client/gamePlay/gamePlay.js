@@ -10,10 +10,15 @@ Template.gamePlay.onCreated(function() {
     var gameCode = Session.get("gameCode");
     var gameQuestions = Games.find({ active: "Yes", gameCode: gameCode }).fetch();
     Session.set("questionsToAsk", gameQuestions.questions);
+    Session.set("questiionAnsweredNow", "no");
 });
 
 Template.gamePlay.onRendered(function() {
     Session.set("questionStatus", "live");
+});
+
+Template.activeQuestion.onCreated(function() {
+    Session.set("questiionAnsweredNow", "no");
 });
 
 Template.gamePlay.helpers({
@@ -52,11 +57,15 @@ Template.activeQuestion.helpers({
         }
         return Session.get("questionStatus");
     },
+    questAnswered: function() {
+        return Session.get("questiionAnsweredNow");
+    },
 });
 
 Template.activeQuestion.events({
     'click .button-option' (event) {
         event.preventDefault();
+
         correctAnswerVal = $("#qCorrect").text();
         clickedAns = event.currentTarget.id;
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
@@ -66,18 +75,18 @@ Template.activeQuestion.events({
         var my_id = Meteor.userId();
         var playersAnsweredQ = GameQuestions.find({ gameCode: gameCode, questionNo: questionNo, playersAnswered: { $in: [my_id] }}).count();
         console.log(playersAnsweredQ + " players have answered.");
-        if (playersAnsweredQ > 0) {
-            showSnackbar("You have answered this question already. Please wait.", "red");
-        } else {
-            if (clickedAns != 'qCorrect') {
 
-                Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
-                    if (err){
-                        Meteor.call('Error.Set', "gamePlay.js", "line 58", err);
-                    } else {
-                        showSnackbar("Sorry, answer is " + correctAnswerVal, "orange");
-                        var correctAnswer = document.getElementById("qCorrect");
-                        correctAnswer.classList.add('button-correct');
+        if (clickedAns != 'qCorrect') {
+            Session.set("questiionAnsweredNow", "yes");
+            Meteor.call('game.addPoints', gameCode, "No", function(err, result) {
+                if (err){
+                    Meteor.call('Error.Set', "gamePlay.js", "line 58", err);
+                } else {
+                    showSnackbar("Sorry, answer is " + correctAnswerVal, "orange");
+                    var correctAnswer = document.getElementById("qCorrect");
+                    correctAnswer.classList.add('button-correct');
+
+                    setTimeout(function(){
                         Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
                             if (err) {
                                 Meteor.call('Error.Set', "gamePlay.js", "line 67", err);
@@ -85,21 +94,21 @@ Template.activeQuestion.events({
                                 checkAllAnswered();
                             }
                         });
-                        // setTimeout(function(){
-                        //
-                        // }, 3000);
-                    }
-                });
-            } else {
+                    }, 3500);
+                }
+            });
+        } else {
+            Session.set("questiionAnsweredNow", "yes");
+            Meteor.call('game.addPoints', gameCode, "Yes", function(err, result){
+                if (err) {
+                    showSnackbar("Unable to update score", "red");
+                    Meteor.call('Error.Set', "gamePlay.js", "line 72", err);
+                } else {
+                    showSnackbar("Correct! Well done.", "green");
+                    var correctAnswer = document.getElementById("qCorrect");
+                    correctAnswer.classList.add('button-correct');
 
-                Meteor.call('game.addPoints', gameCode, "Yes", function(err, result){
-                    if (err) {
-                        showSnackbar("Unable to update score", "red");
-                        Meteor.call('Error.Set', "gamePlay.js", "line 72", err);
-                    } else {
-                        showSnackbar("Correct! Well done.", "green");
-                        var correctAnswer = document.getElementById("qCorrect");
-                        correctAnswer.classList.add('button-correct');
+                    setTimeout(function() {
                         Meteor.call('gameQuestion.answered', gameCode, questionNo, function(err, result){
                             if (err) {
                                 Meteor.call('Error.Set', "gamePlay.js", "line 87", err);
@@ -107,13 +116,9 @@ Template.activeQuestion.events({
                                 checkAllAnswered();
                             }
                         });
-                        // setTimeout(function(){
-                        //
-                        // }, 3000);
-                    }
-                });
-            }
-        // console.log("Answer chosen is: " + clickedAns);
+                    }, 3000);
+                }
+            });
         }
     },
 });
@@ -125,6 +130,7 @@ var checkAllAnswered = function() {
     var game_id = gameAnswers[0]._id;
     Session.set("game_id", game_id);
     var status = "waiting";
+    Session.set("questiionAnsweredNow", "no");
 
 
 
@@ -166,6 +172,8 @@ var checkAllAnswered = function() {
                         Meteor.call('setGameLive', gameCode, status, function(err, result) {
                             if (err) {
                                 Meteor.call('Error.Set', "gamePlay.js", "line 134", err);
+                            } else {
+
                             }
                         });
                     }
