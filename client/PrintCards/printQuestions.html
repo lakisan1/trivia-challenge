@@ -2,10 +2,10 @@
         {{#each allQuestions}}
         <div class="cardWhole">
             <div class="row">
-                <div class="column">
+                <div class="column column-50">
                     Category: <strong>{{category}}</strong>
                 </div>
-                <div class="column">
+                <div class="column column-50">
                     Difficulty Level: <strong>{{difficulty}}</strong>
                 </div>
             </div>
@@ -19,13 +19,13 @@
             <br />
             {{#if $eq type "multipleChoice"}}
             <div class="row">
-                <div class="column">
+                <div class="column column-50">
                     {{#if $eq sequence 1}}A. <strong>{{correctAnswer}}</strong>{{/if}}
                     {{#if $eq sequence 2}}A. {{inCorrectAnswers.[0]}}{{/if}}
                     {{#if $eq sequence 3}}A. {{inCorrectAnswers.[1]}}{{/if}}
                     {{#if $eq sequence 4}}A. {{inCorrectAnswers.[2]}}{{/if}}
                 </div>
-                <div class="column">
+                <div class="column column-50">
                     {{#if $eq sequence 2}}B. <strong>{{correctAnswer}}</strong>{{/if}}
                     {{#if $eq sequence 3}}B. {{inCorrectAnswers.[0]}}{{/if}}
                     {{#if $eq sequence 4}}B. {{inCorrectAnswers.[1]}}{{/if}}
@@ -33,13 +33,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="column">
+                <div class="column column-50">
                     {{#if $eq sequence 3}}C. <strong>{{correctAnswer}}</strong>{{/if}}
                     {{#if $eq sequence 4}}C. {{inCorrectAnswers.[0]}}{{/if}}
                     {{#if $eq sequence 1}}C. {{inCorrectAnswers.[1]}}{{/if}}
                     {{#if $eq sequence 2}}C. {{inCorrectAnswers.[2]}}{{/if}}
                 </div>
-                <div class="column">
+                <div class="column column-50">
                     {{#if $eq sequence 4}}D. <strong>{{correctAnswer}}</strong>{{/if}}
                     {{#if $eq sequence 1}}D. {{inCorrectAnswers.[0]}}{{/if}}
                     {{#if $eq sequence 2}}D. {{inCorrectAnswers.[1]}}{{/if}}
@@ -48,11 +48,11 @@
             </div>
             {{else}}
             <div class="row">
-                <div class="column">
+                <div class="column column-25">
                     Answer: <strong>{{correctAnswer}}</strong>
                 </div>
                 {{#if $eq correctAnswer "false"}}
-                <div class="column">
+                <div class="column column-75">
                     <strong>{{trueAnswer}}</strong>
                 </div>
                 {{/if}}

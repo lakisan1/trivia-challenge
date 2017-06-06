@@ -4,6 +4,7 @@ import { Categories } from '../../imports/api/categories.js';
 Template.addQuestions.onCreated(function() {
     this.subscribe('questionsCounter');
     this.subscribe('categories');
+    Session.set("nextSeqNo", 0);
 });
 
 Template.addQuestions.helpers({
@@ -13,8 +14,8 @@ Template.addQuestions.helpers({
     getLastQuestionSeq: function() {
         console.log("this user is: " + Meteor.user().username);
         var lastSeqNo = Questions.findOne({}, { sort: { addedOn: -1 }, limit: 1 });
-        var myLastNo = Questions.findOne({ addedBy: Meteor.user().username }, { sort: { addedOn: -1 }, limit: 1 });
-        if (lastSeqNo != null) {
+        console.log("lasSeqNo: " + lastSeqNo);
+        if (lastSeqNo) {
             console.log("seq no found: ")
             console.log(lastSeqNo.seqNo);
             var nextSeqNo = lastSeqNo.seqNo + 1;

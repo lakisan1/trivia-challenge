@@ -71,3 +71,11 @@ input[type="file"] {
     font-family: courier;
     text-align: center;
 }
+
+@media print {
+    .cardWhole {
+        font-size: 14pt;
+        border: 1px solid #a1a1a1;
+        margin: 5px;
+    }
+}
