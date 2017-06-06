@@ -4,7 +4,6 @@ import { Categories } from '../../imports/api/categories.js';
 Template.addQuestions.onCreated(function() {
     this.subscribe('questionsCounter');
     this.subscribe('categories');
-    Session.set("nextSeqNo", 0);
 });
 
 Template.addQuestions.helpers({

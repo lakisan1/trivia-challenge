@@ -11,5 +11,5 @@ Template.printQuestions.helpers({
     },
     sequence: function() {
         return Session.get("sequence");
-    }
+    },
 });
