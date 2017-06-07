@@ -118,6 +118,9 @@
                 <button class="primary" id="saveAddQuestion">Save</button>
             </div>
         </div>
+        <div id="automatedQuestionSeqNumber" class="hideForMe">
+            Next Question Number: {{getLastQuestionSeq}}
+        </div>
     </form>
     {{/if}}
     {{> snackbar}}
