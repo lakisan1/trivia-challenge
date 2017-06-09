@@ -12,7 +12,10 @@
                 <a href="#" class="navBtn exitGame" id="exitGame"><i class="fa fa-times-circle fa-fw navBtn exitGame" aria-hidden="true"></i>&nbsp; Exit Game</a>
                 <a href="#" class="navBtn addCategories" id="addCategories"><i class="fa fa-plus-circle fa-fw navBtn addCategories" aria-hidden="true"></i>&nbsp; Add Category</a>
                 <a href="#" class="navBtn addQuestions" id="addQuestions"><i class="fa fa-question-circle fa-fw navBtn addQuestions" aria-hidden="true"></i>&nbsp; Add Questions</a>
-                <a href="#" class="navBtn printGameCards" id="printGameCards"><i class="fa fa-print fa-fw navBtn printGameCards" aria-hidden="true"></i>&nbsp; Print Game Cards</a>
+
+                {{#if isInRole 'SuperAdmin'}}
+                    <a href="#" class="navBtn printGameCards" id="printGameCards"><i class="fa fa-print fa-fw navBtn printGameCards" aria-hidden="true"></i>&nbsp; Print Game Cards</a>
+                {{/if}}
             {{else}}
                 <a href="#" class="signIn"><i class="fa fa-sign-in fa-fw myNav signIn" aria-hidden="true"></i>&nbsp; Sign-In</a>
             {{/if}}
