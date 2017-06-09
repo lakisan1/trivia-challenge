@@ -90,29 +90,66 @@ function findQuestionsMatchingCriteria() {
         console.log("Find Questions mixed set diff and type.");
         var questions = Questions.find({ category: { $in: qCat }}).fetch();
         console.log(questions);
-        for (i = 0; i < questions.length; i++) {
-            theSeqNo[i] = questions[i].seqNo;
+        let totalQuestions = questions.length;
+        console.log("total questions: " + totalQuestions);
+        if (totalQuestions == 0) {
+            showSnackbar("Your selections resluted in no questions, Try again.", "red");
+            setTimeout(function(){
+                FlowRouter.go("/createAGame");
+            }, 3000);
+            return;
+        } else {
+            for (i = 0; i < questions.length; i++) {
+                theSeqNo[i] = questions[i].seqNo;
+            }
         }
     } else if (qType == 'mixed' && qDifficulty != 'mixed') {
         console.log("Find Questions mixed set type.");
         var questions = Questions.find({ category: { $in: qCat }, difficulty: qDifficulty }).fetch();
         console.log(questions);
-        for (i = 0; i < questions.length; i++) {
-            theSeqNo[i] = questions[i].seqNo;
+        let totalQuestions = questions.length;
+        if (totalQuestions == 0) {
+            showSnackbar("Your selections resluted in no questions, Try again.", "red");
+            setTimeout(function(){
+                FlowRouter.go("/createAGame");
+            }, 3000);
+            return;
+        } else {
+            for (i = 0; i < totalQuestions; i++) {
+                theSeqNo[i] = questions[i].seqNo;
+            }
         }
     } else if (qDifficulty == 'mixed' && qType != 'mixed') {
         console.log("Find Questions mixed set diff.");
         var questions = Questions.find({ type: qType, category: { $in: qCat }}).fetch();
         console.log(questions);
-        for (i = 0; i < questions.length; i++) {
-            theSeqNo[i] = questions[i].seqNo;
+        let totalQuestions = questions.length;
+        if (totalQuestions == 0) {
+            showSnackbar("Your selections resluted in no questions, Try again.", "red");
+            setTimeout(function(){
+                FlowRouter.go("/createAGame");
+            }, 3000);
+            return;
+        } else {
+            for (i = 0; i < questions.length; i++) {
+                theSeqNo[i] = questions[i].seqNo;
+            }
         }
     } else {
         console.log("Find Questions no mixed sets.");
         var questions = Questions.find({ type: qType, category: { $in: qCat }, difficulty: qDifficulty }).fetch();
         console.log(questions);
-        for (i = 0; i < questions.length; i++) {
-            theSeqNo[i] = questions[i].seqNo;
+        let totalQuestions = questions.length;
+        if (totalQuestions == 0) {
+            showSnackbar("Your selections resluted in no questions, Try again.", "red");
+            setTimeout(function(){
+                FlowRouter.go("/createAGame");
+            }, 3000);
+            return;
+        } else {
+            for (i = 0; i < questions.length; i++) {
+                theSeqNo[i] = questions[i].seqNo;
+            }
         }
     }
 
