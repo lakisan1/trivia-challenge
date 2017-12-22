@@ -23,6 +23,9 @@ Meteor.methods({
         check(trueAnswer, String);
         check(nextSeqNo, Number);
 
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
 
         if (private == 'private') {
             owner = Meteor.users.findOne(this.userId).username;
@@ -60,6 +63,9 @@ Meteor.methods({
         check(incorrect3, String);
         check(nextSeqNo, Number);
 
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
 
         if (private == 'private') {
             owner = Meteor.users.findOne(this.userId).username;
@@ -85,4 +91,19 @@ Meteor.methods({
             timesUsedInAGame: 0,
         });
     },
+    'update.QuestionsToUncat' (catName) {
+        check(catName, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        console.log("Got to uncat update.");
+
+        Questions.update({ category: catName }, {
+            $set: {
+                category: 'Uncategorized',
+            }
+        }, { multi: true });
+    }
 });

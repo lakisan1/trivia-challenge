@@ -41,7 +41,9 @@
                     {{countQuestions}}
                 </td>
                 <td>
-                    <i class="fa fa-trash navBtn deleteCategory" aria-hidden="true"></i>
+                    {{#if $neq category 'Uncategorized'}}
+                        <i class="fa fa-trash navBtn deleteCategory" aria-hidden="true"></i>
+                    {{/if}}
                 </td>
             </tr>
             {{/each}}
