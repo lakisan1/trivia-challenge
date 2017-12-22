@@ -1,4 +1,5 @@
 import { Categories } from '../../imports/api/categories.js';
+import { Questions } from '../../imports/api/questions.js';
 
 Template.addCategories.onCreated(function() {
     this.subscribe("categories");
@@ -8,6 +9,9 @@ Template.addCategories.onCreated(function() {
 Template.addCategories.helpers({
     getCategories: function() {
         return Categories.find({});
+    },
+    countQuestions: function() {
+        return Questions.find({ category: this.category }).count();
     },
 });
 
@@ -38,5 +42,19 @@ Template.addCategories.events({
                 }
             });
         }
+    },
+    'click .deleteCategory' (event) {
+        event.preventDefault();
+
+        let categoryId = this._id;
+
+        Meteor.call('categories.remove', categoryId, function(err, result) {
+            if (err) {
+                showSnackbar("Error Deleting Category!", "red");
+                Meteor.call("Error.Set", "addCategories.js", "line 47", err);
+            } else {
+                showSnackbar("Category Successfully Deleted!", "green");
+            }
+        });
     },
 });
