@@ -3,6 +3,7 @@ import { Questions } from '../../imports/api/questions.js';
 
 Template.addCategories.onCreated(function() {
     this.subscribe("categories");
+    this.subscribe("questionsCounter");
 });
 
 
@@ -11,7 +12,9 @@ Template.addCategories.helpers({
         return Categories.find({});
     },
     countQuestions: function() {
-        return Questions.find({ category: this.category }).count();
+        let myCat = this.category;
+        console.log("My Cat: " + myCat);
+        return Questions.find({ category: myCat }).count();
     },
 });
 
