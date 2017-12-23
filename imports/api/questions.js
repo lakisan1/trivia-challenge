@@ -105,5 +105,14 @@ Meteor.methods({
                 category: 'Uncategorized',
             }
         }, { multi: true });
-    }
+    },
+    'question.remove' (questionId) {
+        check(questionId, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        return Questions.remove({ _id: questionId });
+    },
 });

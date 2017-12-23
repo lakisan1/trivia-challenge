@@ -1,0 +1,25 @@
+<template name="editQuestion">
+    <div>
+        <h3>Edit Question</h3>
+        <div class="row">
+            <div class="column">
+                <label for="editCat">Category</label>
+                <select name="editCat" id="editCat">
+                    <option value="{{category}}">{{category}}</option>
+                    {{#each allCategories}}
+                        <option value="{{category}}">{{category}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="column">
+                <label for="editType">Type</label>
+                <select name="editType" id="editType">
+                    <option value="{{type}}">{{type}}</option>
+                    {{#each allTypes}}
+                        <option value="{{type}}">type</option>
+                    {{/each}}
+                </select>
+            </div>
+        </div>
+    </div>
+</template>
