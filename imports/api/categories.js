@@ -29,6 +29,7 @@ Meteor.methods({
     },
     'categories.remove' (categoryId) {
         check(categoryId, String);
+
         if(!this.userId) {
             throw new Meteor.Error('User is not authorized to delete a category.');
         }
@@ -39,5 +40,23 @@ Meteor.methods({
         Categories.remove({ _id: categoryId });
         // now update the questions from this category to 'uncategorized'
         Meteor.call('update.QuestionsToUncat', catName);
+    },
+    'category.update' (catId, catName, catDesc) {
+        check(catId, String);
+        check(catName, String);
+        check(catDesc, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized to delete a category.');
+        }
+
+        Categories.update({ _id: catId }, {
+            $set: {
+                category: catName,
+                description: catDesc,
+                editedOn: new Date(),
+                editedBy: Meteor.users.findOne(this.userId).username,
+            }
+        });
     },
 });

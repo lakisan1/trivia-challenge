@@ -196,4 +196,78 @@ Meteor.methods({
             }
         }
     },
+    'MCQuestion.update' (questionId, questionCat, questionType, questionDiff, questionPrivate, question, correctAnswer, incAns1, incAns2, incAns3) {
+        check(questionId, String);
+        check(questionCat, String);
+        check(questionType, String);
+        check(questionDiff, String);
+        check(questionPrivate, String);
+        check(question, String);
+        check(correctAnswer, String);
+        check(incAns1, String);
+        check(incAns2, String);
+        check(incAns3, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        if (questionPrivate == 'private') {
+            owner = Meteor.users.findOne(this.userId).username;
+        } else {
+            owner = "all";
+        }
+
+        return Questions.update({ _id: questionId }, {
+            $set: {
+                category: questionCat,
+                difficulty: questionDiff,
+                type: questionType,
+                owner: owner,
+                question: question,
+                correctAnswer: correctAnswer,
+                inCorrectAnswers: [
+                    incAns1,
+                    incAns2,
+                    incAns3,
+                ],
+                updatedOn: new Date(),
+                updatedBy: Meteor.users.findOne(this.userId).username,
+            }
+        });
+    },
+    'TFQuestion.update' (questionId, questionCat, questionType, questionDiff, questionPrivate, question, correctAnswer, trueAnswer) {
+        check(questionId, String);
+        check(questionCat, String);
+        check(questionType, String);
+        check(questionDiff, String);
+        check(questionPrivate, String);
+        check(question, String);
+        check(correctAnswer, String);
+        check(trueAnswer, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        if (questionPrivate == 'private') {
+            owner = Meteor.users.findOne(this.userId).username;
+        } else {
+            owner = "all";
+        }
+
+        return Questions.update({ _id: questionId }, {
+            $set: {
+                category: questionCat,
+                difficulty: questionDiff,
+                type: questionType,
+                owner: owner,
+                question: question,
+                correctAnswer: correctAnswer,
+                trueAnswer: trueAnswer,
+                updatedOn: new Date(),
+                updatedBy: Meteor.users.findOne(this.userId).username,
+            }
+        });
+    },
 });

@@ -60,4 +60,12 @@ Template.addCategories.events({
             }
         });
     },
+    'click .editCategories' (event) {
+
+        let catId = this._id;
+        console.log("Cat ID: " + catId);
+        Session.set("editCatId", catId);
+
+        FlowRouter.go("/editCategories");
+    },
 });
