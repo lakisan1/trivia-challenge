@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Categories } from './categories.js';
 
 export const Questions = new Mongo.Collection('questions');
 
@@ -132,6 +133,27 @@ Meteor.methods({
             for (k = 0; k < numberResults; k++) {
                 nextSeqNo = nextSeqNo + 1;
 
+                // check to see if the category imported already exists
+                // and if not, create it.
+                let catExists = Categories.findOne({ category: apiResult.data.results[k].category });
+                if (typeof catExists != 'undefined') {
+                    if (catExists.category != null && catExists.category != "") {
+                        console.log("Category exists!");
+                    } else {
+                        console.log("Category doesn't exist.");
+                    }
+                } else {
+                    console.log("Category doesn't exist!");
+                    Categories.insert({
+                        category: apiResult.data.results[k].category,
+                        description: apiResult.data.results[k].category,
+                        addedOn: new Date(),
+                        addedBy: Meteor.users.findOne(this.userId).username,
+                        addedFrom: "import",
+                    });
+                }
+
+                // import the trivia question and answers
                 if (apiResult.data.results[k].type == "multiple") {
                     Questions.insert({
                         category: apiResult.data.results[k].category,
