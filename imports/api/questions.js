@@ -115,4 +115,63 @@ Meteor.methods({
 
         return Questions.remove({ _id: questionId });
     },
+    'importQuestions' (apiResult) {
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        let numberResults = apiResult.data.results.length;
+        // console.log("Number of API Results: " + numberResults);
+
+        let nextSeqNoread = Questions.findOne({}, { sort: { seqNo: -1 }, limit: 1 });
+        console.log("Next Seq No = " + nextSeqNoread.seqNo);
+        let nextSeqNo = nextSeqNoread.seqNo;
+        if (numberResults > 0) {
+            // console.dir(apiResult.data.results);
+            for (k = 0; k < numberResults; k++) {
+                nextSeqNo = nextSeqNo + 1;
+
+                if (apiResult.data.results[k].type == "multiple") {
+                    Questions.insert({
+                        category: apiResult.data.results[k].category,
+                        difficulty: apiResult.data.results[k].difficulty,
+                        type: apiResult.data.results[k].type,
+                        owner: "all",
+                        question: apiResult.data.results[k].question,
+                        correctAnswer: apiResult.data.results[k].correct_answer,
+                        inCorrectAnswers: [
+                            apiResult.data.results[k].incorrect_answers[0],
+                            apiResult.data.results[k].incorrect_answers[1],
+                            apiResult.data.results[k].incorrect_answers[2],
+                        ],
+                        seqNo: nextSeqNo,
+                        addedOn: new Date(),
+                        addedBy: Meteor.users.findOne(this.userId).username,
+                        timesUsedInAGame: 0,
+                    });
+                } else {
+                    if (apiResult.data.results[k].correct_answer == 'True') {
+                        var tfAnswer = true;
+                    } else {
+                        var tfAnswer = false;
+                    }
+
+                    Questions.insert({
+                        category: apiResult.data.results[k].category,
+                        difficulty: apiResult.data.results[k].difficulty,
+                        type: apiResult.data.results[k].type,
+                        owner: "all",
+                        question: apiResult.data.results[k].question,
+                        correctAnswer: tfAnswer,
+                        trueAnswer: "",
+                        seqNo: nextSeqNo,
+                        addedOn: new Date(),
+                        addedBy: Meteor.users.findOne(this.userId).username,
+                        timesUsedInAGame: 0,
+                    });
+                }
+            }
+        }
+    },
 });

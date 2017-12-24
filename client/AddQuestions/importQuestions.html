@@ -1,0 +1,68 @@
+<template name="importQuestions">
+    <div>
+        <h3>Import Questions</h3>
+        <p>Questions imported are from the online Open Trivia (user contributed question) Database. You can visit the database directly at: https://opentdb.com/</p>
+    </div>
+    <hr />
+    <div class="row">
+        <div class="column">
+            <label for="noOfQuestionsImport">Number of questions to import:</label>
+            <input type="text" class="noOfQuestionsImport" id="noOfQuestionsImport" placeholder="1 - 50" />
+        </div>
+        <div class="column">
+            <label for="importType">Question Type:</label>
+            <select name="importType" id="importType">
+                <option value="multiple">Multiple Choice</option>
+                <option value="boolean">True / False</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <label for="importDifficulty">Difficulty Level</label>
+            <select name="importDifficulty" id="importDifficulty">
+                <option value="easy">Easy</option>
+                <option value="medium">Medium</option>
+                <option value="hard">Hard</option>
+            </select>
+        </div>
+        <div class="column">
+            <label for="importCategory">Category</label>
+            <select name="importCategory" id="importCategory">
+                <option value="9">General Knowledge</option>
+                <option value="10">Entertainment: Books</option>
+                <option value="11">Entertainment: Film</option>
+                <option value="12">Entertainment: Music</option>
+                <option value="13">Entertainment: Musicals and Theater</option>
+                <option value="14">Entertainment: Television</option>
+                <option value="15">Entertainment: Video Games</option>
+                <option value="16">Entertainment: Board Games</option>
+                <option value="29">Entertainment: Comics</option>
+                <option value="31">Entertainment: Japanese Anime and Manga</option>
+                <option value="32">Entertainment: Cartoons and Animation</option>
+                <option value="17">Science and Nature</option>
+                <option value="18">Science: Computers</option>
+                <option value="30">Science: Gadgets</option>
+                <option value="19">Science: Mathematics</option>
+                <option value="20">Mythology</option>
+                <option value="21">Sports</option>
+                <option value="22">Geograaphy</option>
+                <option value="23">History</option>
+                <option value="24">Politics</option>
+                <option value="25">Art</option>
+                <option value="26">Celebrities</option>
+                <option value="27">Animals</option>
+                <option value="28">Vehicles</option>
+            </select>
+        </div>
+    </div>
+    <div class="row">
+        <div class="column">
+            <button class="button cancel" id="cancelImport">Cancel</button>
+        </div>
+        <div class="column">
+            <button class="button primary" id="saveImport">Import</button>
+        </div>
+    </div>
+    {{> snackbar}}
+</template>

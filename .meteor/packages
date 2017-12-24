@@ -33,9 +33,14 @@ noahvlncrt:milligram
 
 aldeed:template-extension
 aldeed:collection2          # define a schema for the data to adhere to with reactivity.
+
 sacha:spin                  # spinner for loading
 teamon:tinymce              # tinyMCE Editor plugin for meteor
 mizzao:autocomplete         # for the @mentions functionality
 npm-bcrypt@0.9.3
 session@1.1.7
 dynamic-import
+http                        # http api calls
+harrison:papa-parse         # csv parsing library
+mizzao:user-status          # track user online / offline status
+email                           # ability to email users from application
