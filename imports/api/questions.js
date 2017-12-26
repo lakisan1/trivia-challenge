@@ -1,6 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Mongo } from 'meteor/mongo';
 import { check } from 'meteor/check';
+import { Categories } from './categories.js';
 
 export const Questions = new Mongo.Collection('questions');
 
@@ -23,6 +24,9 @@ Meteor.methods({
         check(trueAnswer, String);
         check(nextSeqNo, Number);
 
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
 
         if (private == 'private') {
             owner = Meteor.users.findOne(this.userId).username;
@@ -60,6 +64,9 @@ Meteor.methods({
         check(incorrect3, String);
         check(nextSeqNo, Number);
 
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
 
         if (private == 'private') {
             owner = Meteor.users.findOne(this.userId).username;
@@ -83,6 +90,184 @@ Meteor.methods({
             addedOn: new Date(),
             addedBy: Meteor.users.findOne(this.userId).username,
             timesUsedInAGame: 0,
+        });
+    },
+    'update.QuestionsToUncat' (catName) {
+        check(catName, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        console.log("Got to uncat update.");
+
+        Questions.update({ category: catName }, {
+            $set: {
+                category: 'Uncategorized',
+            }
+        }, { multi: true });
+    },
+    'question.remove' (questionId) {
+        check(questionId, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        return Questions.remove({ _id: questionId });
+    },
+    'importQuestions' (apiResult) {
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        let numberResults = apiResult.data.results.length;
+        // console.log("Number of API Results: " + numberResults);
+
+        let nextSeqNoread = Questions.findOne({}, { sort: { seqNo: -1 }, limit: 1 });
+        console.log("Next Seq No = " + nextSeqNoread.seqNo);
+        let nextSeqNo = nextSeqNoread.seqNo;
+        if (numberResults > 0) {
+            // console.dir(apiResult.data.results);
+            for (k = 0; k < numberResults; k++) {
+                nextSeqNo = nextSeqNo + 1;
+
+                // check to see if the category imported already exists
+                // and if not, create it.
+                let catExists = Categories.findOne({ category: apiResult.data.results[k].category });
+                if (typeof catExists != 'undefined') {
+                    if (catExists.category != null && catExists.category != "") {
+                        console.log("Category exists!");
+                    } else {
+                        console.log("Category doesn't exist.");
+                    }
+                } else {
+                    console.log("Category doesn't exist!");
+                    Categories.insert({
+                        category: apiResult.data.results[k].category,
+                        description: apiResult.data.results[k].category,
+                        addedOn: new Date(),
+                        addedBy: Meteor.users.findOne(this.userId).username,
+                        addedFrom: "import",
+                    });
+                }
+
+                // import the trivia question and answers
+                if (apiResult.data.results[k].type == "multiple") {
+                    Questions.insert({
+                        category: apiResult.data.results[k].category,
+                        difficulty: apiResult.data.results[k].difficulty,
+                        type: apiResult.data.results[k].type,
+                        owner: "all",
+                        question: apiResult.data.results[k].question,
+                        correctAnswer: apiResult.data.results[k].correct_answer,
+                        inCorrectAnswers: [
+                            apiResult.data.results[k].incorrect_answers[0],
+                            apiResult.data.results[k].incorrect_answers[1],
+                            apiResult.data.results[k].incorrect_answers[2],
+                        ],
+                        seqNo: nextSeqNo,
+                        addedOn: new Date(),
+                        addedBy: Meteor.users.findOne(this.userId).username,
+                        timesUsedInAGame: 0,
+                    });
+                } else {
+                    if (apiResult.data.results[k].correct_answer == 'True') {
+                        var tfAnswer = true;
+                    } else {
+                        var tfAnswer = false;
+                    }
+
+                    Questions.insert({
+                        category: apiResult.data.results[k].category,
+                        difficulty: apiResult.data.results[k].difficulty,
+                        type: apiResult.data.results[k].type,
+                        owner: "all",
+                        question: apiResult.data.results[k].question,
+                        correctAnswer: tfAnswer,
+                        trueAnswer: "",
+                        seqNo: nextSeqNo,
+                        addedOn: new Date(),
+                        addedBy: Meteor.users.findOne(this.userId).username,
+                        timesUsedInAGame: 0,
+                    });
+                }
+            }
+        }
+    },
+    'MCQuestion.update' (questionId, questionCat, questionType, questionDiff, questionPrivate, question, correctAnswer, incAns1, incAns2, incAns3) {
+        check(questionId, String);
+        check(questionCat, String);
+        check(questionType, String);
+        check(questionDiff, String);
+        check(questionPrivate, String);
+        check(question, String);
+        check(correctAnswer, String);
+        check(incAns1, String);
+        check(incAns2, String);
+        check(incAns3, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        if (questionPrivate == 'private') {
+            owner = Meteor.users.findOne(this.userId).username;
+        } else {
+            owner = "all";
+        }
+
+        return Questions.update({ _id: questionId }, {
+            $set: {
+                category: questionCat,
+                difficulty: questionDiff,
+                type: questionType,
+                owner: owner,
+                question: question,
+                correctAnswer: correctAnswer,
+                inCorrectAnswers: [
+                    incAns1,
+                    incAns2,
+                    incAns3,
+                ],
+                updatedOn: new Date(),
+                updatedBy: Meteor.users.findOne(this.userId).username,
+            }
+        });
+    },
+    'TFQuestion.update' (questionId, questionCat, questionType, questionDiff, questionPrivate, question, correctAnswer, trueAnswer) {
+        check(questionId, String);
+        check(questionCat, String);
+        check(questionType, String);
+        check(questionDiff, String);
+        check(questionPrivate, String);
+        check(question, String);
+        check(correctAnswer, String);
+        check(trueAnswer, String);
+
+        if(!this.userId) {
+            throw new Meteor.Error('User is not authorized.');
+        }
+
+        if (questionPrivate == 'private') {
+            owner = Meteor.users.findOne(this.userId).username;
+        } else {
+            owner = "all";
+        }
+
+        return Questions.update({ _id: questionId }, {
+            $set: {
+                category: questionCat,
+                difficulty: questionDiff,
+                type: questionType,
+                owner: owner,
+                question: question,
+                correctAnswer: correctAnswer,
+                trueAnswer: trueAnswer,
+                updatedOn: new Date(),
+                updatedBy: Meteor.users.findOne(this.userId).username,
+            }
         });
     },
 });

@@ -1,0 +1,102 @@
+<template name="editQuestion">
+    <div>
+        <h3>Edit Question</h3>
+        {{#each thisQuestion}}
+        <div class="row">
+            <div class="column">
+                <label for="editCat">Category</label>
+                <select name="editCat" id="editCat">
+                    <option value="{{category}}">{{category}}</option>
+                    {{#each allCategories}}
+                        <option value="{{category}}">{{category}}</option>
+                    {{/each}}
+                </select>
+            </div>
+            <div class="column">
+                <label for="editType">Type</label>
+                <select name="editType" id="editType">
+                    <option value="{{type}}">
+                        {{#if $eq type "multipleChoice"}}Multiple Choice{{else}}True / False{{/if}}
+                    </option>
+                    <option value="trueFalse">True / False</option>
+                    <option value="multipleChoice">Multiple Choice</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <label for="editDifficulty">Difficulty</label>
+                <select name="editDifficulty" id="editDifficulty">
+                    <option value="{{difficulty}}">
+                        {{#if $eq difficulty "easy"}}Easy{{else if $eq difficulty medium}}Medium{{else}}Hard{{/if}}
+                    </option>
+                    <option value="easy">Easy</option>
+                    <option value="medium">Medium</option>
+                    <option value="hard">Hard</option>
+                </select>
+            </div>
+            <div class="column">
+                <label for="editPrivate">Private Game Question</label>
+                <select name="editPrivate" id="editPrivate">
+                    <option value="{{owner}}">
+                        {{#if $eq owner "all"}}Public{{else}}Private{{/if}}
+                    </option>
+                    <option value="public">Public</option>
+                    <option value="private">Private</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <label for="editQuestion">Question</label>
+                <textarea class="editQuestion" id="editQuestion" value="{{question}}"></textarea>
+            </div>
+        </div>
+        {{#if $eq type "multipleChoice"}}
+            <h4>Answers</h4>
+            <div class="row">
+                <div class="column">
+                    <label for="correctAnswerEdit">Correct Answer</label>
+                    <input type="text" class="corrrectAnswerEdit" id="correctAnswerEdit" value="{{correctAnswer}}" />
+                </div>
+            </div>
+            {{#each inCorrectAnswers}}
+            <div class="row">
+                <div class="column">
+                    <label>Incorrect Answer</label>
+                    <input type="text" class="incorrectEdit" id="incorrectEdit{{@index}}" value="{{this}}"/>
+                </div>
+            </div>
+            {{/each}}
+        {{else}}
+            <h4>Answers</h4>
+            <div class="row">
+                <div class="column">
+                    <label for="correctAnswerTFEdit">Correct Answer</label>
+                    <select name="correctAnswerTFEdit" id="correctAnswerTFEdit">
+                        <option value="{{correctAnswer}}">
+                            {{#if $eq correctAnswer "true"}}True{{else}}False{{/if}}
+                        </option>
+                        <option value="true">True</option>
+                        <option value="false">False</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="column">
+                    <label for="trueInfoEdit">The <bold>True</bold> information for this question</label>
+                    <input type="text" class="trueInfoEdit" id="trueInfoEdit" value="{{trueAnswer}}" />
+                </div>
+            </div>
+        {{/if}}
+            <div class="row">
+                <div class="column">
+                    <button class="cancel" id="cancelEditQuestion">Cancel</button>
+                </div>
+                <div class="column">
+                    <button class="primary" id="saveEditQuestion">Save Changes</button>
+                </div>
+            </div>
+        {{/each}}
+    </div>
+</template>

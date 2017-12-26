@@ -1,0 +1,41 @@
+<template name="questionsList">
+    <div>
+        <table>
+            <tr>
+                <th>Question</th>
+                <th>Category</th>
+                <th>Difficulty</th>
+                <th>Type</th>
+                <th>Actions</th>
+            </tr>
+            {{#each myQuestionsList}}
+            <tr>
+                <td>
+                    {{question}}
+                </td>
+                <td>{{category}}</td>
+                <td>
+                    {{#if $eq difficulty "easy"}}
+                    Easy
+                    {{else if $eq difficulty "medium"}}
+                    Medium
+                    {{else}}
+                    Hard
+                    {{/if}}
+                </td>
+                <td>
+                    {{#if $eq type "trueFalse"}}
+                        True / False
+                    {{else}}
+                        Multiple Choice
+                    {{/if}}
+                </td>
+                <td>
+                    <i class="fa fa-pencil navBtn editQuestion" aria-hidden="true"></i>
+                    <i class="fa fa-trash navBtn deleteQuestion" aria-hidden="true"></i>
+                </td>
+            </tr>
+            {{/each}}
+        </table>
+    </div>
+</template>

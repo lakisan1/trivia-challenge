@@ -70,9 +70,16 @@ Template.activeQuestion.events({
         clickedAns = event.currentTarget.id;
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
         var questionNo = questionInfo[0].questionNo;
+        let questionId = questionInfo[0].questionId;
         console.log("the Question No is: " + questionNo);
         var questionType = questionInfo[0].qType;
         var my_id = Meteor.userId();
+        let questionData = Questions.findOne({ _id: questionId });
+        if (questionType == 'trueFalse') {
+            var correctAnswerValue = correctAnswerVal + ": " + questionData.trueAnswer;
+        } else {
+            var correctAnswerValue = correctAnswerVal;
+        }
         var playersAnsweredQ = GameQuestions.find({ gameCode: gameCode, questionNo: questionNo, playersAnswered: { $in: [my_id] }}).count();
         console.log(playersAnsweredQ + " players have answered.");
 
@@ -82,7 +89,7 @@ Template.activeQuestion.events({
                 if (err){
                     Meteor.call('Error.Set', "gamePlay.js", "line 58", err);
                 } else {
-                    showSnackbar("Sorry, answer is " + correctAnswerVal, "orange");
+                    showSnackbar("Sorry, answer is " + correctAnswerValue, "orange");
                     var correctAnswer = document.getElementById("qCorrect");
                     correctAnswer.classList.add('button-correct');
 

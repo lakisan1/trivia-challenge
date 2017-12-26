@@ -1,0 +1,26 @@
+<template name="editCategories">
+    <div>
+        <h3>Edit Category</h3>
+        {{#each thisCategory}}
+        <div class="row">
+            <div class="column">
+                <label for="catName">Category Name</label>
+                <input type="text" class="catName" id="catName" value="{{category}}"/>
+            </div>
+            <div class="column">
+                <label for="catDesc">Category Description</label>
+                <textarea name="catDesc" class="catDesc" id="catDesc" rows="8" value="{{description}}"></textarea>
+            </div>
+        </div>
+        {{/each}}
+    </div>
+    <div class="row">
+        <div class="column">
+            <button class="button cancel" id="cancelEditCategory">Cancel</button>
+        </div>
+        <div class="column">
+            <button class="button primary" id="saveEditCategory">Save Changes</button>
+        </div>
+    </div>
+    {{> snackbar}}
+</template>
