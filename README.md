@@ -16,4 +16,4 @@ I have recently added the ability to import questions from the [Open Trivia Data
 
 #### Demo Site
 A demo site can be found and used at:
-- [Trivia-Challenge.org](http://trivia-challenge.org:5001)
+- [Trivia-Challenge.org](https://trivia-challenge.org)
