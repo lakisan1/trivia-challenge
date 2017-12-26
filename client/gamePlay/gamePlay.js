@@ -26,32 +26,36 @@ Template.gamePlay.helpers({
         return gameCode = Session.get("gameCode");
     },
     currentGameStatus: function() {
-        var gameCode = Session.get("gameCode");
+        let gameCode = Session.get("gameCode");
         return Games.find({ active: "Yes", gameCode: gameCode });
     },
     nextQuestion: function() {
-        var gameCode = Session.get("gameCode");
+        let gameCode = Session.get("gameCode");
         return GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" });
+    },
+    anyGames: function() {
+        let gameCode = Session.get("gameCode");
+        return Games.find({ active: "Yes", gameCode: gameCode });
     },
 });
 
 Template.activeQuestion.helpers({
     questionStatus: function() {
-        console.log("User ID:  " + Meteor.userId());
+        // console.log("User ID:  " + Meteor.userId());
         var player = Meteor.userId();
         var currentlyAnswered = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y", playersAnswered: { $in: [player] } }).count();
         var continueGame = Games.find({ gameCode: gameCode, active: "Yes" }).fetch();
-        console.log("cureently answered " + currentlyAnswered);
+        // console.log("cureently answered " + currentlyAnswered);
         var statusNow = continueGame[0].nextQuestionStatus;
-        console.log("status now " + statusNow);
+        // console.log("status now " + statusNow);
         if (currentlyAnswered > 0 && statusNow != "complete") {
             Session.set("questionStatus", "waiting");
             var questionStatus = Session.get("questionStatus");
-            console.log("question status should be: " + questionStatus);
+            // console.log("question status should be: " + questionStatus);
         } else if (currentlyAnswered <= 0 && statusNow != "complete"){
             Session.set("questionStatus", "live");
             var questionStatus = Session.get("questionStatus");
-            console.log("question status should be: " + questionStatus);
+            // console.log("question status should be: " + questionStatus);
         } else if (statusNow == "complete"){
             FlowRouter.go("/finalScoreCard");
         }
@@ -64,14 +68,14 @@ Template.activeQuestion.helpers({
 
 Template.activeQuestion.events({
     'click .button-option' (event) {
-        event.preventDefault();
+        // event.preventDefault();
 
         correctAnswerVal = $("#qCorrect").text();
         clickedAns = event.currentTarget.id;
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
         var questionNo = questionInfo[0].questionNo;
         let questionId = questionInfo[0].questionId;
-        console.log("the Question No is: " + questionNo);
+        // console.log("the Question No is: " + questionNo);
         var questionType = questionInfo[0].qType;
         var my_id = Meteor.userId();
         let questionData = Questions.findOne({ _id: questionId });
@@ -81,7 +85,7 @@ Template.activeQuestion.events({
             var correctAnswerValue = correctAnswerVal;
         }
         var playersAnsweredQ = GameQuestions.find({ gameCode: gameCode, questionNo: questionNo, playersAnswered: { $in: [my_id] }}).count();
-        console.log(playersAnsweredQ + " players have answered.");
+        // console.log(playersAnsweredQ + " players have answered.");
 
         if (clickedAns != 'qCorrect') {
             Session.set("questiionAnsweredNow", "yes");
@@ -141,7 +145,7 @@ var checkAllAnswered = function() {
 
 
 
-    console.log("No of Players: " + gameAnswers[0].numberOfPlayers + " = Players Answered: " + gameAnswers[0].playersAnswered + " ?");
+    // console.log("No of Players: " + gameAnswers[0].numberOfPlayers + " = Players Answered: " + gameAnswers[0].playersAnswered + " ?");
     if (gameAnswers[0].numberOfPlayers <= gameAnswers[0].playersAnswered) {
         // now set gameStatus to "live" again, and change the question with
         // current = "Y" to the next questionNo in the list.
@@ -150,21 +154,21 @@ var checkAllAnswered = function() {
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
         var currQuestionNo = questionInfo[0].questionNo;
         var nextQuestionNo = currQuestionNo + 1;
-        console.log("------------------");
-        console.log("Changing current question from " + currQuestionNo + " to " + nextQuestionNo);
-        console.log("------------------");
+        // console.log("------------------");
+        // console.log("Changing current question from " + currQuestionNo + " to " + nextQuestionNo);
+        // console.log("------------------");
         var status = "live";
 
         var totalQuestions = gameAnswers[0].numberofQuestions;
 
-        console.log("** -- ** -- ** Total Questions: " + totalQuestions);
+        // console.log("** -- ** -- ** Total Questions: " + totalQuestions);
 
         // now increment the currQuestionNo in the db
         Meteor.call('gameQuestions.changeCurrent', gameCode, nextQuestionNo, totalQuestions, function(err, result){
             if (err) {
                 Meteor.call('Error.Set', "gamePlay.js", "line 115", err);
             } else if (result == "complete") {
-                console.log("Game Complete!");
+                // console.log("Game Complete!");
                 Meteor.call('setGameStatus', gameCode, "complete", function(err, result){
                     if (err) {
                         Meteor.call('Error.Set', "gamePlay.js", "line 118", err);
@@ -188,7 +192,7 @@ var checkAllAnswered = function() {
             }
         });
     } else if (gameAnswers[0].playersAnswered <= 0) {
-        console.log("!!! *** !!! game tried to move forward on it's own. !!! *** !!!");
+        // console.log("!!! *** !!! game tried to move forward on it's own. !!! *** !!!");
         var status = "live";
     } else {
         // call and set game for this player to waiting status until all have Answered

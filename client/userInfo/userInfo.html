@@ -1,0 +1,32 @@
+<template name="userInfo">
+    <h4>User Info</h4>
+    <div class="row">
+        <div class="column">
+            <table>
+                <thead>
+                    <tr>
+                        <th>UserName</th>
+                        <th>Email</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each users}}
+                        <tr>
+                            <td>
+                                {{username}}
+                            </td>
+                            <td>
+                                {{userEmail}}
+                            </td>
+                            <td>
+                                <button class="cancel" id="resetPassword">Reset Password</button>
+                                <button class="delete" id="deleteUseer">Delete</button>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</template>

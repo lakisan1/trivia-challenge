@@ -99,7 +99,7 @@ Meteor.methods({
             throw new Meteor.Error('User is not authorized.');
         }
 
-        console.log("Got to uncat update.");
+        // console.log("Got to uncat update.");
 
         Questions.update({ category: catName }, {
             $set: {
@@ -123,10 +123,10 @@ Meteor.methods({
         }
 
         let numberResults = apiResult.data.results.length;
-        // console.log("Number of API Results: " + numberResults);
+        // // console.log("Number of API Results: " + numberResults);
 
         let nextSeqNoread = Questions.findOne({}, { sort: { seqNo: -1 }, limit: 1 });
-        console.log("Next Seq No = " + nextSeqNoread.seqNo);
+        // // console.log("Next Seq No = " + nextSeqNoread.seqNo);
         let nextSeqNo = nextSeqNoread.seqNo;
         if (numberResults > 0) {
             // console.dir(apiResult.data.results);
@@ -138,12 +138,12 @@ Meteor.methods({
                 let catExists = Categories.findOne({ category: apiResult.data.results[k].category });
                 if (typeof catExists != 'undefined') {
                     if (catExists.category != null && catExists.category != "") {
-                        console.log("Category exists!");
+                        // // console.log("Category exists!");
                     } else {
-                        console.log("Category doesn't exist.");
+                        // // console.log("Category doesn't exist.");
                     }
                 } else {
-                    console.log("Category doesn't exist!");
+                    // console.log("Category doesn't exist!");
                     Categories.insert({
                         category: apiResult.data.results[k].category,
                         description: apiResult.data.results[k].category,

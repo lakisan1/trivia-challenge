@@ -43,11 +43,11 @@ function getGameQuestions(countEntered, theQuestions) {
         var QuestionIndex = Math.floor((Math.random() * randNoSize));
 
         var QuestionNo = theQuestions[QuestionIndex];
-        console.log("Question Randomly picked is: " + QuestionNo);
+        // console.log("Question Randomly picked is: " + QuestionNo);
 
         myQuestionSet.push(QuestionNo);
 
-        console.log("My Question set is: " + myQuestionSet);
+        // console.log("My Question set is: " + myQuestionSet);
 
         theQuestions.splice(QuestionIndex, 1);
 
@@ -67,7 +67,7 @@ function writeQuestionsToDB(myQuestionSet, numOfQs) {
 
     Meteor.call('gameQuestions', numOfQs, QuestionSet, gameCode, gameName, function(err, result) {
         if (err) {
-            console.log("Error Writing Questions to Game: " + err);
+            // console.log("Error Writing Questions to Game: " + err);
             showSnackbar("An Error Occurred Adding Questions to Game.", "red");
         } else {
             showSnackbar("Questions added to Game.", "green");

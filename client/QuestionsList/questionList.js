@@ -32,7 +32,7 @@ Template.questionsList.events({
         event.preventDefault();
 
         let questionId = this._id;
-        console.log("Id clicked for edit: " + questionId);
+        // console.log("Id clicked for edit: " + questionId);
         Session.set('editQuestionNo', questionId);
         FlowRouter.go('/editQuestion');
     }

@@ -1,6 +1,6 @@
 Template.menuBtn.events({
     'click .menu': () => {
-        // console.log('menu clicked');
+        // // console.log('menu clicked');
         // document.getElementById("mySidenav").style.width = "275px";
 
         document.getElementById("mySidenav").style.width = "250px";

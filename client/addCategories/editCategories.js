@@ -40,7 +40,7 @@ Template.editCategories.events({
             } else {
                 Meteor.call('category.update', catId, catName, catDesc, function(err, result) {
                     if (err) {
-                        console.log("Error updating the category: " + err);
+                        // console.log("Error updating the category: " + err);
                         showSnackbar("Error Updating Category!", "red");
                     } else {
                         showSnackbar("Category Updated Successfully!", "green");

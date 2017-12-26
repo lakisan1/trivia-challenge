@@ -11,18 +11,18 @@ Template.addQuestions.helpers({
         return Categories.find({});
     },
     getLastQuestionSeq: function() {
-        console.log("this user is: " + Meteor.user().username);
+        // console.log("this user is: " + Meteor.user().username);
         var lastSeqNo = Questions.findOne({}, { sort: { addedOn: -1 }, limit: 1 });
-        console.log("lasSeqNo: " + lastSeqNo);
+        // console.log("lasSeqNo: " + lastSeqNo);
         if (lastSeqNo) {
-            console.log("seq no found: ")
-            console.log(lastSeqNo.seqNo);
+            // console.log("seq no found: ")
+            // console.log(lastSeqNo.seqNo);
             var nextSeqNo = lastSeqNo.seqNo + 1;
-            console.log("Next Seq No: " + nextSeqNo);
+            // console.log("Next Seq No: " + nextSeqNo);
             Session.set("nextSeqNo", nextSeqNo);
             return nextSeqNo;
         } else {
-            console.log('no seq no found.');
+            // console.log('no seq no found.');
             var nextSeqNo = 0;
             Session.set("nextSeqNo", nextSeqNo);
             return nextSeqNo;
@@ -67,7 +67,7 @@ Template.addQuestions.events({
         var questionType = $("#questionTypeEntry").val();
         var private = $("#privateGameQuestion").val();
         var question = $("#mainQuestion").val();
-        console.log("Question text: " + question);
+        // console.log("Question text: " + question);
 
         if (questionCat == null) {
             showSnackbar("You must enter a Category for this Question.", "red");
@@ -101,7 +101,7 @@ Template.addQuestions.events({
                     trueAnswer = question;
                 }
 
-                console.log("All Good on TF type.");
+                // console.log("All Good on TF type.");
 
                 Meteor.call('newQuestionTF.insert', questionCat, questionDiff, questionType, private, question, tOrF, trueAnswer, nextSeqNo, function(err, result) {
                     if (err) {

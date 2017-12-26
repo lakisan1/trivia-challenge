@@ -56,7 +56,7 @@ Template.editQuestion.events({
             } else {
                 Meteor.call('MCQuestion.update', questionId, questionCat, questionType, questionDiff, questionPrivate, question, correctAnswer, incAns1, incAns2, incAns3, function(err, result) {
                     if (err) {
-                        console.log("Error Updating Question: " + err);
+                        // console.log("Error Updating Question: " + err);
                         showSnackbar("Error Updating Question!", "red");
                     } else {
                         showSnackbar("Question Updated Successfully", "green");
@@ -78,10 +78,10 @@ Template.editQuestion.events({
                 }
             }
 
-            console.log("All Passed!");
+            // console.log("All Passed!");
             Meteor.call('TFQuestion.update', questionId, questionCat, questionType, questionDiff, questionPrivate, question, correctAnswer, trueAnswer, function(err, result) {
                 if (err) {
-                    console.log("Error Updating Question: " + err);
+                    // console.log("Error Updating Question: " + err);
                     showSnackbar("Error Updating Question!", "red");
                 } else {
                     showSnackbar("Question Updated Successfully", "green");

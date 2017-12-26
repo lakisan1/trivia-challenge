@@ -2,7 +2,7 @@ Template.navMain.events({
     'click  .navBtn' (event) {
         event.preventDefault();
         var clickedTarget = event.target.id;
-        console.log("User clicked: " + clickedTarget);
+        // console.log("User clicked: " + clickedTarget);
         closeSide();
         if (clickedTarget == 'mainMenu') {
             FlowRouter.go('/');

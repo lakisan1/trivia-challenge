@@ -8,7 +8,7 @@ Template.gameMaster.onCreated(function() {
 Template.gameMaster.onRendered(function() {
     // set the Game Status to 'Waiting' while players / teams
     // join the game.
-    console.log("Game should be in 'Waiting' status.");
+    // console.log("Game should be in 'Waiting' status.");
     var gameCode = Session.get("gameCode");
     Meteor.call('setGameWaiting', gameCode, function(err, result) {
         if (err) {
@@ -36,7 +36,7 @@ Template.gameMaster.helpers({
 Template.gameMaster.events({
     'click #cancelStartGame' (event) {
         event.preventDefault();
-        console.log("cancel clicked.");
+        // console.log("cancel clicked.");
     },
     'click #startGame' (event) {
         event.preventDefault();

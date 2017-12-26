@@ -15,7 +15,7 @@ Template.activeGameList.events({
         event.preventDefault();
 
         var game_id = this._id;
-        console.log("game id is:" + game_id);
+        // console.log("game id is:" + game_id);
 
         Session.set("gameId", game_id);
         var game_info = Games.findOne({ _id: game_id, active: "Yes" });

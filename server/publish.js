@@ -23,3 +23,7 @@ Meteor.publish('questionsCounter', function() {
 Meteor.publish('gameQuestions', function() {
     return GameQuestions.find({});
 });
+
+Meteor.publish('allUsers', function() {
+    return Meteor.users.find({});
+});

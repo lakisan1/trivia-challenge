@@ -49,10 +49,10 @@ Meteor.methods({
                 var rounds = ansOptions.length;
                 for (j = 0; j < rounds; j++) {
                     var ansIndex = Math.floor((Math.random() * ansOptions.length));
-                    console.log("Answer Index: " + ansIndex);
+                    // // console.log("Answer Index: " + ansIndex);
 
                     var ansPosition = ansOptions[ansIndex];
-                    console.log("Answer " + j + ": " + ansPosition);
+                    // // console.log("Answer " + j + ": " + ansPosition);
 
                     switch(j) {
                         case 0:
@@ -72,10 +72,10 @@ Meteor.methods({
                     ansOrder.push(ansPosition);
 
                     ansOptions.splice(ansIndex, 1);
-                    console.log("Answer Options: " + ansOptions);
+                    // // console.log("Answer Options: " + ansOptions);
 
                 }
-                console.log('Answer Order: ' + ansOrder);
+                // console.log('Answer Order: ' + ansOrder);
 
                 GameQuestions.insert({
                     questionId: questionInfo[0]._id,
@@ -139,7 +139,7 @@ Meteor.methods({
 
         var prevQuestionNo = nextQuestionNo - 1;
         var questionInfo = GameQuestions.find({ gameCode: gameCode, active: "Yes" }, { sort: { questionNo: +1 }}, { limit: 1 }).fetch();
-        console.log("--------  Total Questions: " + totalQuestions + " ----------");
+        // // console.log("--------  Total Questions: " + totalQuestions + " ----------");
 
         if (totalQuestions < nextQuestionNo ) {
             // need to complete the game

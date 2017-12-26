@@ -3,8 +3,4 @@ Template.quickJoin.events({
         event.preventDefault();
         FlowRouter.go('/joinAGame');
     },
-    'click #createGame' (event) {
-        event.preventDefault();
-        FlowRouter.go('/createAGame');
-    },
 });

@@ -25,7 +25,7 @@ Template.createAGame.events({
             for(var i = 0; i < stringLength; i++) {
                 gameCode += possible.charAt(Math.floor(Math.random() * possible.length));
             }
-            console.log('Game code is: ' + gameCode);
+            // console.log('Game code is: ' + gameCode);
         }
         // call the function above, and pass the length you want for the random string code
         randomString(6);
@@ -57,7 +57,7 @@ Template.createAGame.events({
                 showSnackbar("You must choose at least one Question Category.", "red");
                 document.getElementById('questionCategories').style.borderColor = "red";
             } else {
-                console.log("call find questions function.");
+                // console.log("call find questions function.");
                 findQuestionsMatchingCriteria();
             }
         }
@@ -66,32 +66,32 @@ Template.createAGame.events({
         event.preventDefault();
         // document.getElementById("createGameForm").reset();
         var qCat = $("#questionCategories").val();
-        console.log("Category is: " + qCat);
+        // console.log("Category is: " + qCat);
         var questions = Questions.find({ category: qCat }).fetch();
-        console.log(questions);
+        // console.log(questions);
 
 
-        FlowRouter.go('/noOfQuestions');
+        FlowRouter.go('/');
     },
 });
 
 function findQuestionsMatchingCriteria() {
     var qType = Session.get("qType");
-    console.log("Type = " + qType)
+    // console.log("Type = " + qType)
     var qDifficulty = Session.get("qDifficulty");
-    console.log("Diff = " + qDifficulty);
+    // console.log("Diff = " + qDifficulty);
     var qCat = Session.get("qCat");
-    console.log("Category = " + qCat);
+    // console.log("Category = " + qCat);
 
-    console.log("Finding Questions to Match Criteria.")
+    // console.log("Finding Questions to Match Criteria.")
 
     var theSeqNo = [];
     if (qType == 'mixed' && qDifficulty == 'mixed') {
-        console.log("Find Questions mixed set diff and type.");
+        // console.log("Find Questions mixed set diff and type.");
         var questions = Questions.find({ category: { $in: qCat }}).fetch();
-        console.log(questions);
+        // console.log(questions);
         let totalQuestions = questions.length;
-        console.log("total questions: " + totalQuestions);
+        // console.log("total questions: " + totalQuestions);
         if (totalQuestions == 0) {
             showSnackbar("Your selections resluted in no questions, Try again.", "red");
             setTimeout(function(){
@@ -104,9 +104,9 @@ function findQuestionsMatchingCriteria() {
             }
         }
     } else if (qType == 'mixed' && qDifficulty != 'mixed') {
-        console.log("Find Questions mixed set type.");
+        // console.log("Find Questions mixed set type.");
         var questions = Questions.find({ category: { $in: qCat }, difficulty: qDifficulty }).fetch();
-        console.log(questions);
+        // console.log(questions);
         let totalQuestions = questions.length;
         if (totalQuestions == 0) {
             showSnackbar("Your selections resluted in no questions, Try again.", "red");
@@ -120,9 +120,9 @@ function findQuestionsMatchingCriteria() {
             }
         }
     } else if (qDifficulty == 'mixed' && qType != 'mixed') {
-        console.log("Find Questions mixed set diff.");
+        // console.log("Find Questions mixed set diff.");
         var questions = Questions.find({ type: qType, category: { $in: qCat }}).fetch();
-        console.log(questions);
+        // console.log(questions);
         let totalQuestions = questions.length;
         if (totalQuestions == 0) {
             showSnackbar("Your selections resluted in no questions, Try again.", "red");
@@ -136,9 +136,9 @@ function findQuestionsMatchingCriteria() {
             }
         }
     } else {
-        console.log("Find Questions no mixed sets.");
+        // console.log("Find Questions no mixed sets.");
         var questions = Questions.find({ type: qType, category: { $in: qCat }, difficulty: qDifficulty }).fetch();
-        console.log(questions);
+        // console.log(questions);
         let totalQuestions = questions.length;
         if (totalQuestions == 0) {
             showSnackbar("Your selections resluted in no questions, Try again.", "red");
@@ -153,13 +153,13 @@ function findQuestionsMatchingCriteria() {
         }
     }
 
-    console.log("Questions are: " + theSeqNo);
+    // console.log("Questions are: " + theSeqNo);
     Session.set("theSeqNo", theSeqNo);
     if (theSeqNo != []) {
         // lineUpQuestions();
         writeGameToDB();
     } else {
-        console.log("seq no did not get any values.");
+        // console.log("seq no did not get any values.");
 
         // TODO: Add a message that no questions were open.
     }

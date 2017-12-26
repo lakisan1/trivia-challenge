@@ -15,7 +15,7 @@ Template.joinAGame.events({
 
         if (joinId != '' && joinId != null) {
             // we want to use id if we have it
-            console.log('Game ID entered: ' + joinId);
+            // console.log('Game ID entered: ' + joinId);
             Session.set("gameCode", joinId);
             validateGameCode();
         } else if ((joinName != '' && joinName != null) || (joinOwner != '' && joinOwner != null)) {
@@ -34,7 +34,7 @@ Template.joinAGame.events({
                 } else {
                     var gameCode = currentGame.gameCode;
                     var gameId = currentGame._id;
-                    console.log("Game code found is: " + gameCode);
+                    // console.log("Game code found is: " + gameCode);
                     Session.set("gameCode", gameCode);
                     Session.set("gameId", gameId);
                     validateGameCode();
@@ -53,11 +53,11 @@ validateGameCode = function() {
     var gameCode = Session.get("gameCode");
     var gameId = Session.get("gameId");
     var currentGame = Games.findOne({ gameCode: gameCode, active: "Yes" });
-    console.log(currentGame);
+    // console.log(currentGame);
     if (currentGame != null) {
         var gameId = currentGame._id;
-        console.log("GAME ID is " + gameId);
-        console.log("Found Active Game!  Success!");
+        // console.log("GAME ID is " + gameId);
+        // console.log("Found Active Game!  Success!");
         Meteor.call('game.addPlayers', Meteor.user().username, gameId, function(err, result){
             if (err) {
                 showSnackbar("Something went wrong joining the game.", "red");
@@ -69,6 +69,6 @@ validateGameCode = function() {
         });
     } else {
         showSnackbar("Unable to find an Active Game!", "red");
-        console.log('Did not Find an Active Game! Fail!!!');
+        // console.log('Did not Find an Active Game! Fail!!!');
     }
 }

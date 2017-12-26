@@ -13,7 +13,7 @@ Template.addCategories.helpers({
     },
     countQuestions: function() {
         let myCat = this.category;
-        console.log("My Cat: " + myCat);
+        // console.log("My Cat: " + myCat);
         return Questions.find({ category: myCat }).count();
     },
 });
@@ -63,7 +63,7 @@ Template.addCategories.events({
     'click .editCategories' (event) {
 
         let catId = this._id;
-        console.log("Cat ID: " + catId);
+        // console.log("Cat ID: " + catId);
         Session.set("editCatId", catId);
 
         FlowRouter.go("/editCategories");

@@ -68,8 +68,8 @@ Meteor.methods({
         if(!this.userId) {
             throw new Meteor.Error('User is not authorized to add a category');
         }
-        console.log("Game Code sent is: " + gameCode);
-        console.log("NQS: " + status + " by " + Meteor.users.findOne(this.userId).username);
+        // // console.log("Game Code sent is: " + gameCode);
+        // // console.log("NQS: " + status + " by " + Meteor.users.findOne(this.userId).username);
 
         return Games.update({ gameCode: gameCode, active: "Yes" },
             {
@@ -91,7 +91,7 @@ Meteor.methods({
         var teamExists = Games.find({ _id: gameId, "players.name": { $in: [teamName]}}).count();
 
         if (teamExists > 0) {
-            console.log("Team " + teamName + " has already joined the game.");
+            // console.log("Team " + teamName + " has already joined the game.");
         } else {
             return Games.update({ _id: gameId },
                 { $addToSet: { players: { name: teamName, points: 0, questionsCorrect: 0, questionsAnswered: 0 }},
@@ -183,6 +183,7 @@ Meteor.methods({
             $set: {
                 active: "No",
                 nextQuestionStatus: "complete",
+                gameStatus: "noGame",
             }
         });
     },
@@ -191,10 +192,10 @@ Meteor.methods({
         check(status, String);
 
         if(!this.userId) {
-            throw new Meteor.Error('User is not authorized to add a category');
+            throw new Meteor.Error('User is not authorized to set Game Status, please login.');
         }
-        console.log("Game Code sent is: " + gameCode);
-        console.log("NQS: " + status + " by " + Meteor.users.findOne(this.userId).username);
+        // // console.log("Game Code sent is: " + gameCode);
+        // // console.log("NQS: " + status + " by " + Meteor.users.findOne(this.userId).username);
 
         return Games.update({ gameCode: gameCode, active: "Yes" },
             {

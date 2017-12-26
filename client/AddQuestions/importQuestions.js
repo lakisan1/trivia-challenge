@@ -53,11 +53,11 @@ Template.importQuestions.events({
 
             // now build the api call URL
             let APICall = starterAPI + importQuestNoAPI + importCatAPI + importDiffAPI + importTypeAPI;
-            console.log("API URL = " + APICall);
+            // console.log("API URL = " + APICall);
 
             Meteor.call('importFrom.opentdb', APICall, function(err, result) {
                 if (err) {
-                    console.log("Error calling API: " + err);
+                    // console.log("Error calling API: " + err);
                     showSnackbar("Error Calling Import API!", "red");
                 } else {
                     showSnackbar("API Called Successfully!", "green");

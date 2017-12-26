@@ -15,7 +15,7 @@ Template.activeGameListMstr.events({
         event.preventDefault();
 
         var game_id = this._id;
-        console.log("Start Game id is:" + game_id);
+        // console.log("Start Game id is:" + game_id);
         var myGame = Games.find({ _id: game_id }).fetch();
         var gameCode = myGame[0].gameCode;
 
