@@ -2,6 +2,7 @@ import { Categories } from '../imports/api/categories.js';
 import { Games } from '../imports/api/games.js';
 import { Questions} from '../imports/api/questions.js';
 import { GameQuestions } from '../imports/api/gameQuestions.js';
+import { EmailSetup } from '../imports/api/emailSetup.js';
 
 Meteor.publish('categories', function() {
     return Categories.find({});
@@ -26,4 +27,8 @@ Meteor.publish('gameQuestions', function() {
 
 Meteor.publish('allUsers', function() {
     return Meteor.users.find({});
+});
+
+Meteor.publish('emailSetup', function() {
+    return EmailSetup.find({});
 });

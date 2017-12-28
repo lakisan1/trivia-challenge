@@ -43,4 +43,4 @@ dynamic-import
 http                        # http api calls
 harrison:papa-parse         # csv parsing library
 mizzao:user-status          # track user online / offline status
-email                           # ability to email users from application
+email                       # ability to email users from application

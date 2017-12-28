@@ -1,0 +1,82 @@
+<template name="emailSetup">
+    <div>
+        <div class="madeIt">
+            <h4>Email / SMTP Setup</h4>
+            <p>
+                Use this form to setup the information required to send email through your email provider / service / server.
+            </p>
+        </div>
+        {{#if emailSettings}}
+            {{#each emailSettings}}
+                <div class="row">
+                    <div class="column">
+                        <label for="emailUser">Email Username (may be full email address)</label>
+                        <input type="text" class="input emailUser" id="emailUser" value="{{emailUser}}"/>
+                    </div>
+                    <div class="column">
+                        <label for="userPass">Password for this Account</label>
+                        <input type="password" class="input userPass" id="userPass" value="{{emailPasswd}}" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="column">
+                        <label for="smtpSrvURL">SMTP Server URL</label>
+                        <input type="text" class="input smtpSrvURL" id="smtpSrvURL" value="{{emailSrv}}"/>
+                    </div>
+                    <div class="column">
+                        <label for="smtpPort">SMTP Port Number (e.g. 25, 443, 587, etc)</label>
+                        <input type="text" class="input smtpPort" id="smtpPort" value="{{emailPort}}"/>
+                    </div>
+                </div>
+            {{/each}}
+        {{else}}
+        <div class="row">
+            <div class="column">
+                <label for="emailUser">Email Username (may be full email address)</label>
+                <input type="text" class="input emailUser" id="emailUser" />
+            </div>
+            <div class="column">
+                <label for="userPass">Password for this Account</label>
+                <input type="password" class="input userPass" id="userPass" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <label for="smtpSrvURL">SMTP Server URL</label>
+                <input type="text" class="input smtpSrvURL" id="smtpSrvURL" />
+            </div>
+            <div class="column">
+                <label for="smtpPort">SMTP Port Number (e.g. 25, 443, 587, etc)</label>
+                <input type="text" class="input smtpPort" id="smtpPort" />
+            </div>
+        </div>
+        {{/if}}
+        <div class="row">
+            <div class="column">
+                <button class="button cancel" id="cancelEmailSetup">Cancel</button>
+            </div>
+        {{#if $eq editSettings false}}
+            <div class="column">
+                <button class="button primary" id="saveEmailSetup">Save</button>
+            </div>
+        {{else}}
+            <div class="column">
+                <button class="button primary" id="updateEmailSetup">Update</button>
+            </div>
+        {{/if}}
+        </div>
+        <hr />
+        <div id="testEmailDiv">
+            <div class="row">
+                <div class="column">
+                    <button class="button" id="testEmailSetup">Test Email Settings</button>
+                </div>
+                <div class="column">
+                    <input type="email" class="toRecip" id="toRecip" placeholder="To Email Address?"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{> warningModal}}
+    {{> snackbar}}
+</template>
