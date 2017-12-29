@@ -42,5 +42,5 @@
 }
 
 .button-correct, button-correct:hover {
-    background: #32CD32;
+    background: #32CD32 !important;
 }

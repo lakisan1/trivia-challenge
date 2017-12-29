@@ -1,14 +1,14 @@
 import { Games } from '../../../imports/api/games.js';
 
-Template.joinAGame.onCreated(function() {
+Template.challengeGame.onCreated(function() {
     this.subscribe("games");
 });
 
-Template.joinAGame.onRendered(function() {
-    Session.set("gameType", "allA");
+Template.challengeGame.onRendered(function() {
+    Session.set("gameType", "challenge");
 });
 
-Template.joinAGame.events({
+Template.challengeGame.events({
     'click #joinNow' (event) {
         event.preventDefault();
 

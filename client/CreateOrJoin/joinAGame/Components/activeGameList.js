@@ -6,7 +6,8 @@ Template.activeGameList.onCreated(function() {
 
 Template.activeGameList.helpers({
     activeGames: function() {
-        return Games.find({ active: "Yes", gameStatus: "Waiting" });
+        let gameType = Session.get("gameType");
+        return Games.find({ active: "Yes", gameStatus: "Waiting", gameType: gameType });
     },
 });
 

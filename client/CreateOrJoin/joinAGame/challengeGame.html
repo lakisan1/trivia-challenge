@@ -1,0 +1,34 @@
+<template name="challengeGame">
+    <div>
+        <div class="row">
+            <div class="column">
+                <label>Enter the Game Id:
+                    <input type="text" id="joinChallengeWithId" />
+                </label>
+            </div>
+        </div>
+        or
+        <br />
+        <div class="row">
+            <div class="column">
+                <label>Enter a Game Name:
+                    <input type="text" id="joinChallengeWithName" />
+                </label>
+            </div>
+            and
+            <div class="column">
+                <label>Enter Game Owner:
+                    <input type="text" id="joinChallengeWithOwner" />
+                </label>
+            </div>
+        </div>
+        <div class="row">
+            <div class="column">
+                <button class="button primary" id="joinChallengeNow">Join Challenge Now</button>
+            </div>
+        </div>
+    </div>
+    <div id="challengeGameQuick">
+        {{> activeGameList}}
+    </div>
+</template>

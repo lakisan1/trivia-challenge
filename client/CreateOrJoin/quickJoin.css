@@ -1,13 +1,47 @@
 .gameJoin {
     background: green;
-    height: 20vh;
-    width: 40vw;
-    font-size: 3vw;
+    height: 15vh;
+    width: 35vw;
+    font-size: 2.7vw;
 }
 
-.gameCreate {
-    background: blue;
-    height: 20vh;
-    width: 40vw;
-    font-size: 3vw;
+/* tooltip */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+/* Tooltip text */
+.tooltip .tooltiptext {
+    visibility: hidden;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    padding: 5px;
+    border-radius: 2px;
+
+    /* Position the tooltip text - see examples below! */
+    position: absolute;
+    z-index: 1;
+
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltip-top {
+    bottom: 105%;
+    left: 30%;
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
+}
+
+.tooltip-bottom {
+    top: 105%;
+    left: 30%;
+    margin-left: -60px; /* Use half of the width (120/2 = 60), to center the tooltip */
 }

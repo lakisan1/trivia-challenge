@@ -15,22 +15,56 @@ Template.numberOfQuestions.helpers({
         Session.set("countAvail", countAvail);
         return countAvail;
     },
+    theGameType: function() {
+        return Session.get("gameType");
+    },
 });
 
 Template.numberOfQuestions.events({
     'click #makeGame' (event) {
         event.preventDefault();
-
+        let gType = Session.get("gameType");
+        let countField = $("#numberOfQuestions").val();
         var countAvail = Session.get("countAvail");
         var theQuestions = Session.get("theSeqNo");
         var countEntered = parseInt($("#numberOfQuestions").val());
 
-        if (countAvail < countEntered) {
-            $("#numberOfQuestions").val('');
-            document.getElementById('numberOfQuestions').style.borderColor = "red";
-            showSnackbar("The Number of Questions Entered is Too High!", "red");
-        } else {
-            getGameQuestions(countEntered, theQuestions);
+        if (gType == "allA") {
+            if (countAvail < countEntered) {
+                $("#numberOfQuestions").val('');
+                document.getElementById('numberOfQuestions').style.borderColor = "red";
+                showSnackbar("The Number of Questions Entered is Too High!", "red");
+            } else if (countField == "" || countEntered == null) {
+                showSnackbar("Number of Questions Is Required!", "red");
+                return;
+            } else {
+                getGameQuestions(countEntered, theQuestions);
+            }
+        } else if (gType == "challenge") {
+            if (countField == "" || countField == "null") {
+                if (countAvail < 41) {
+                    var countEntered = countAvail;
+                    console.log("Count = " + countEntered);
+                    getGameQuestions(countEntered, theQuestions);
+                } else {
+                    var countEntered = 40;
+                    console.log("Count = " + countEntered);
+                    getGameQuestions(countEntered, theQuestions);
+                }
+            } else {
+                if (countAvail < countEntered) {
+                    $("#numberOfQuestions").val('');
+                    document.getElementById('numberOfQuestions').style.borderColor = "red";
+                    showSnackbar("The Number of Questions Entered is Too High!", "red");
+                } else if (countAvail > 40 && countEntered > 40) {
+                    $("#numbeerOFQuestions").val('');
+                    document.getElementById('numberOfQuestions').style.borderColor = "red";
+                    showSnackbar("No More than 40 Questions per Game!", "red");
+                } else {
+                    console.log("Count = " + countEntered);
+                    getGameQuestions(countEntered, theQuestions);
+                }
+            }
         }
     },
 });

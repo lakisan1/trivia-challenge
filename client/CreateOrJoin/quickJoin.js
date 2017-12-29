@@ -22,4 +22,8 @@ Template.quickJoin.events({
         event.preventDefault();
         FlowRouter.go('/joinAGame');
     },
+    'click #joinChallengeGame' (event) {
+        event.preventDefault();
+        FlowRouter.go('/challengeGame');
+    },
 });

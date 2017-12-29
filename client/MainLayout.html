@@ -2,11 +2,11 @@
     {{> headerBar}}
     <div id="main">
         {{#if currentUser}}
-            <div class="container pushDown">
+            <div class="myContainer pushDown">
                 {{> Template.dynamic template=main}}
             </div>
         {{else}}
-            <div class="container pushDown">
+            <div class="myContainer pushDown">
                 {{> splashScreen}}
             </div>
         {{/if}}
