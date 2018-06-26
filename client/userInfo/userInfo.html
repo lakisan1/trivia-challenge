@@ -7,6 +7,7 @@
                     <tr>
                         <th>UserName</th>
                         <th>Email</th>
+                        <th>Role</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -20,8 +21,19 @@
                                 {{userEmail}}
                             </td>
                             <td>
-                                <button class="cancel" id="resetPassword">Reset Password</button>
-                                <button class="delete" id="deleteUseer">Delete</button>
+                                {{userRole}}
+                            </td>
+                            <td>
+                                    <span class="fa-passwd-reset fa-stack">
+                                        <i class="fa fa-undo fa-stack-2x"></i>
+                                        <i class="fa fa-lock fa-stack-1x"></i>
+                                    </span>
+                                <span class="editUser">
+                                    <i class="fa fa-edit fa-2x"></i>
+                                </span>
+                                <span class="deleteUser">
+                                    <i class="fa fa-trash fa-2x"></i>
+                                </span>
                             </td>
                         </tr>
                     {{/each}}

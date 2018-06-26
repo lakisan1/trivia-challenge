@@ -68,8 +68,7 @@ Template.activeQuestion.helpers({
 
 Template.activeQuestion.events({
     'click .button-option' (event) {
-        // event.preventDefault();
-
+        
         correctAnswerVal = $("#qCorrect").text();
         clickedAns = event.currentTarget.id;
         var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();

@@ -15,6 +15,9 @@ Template.userInfo.helpers({
     userEmail: function() {
         return this.emails[0].address;
     },
+    userRole: function() {
+        return this.roles[0];
+    }
 });
 
 Template.userInfo.events({

@@ -1,5 +1,9 @@
 var postSignUp = function(userId, info) {
-    Roles.addUsersToRoles(userId, 'allUsers');
+    if (Meteor.users.find().count() > 1) {
+        Roles.addUsersToRoles(userId, 'allUsers');
+    } else if (Meteor.users.find().count() === 1){
+        Roles.addUsersToRoles(userId, 'SuperAdmin');
+    }
 }
 
 AccountsTemplates.configure({
