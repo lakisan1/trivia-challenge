@@ -12,7 +12,7 @@ Games.allow({
 });
 
 Meteor.methods({
-    'newGame.insert' (gameType, gameName, qType, qDiff, qCat, gameCode) {
+    'newGame.insert' (gameType, gameName, qType, qDiff, qCat, gameCode, timeLimit) {
         // check the values for proper / expected type
         check(gameType, String);
         check(gameName, String);
@@ -20,11 +20,17 @@ Meteor.methods({
         check(qDiff, String);
         check(qCat, [String]);
         check(gameCode, String);
+        check(timeLimit, String);
 
         // verify the user is logged in before allowing game insert
         if(!this.userId) {
             throw new Meteor.Error('User is not authorized to add a category');
         }
+
+        // first let's check the time limit. 
+        secondString = timeLimit.split(' ');
+        numericTimeLimit = parseInt(secondString[0]);
+        console.log("Time Limit is: " + numericTimeLimit);
 
         // now add the neew Game to the system
 
@@ -35,6 +41,7 @@ Meteor.methods({
                 questionDifficulty: qDiff,
                 questionCategory: qCat,
                 gameCode: gameCode,
+                timeLimit: numericTimeLimit,
                 gameStatus: '',
                 nextQuestionStatus: '',
                 active: 'Yes',

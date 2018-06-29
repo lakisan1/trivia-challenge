@@ -25,6 +25,8 @@ startGameFunc = function(game_id, gameCode) {
                     Meteor.call('Error.Set', "gameMaster.js", "line 51", err);
                 } else {
                     showSnackbar("Game Started!", "green");
+                    // for a game where there's a timer, I think I shouldstart it here forquestion 1.
+                    
                     FlowRouter.go('/displayQuestions');
                 }
             });

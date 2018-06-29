@@ -37,6 +37,7 @@ Template.createAGame.events({
         var qType = $("#questionType").val();
         var qDifficulty = $("#questionDifficulty").val();
         var qCat = $("#questionCategories").val();
+        var qTimeLimit = $("#timeLimit").val();
 
         Session.set("gameCode", gameCode);
         Session.set("gameName", gameName);
@@ -44,6 +45,7 @@ Template.createAGame.events({
         Session.set("gameType", gameType);
         Session.set("qType", qType);
         Session.set("qDifficulty", qDifficulty);
+        Session.set("questionTimeLimit", qTimeLimit);
 
         // form field validation
         if (gameType == '' || gameType == null) {
@@ -172,11 +174,12 @@ function writeGameToDB() {
     var qType = Session.get("qType");
     var qDifficulty = Session.get("qDifficulty");
     var qCat = Session.get("qCat");
+    var timeLimit = Session.get("questionTimeLimit");
 
     $("#gameCodeSpace").append("Game Code is: " + gameCode);
     Session.set("gameCode", gameCode);
     Session.set("gameName", gameName);
-    Meteor.call('newGame.insert', gameType, gameName, qType, qDifficulty, qCat, gameCode, function(err, result) {
+    Meteor.call('newGame.insert', gameType, gameName, qType, qDifficulty, qCat, gameCode, timeLimit, function(err, result) {
         if (err) {
             showSnackbar("An error occurred saving the Game.", "red");
             Meteor.call('Error.Set', "createAGame.js", "line 142", err);
