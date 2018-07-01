@@ -39,6 +39,10 @@ Template.createAGame.events({
         var qCat = $("#questionCategories").val();
         var qTimeLimit = $("#timeLimit").val();
 
+        if (qTimeLimit == "" || qTimeLimit == null) {
+            qTimeLimit = "No Limit";
+        }
+
         Session.set("gameCode", gameCode);
         Session.set("gameName", gameName);
         Session.set("qCat", qCat);

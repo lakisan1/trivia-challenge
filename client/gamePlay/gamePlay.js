@@ -149,47 +149,7 @@ var checkAllAnswered = function() {
         // now set gameStatus to "live" again, and change the question with
         // current = "Y" to the next questionNo in the list.
 
-        // get the current questionNo
-        var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
-        var currQuestionNo = questionInfo[0].questionNo;
-        var nextQuestionNo = currQuestionNo + 1;
-        // console.log("------------------");
-        // console.log("Changing current question from " + currQuestionNo + " to " + nextQuestionNo);
-        // console.log("------------------");
-        var status = "live";
-
-        var totalQuestions = gameAnswers[0].numberofQuestions;
-
-        // console.log("** -- ** -- ** Total Questions: " + totalQuestions);
-
-        // now increment the currQuestionNo in the db
-        Meteor.call('gameQuestions.changeCurrent', gameCode, nextQuestionNo, totalQuestions, function(err, result){
-            if (err) {
-                Meteor.call('Error.Set', "gamePlay.js", "line 115", err);
-            } else if (result == "complete") {
-                // console.log("Game Complete!");
-                Meteor.call('setGameStatus', gameCode, "complete", function(err, result){
-                    if (err) {
-                        Meteor.call('Error.Set', "gamePlay.js", "line 118", err);
-                    }
-                });
-            } else {
-                // now set gameStatus back to 'live'
-                Meteor.call('resetPlayerAnswerCount', gameCode, function(err, result){
-                    if (err) {
-                        Meteor.call('Error.Set', "gamePlay.js", "line 128", err);
-                    } else {
-                        Meteor.call('setGameLive', gameCode, status, function(err, result) {
-                            if (err) {
-                                Meteor.call('Error.Set', "gamePlay.js", "line 134", err);
-                            } else {
-
-                            }
-                        });
-                    }
-                });
-            }
-        });
+        moveGameForward(gameCode, gameAnswers, game_id)
     } else if (gameAnswers[0].playersAnswered <= 0) {
         // console.log("!!! *** !!! game tried to move forward on it's own. !!! *** !!!");
         var status = "live";
@@ -203,4 +163,48 @@ var checkAllAnswered = function() {
             }
         });
     }
+}
+
+moveGameForward = function(gameCode, gameAnswers, game_id) {
+    // get the current questionNo
+    var questionInfo = GameQuestions.find({ gameCode: gameCode, currentQuestion: "Y" }).fetch();
+    var currQuestionNo = questionInfo[0].questionNo;
+    var nextQuestionNo = currQuestionNo + 1;
+    // console.log("------------------");
+    // console.log("Changing current question from " + currQuestionNo + " to " + nextQuestionNo);
+    // console.log("------------------");
+    var status = "live";
+
+    var totalQuestions = gameAnswers[0].numberofQuestions;
+
+    // console.log("** -- ** -- ** Total Questions: " + totalQuestions);
+
+    // now increment the currQuestionNo in the db
+    Meteor.call('gameQuestions.changeCurrent', gameCode, nextQuestionNo, totalQuestions, function(err, result){
+        if (err) {
+            Meteor.call('Error.Set', "gamePlay.js", "line 115", err);
+        } else if (result == "complete") {
+            // console.log("Game Complete!");
+            Meteor.call('setGameStatus', gameCode, "complete", function(err, result){
+                if (err) {
+                    Meteor.call('Error.Set', "gamePlay.js", "line 118", err);
+                }
+            });
+        } else {
+            // now set gameStatus back to 'live'
+            Meteor.call('resetPlayerAnswerCount', gameCode, function(err, result){
+                if (err) {
+                    Meteor.call('Error.Set', "gamePlay.js", "line 128", err);
+                } else {
+                    Meteor.call('setGameLive', gameCode, status, function(err, result) {
+                        if (err) {
+                            Meteor.call('Error.Set', "gamePlay.js", "line 134", err);
+                        } else {
+
+                        }
+                    });
+                }
+            });
+        }
+    });
 }

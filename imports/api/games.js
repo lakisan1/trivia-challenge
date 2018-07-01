@@ -28,9 +28,13 @@ Meteor.methods({
         }
 
         // first let's check the time limit. 
-        secondString = timeLimit.split(' ');
-        numericTimeLimit = parseInt(secondString[0]);
-        console.log("Time Limit is: " + numericTimeLimit);
+        if (timeLimit == "No Limit") {
+            numericTimeLimit = "none";
+        } else {
+            secondString = timeLimit.split(' ');
+            numericTimeLimit = parseInt(secondString[0]);
+            console.log("Time Limit is: " + numericTimeLimit);
+        }
 
         // now add the neew Game to the system
 
