@@ -39,9 +39,9 @@ teamon:tinymce              # tinyMCE Editor plugin for meteor
 mizzao:autocomplete         # for the @mentions functionality
 npm-bcrypt@0.9.3
 session@1.1.7
-dynamic-import@0.4.0
+dynamic-import@0.4.2
 http@1.4.1                        # http api calls
 harrison:papa-parse         # csv parsing library
 mizzao:user-status          # track user online / offline status
 email@1.2.3                       # ability to email users from application
-underscore
+underscore@1.0.10
