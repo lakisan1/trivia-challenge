@@ -1,5 +1,6 @@
 <template name="userInfo">
     <h4>User Info</h4>
+    {{#if Template.subscriptionsReady}}
     <div class="row">
         <div class="column">
             <table>
@@ -24,15 +25,12 @@
                                 {{userRole}}
                             </td>
                             <td>
-                                    <span class="fa-passwd-reset fa-stack">
-                                        <i class="fa fa-undo fa-stack-2x"></i>
-                                        <i class="fa fa-lock fa-stack-1x"></i>
-                                    </span>
-                                <span class="editUser">
-                                    <i class="fa fa-edit fa-2x"></i>
+                                <span id="resetPassword" class="fa-passwd-reset fa-stack tooltip">
+                                    <i class="fa fa-undo fa-stack-2x"><span class="tooltiptext">Reset Password</span></i>
+                                    <i class="fa fa-lock fa-stack-1x"></i>
                                 </span>
-                                <span class="deleteUser">
-                                    <i class="fa fa-trash fa-2x"></i>
+                                <span id="deleteUser" class="deleteUser tooltip">
+                                    <i class="fa fa-trash fa-2x"><span class="tooltiptext">Delete User</span></i>
                                 </span>
                             </td>
                         </tr>
@@ -41,4 +39,5 @@
             </table>
         </div>
     </div>
+    {{/if}}
 </template>

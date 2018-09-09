@@ -21,15 +21,27 @@ Template.userInfo.helpers({
 });
 
 Template.userInfo.events({
-    'click #deleteUser' (event) {
-        event.preventDefault();
-    },
-    'click #resetPassword' (event) {
+    'click .deleteUser' (event) {
         event.preventDefault();
 
         let userId = this._id;
-        // // console.log("User Id is: " + userId);
+        console.log("User Id is: " + userId);
 
+        Meteor.call('deleteAUser', userId, function(err, result) {
+            if (err) {
+                console.log("Error deleting user: " + err);
+                showSnackbar("Error Deleting User!", "red");
+            } else {
+                showSnackbar("User Deleted Successfully!");
+            }
+        });
+    },
+    'click .resetPassword' (event) {
+        event.preventDefault();
+
+        let userId = this._id;
+        console.log("User Id is: " + userId);
+        
         Meteor.call('changeUserPass', userId, function(err, result) {
             if (err) {
                 // console.log("Error changing user Password to default: " + err);

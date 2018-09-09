@@ -26,4 +26,13 @@ Meteor.methods({
             html: "This is an email to check your Trivia Challenge site email SMTP settings."
         });
     },
+    'deleteAUser' (usersId) {
+        check(usersId, String);
+
+        if (!this.userId) {
+            throw new Meteor.Error('User is not authorized to delete users from system.');
+        }
+
+        Meteor.users.remove({ _id: usersId });
+    },
 });

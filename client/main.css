@@ -3,6 +3,11 @@ input, select {
     font-size: 16px;
 }
 
+body {
+    color: #000;
+    font-size: 2rem;
+}
+
 header {
     background: #00366b;
     color: white;
@@ -94,4 +99,29 @@ textarea {
         border: 1px solid #a1a1a1;
         margin: 5px;
     }
+}
+
+.tooltip {
+    position: relative;
+    display: inline-block;
+    border-bottom: 1px dotted black;
+}
+
+.tooltip .tooltiptext {
+    visibility: hidden;
+    width: 200px;
+    background-color: black;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+    font-size: 1.6rem;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+}
+
+.tooltip:hover .tooltiptext {
+    visibility: visible;
 }
