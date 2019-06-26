@@ -12,8 +12,10 @@ How to create and join games should be pretty straight forward, but there are in
 
 I hope you enjoy the game, and I'll be trying to improve it as I go, so check back for updates.  If you'd like to contribute feel free to clone, and make a pull request.
 
-I have recently added the ability to import questions from the [Open Trivia Database](https://opentdb.com/) as well.  
+I have recently added the ability to import questions from the [Open Trivia Database](https://opentdb.com/) as well. <-- this is currently not working as intended.  I am looking into it.  
 
 #### Demo Site
 A demo site can be found and used at:
-- [Trivia-Challenge.org](https://trivia-challenge.org)
+- [Trivia-Challenge Demo Site](https://trivia.routemehome.org)
+Demo Admin User: demo
+Demo Admin Password: demoadmin
