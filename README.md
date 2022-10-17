@@ -98,13 +98,19 @@ In the Find what paste: {"response_code":0,"results": and in the Replace with do
 
 --------------------------------------------------
 
+"correctAnswer" & "inCorrectAnswers"
 
+Step1: In the Find what paste: "incorrect_answers" and in the Replace with paste "correctAnswer" and click Replace All
+
+Step2: In the Find what paste: "correct_answer" and in the Replace with paste ],"addedBy": "inCorrectAnswers" and click Replace All
+
+2 steps missing for now
 
 --------------------------------------------------
 
 "_id":
 
-Now the complicated part, the "_id": needs to string.ascii_lowercase lenght of 16.
+Now the complicated part, the "_id": needs to be a string.ascii_lowercase lenght of 16.
 
 Step1: In the Find what paste: "category": and in the Replace with paste "_id": "willBeReplaced","category": and click Replace All
 
@@ -112,5 +118,17 @@ Step2: Make a script to replace willBeReplaced with a random string or find a pr
 
 --------------------------------------------------
 
+"seqNo"
 
+The "seqNo": needs to be a number countin from 0.
+
+Step1: In the Find what paste: "addedBy": and in the Replace with paste "seqNo": repThis,"addedBy": and click Replace All
+
+Step2: Make a script to replace repThis with a counter or find a program that can do that. If there's a demand I will upload or link the script i used (ask in coment or bugs ). I can't do it now because i currently can't find it and would have to make it.
+
+When adding questions from Trivia-Challege the "seqNo" starts over for now i have no fix exept going into mongodb an manually changing the number.
+
+--------------------------------------------------
+
+Steps for fixing ' and " will be added soon with the rest of the steps for "correctAnswer" & "inCorrectAnswers"
 
