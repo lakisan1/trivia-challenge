@@ -6,6 +6,8 @@ Formatting data from https://opentdb.com/ so that it works in Trivia-Challege.
 
 First, I am a noob and it's likely there's a better solution, but I did it this way:
 
+If there's a lot demand I will make a script for doing this in one click. Please let me know if you are interested!
+
 After getting the questions they are going to be in sets of 50, you can put them all in one json file for convenience. (Make sure you use a token so you don't get duplicate questions).
 
 --------------------------------------------------
