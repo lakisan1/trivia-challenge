@@ -100,11 +100,11 @@ Step2: Go to the end of the file and delete an extra ```,"addedBy": "YOUR USERNA
 
 --------------------------------------------------
 
-{"response_code":0,"results":
+```[{"response_code":0,"results":```
 
-Depending on how you got the questions you might have {"response_code":0,"results": on the begining of a bach of questions.
+Depending on how you got the questions you might have ```[{"response_code":0,"results":``` on the begining of a bach of questions.
 
-In the Find what paste ```{"response_code":0,"results":``` and in the Replace with do nothing so it gets deleted and click Replace All
+In the Find what paste ```[{"response_code":0,"results":``` and in the Replace with do nothing so it gets deleted and click Replace All
 
 --------------------------------------------------
 
@@ -133,6 +133,14 @@ In the Find what paste ```&#039;``` and in the Replace with paste ```'``` and cl
 ```&quot;```
 
 In the Find what paste ```&quot;``` and in the Replace with paste ```\"``` and click Replace All
+
+--------------------------------------------------
+
+[]
+
+Step1 add ```[``` tho te begining
+
+Step2 add ```]``` tho te end
 
 --------------------------------------------------
 
