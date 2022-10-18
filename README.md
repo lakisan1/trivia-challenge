@@ -164,7 +164,7 @@ Step1: In the Find what paste ```"addedBy":``` and in the Replace with paste ```
 
 Step2: Make a script to replace ```repThis``` with a counter or find a program that can do that. If there's a demand I will upload or link the script i used (ask in coment or bugs ). I can't do it now because i currently can't find it and would have to make it.
 
-When adding questions from Trivia-Challege the "seqNo" starts over for now i have no fix exept going into mongodb an manually changing the number.
+When adding questions from Trivia-Challege the "seqNo" starts over for now i have no fix exept going into mongodb an manually changing the number of the new question.
 
 --------------------------------------------------
 
