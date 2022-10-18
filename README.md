@@ -85,14 +85,22 @@ The "owner" value must be added.
 In the Find what paste: "question": and in the Replace with paste "owner":"all","question": and click Replace All
 
 --------------------------------------------------
+
+]}]}
+
+Step1: In the Find what paste: ]}]} and in the Replace with paste ]} and click Replace All
+
+--------------------------------------------------
  
 "addedBy" and "timesUsedInAGame":0
 
-Step1: In the Find what paste: ]} and in the Replace with paste ],"addedBy": "YOUR USERNAME","timesUsedInAGame":0}: and click Replace All
+Step1: In the Find what paste: ]} and in the Replace with paste ],"addedBy": "YOUR USERNAME","timesUsedInAGame":0} and click Replace All
 
-Step2: Go to the end of the file and delete an extra ,"addedBy": "YOUR USERNAME","timesUsedInAGame":0} if it is present
+Step2: Go to the end of the file and delete an extra ,"addedBy": "YOUR USERNAME","timesUsedInAGame":0} or : if it is present
 
-###{"response_code":0,"results":
+--------------------------------------------------
+
+{"response_code":0,"results":
 
 Depending on how you got the questions you might have {"response_code":0,"results": on the begining of a bach of questions.
 
@@ -102,11 +110,28 @@ In the Find what paste: {"response_code":0,"results": and in the Replace with do
 
 "correctAnswer" & "inCorrectAnswers"
 
-Step1: In the Find what paste: "incorrect_answers" and in the Replace with paste "correctAnswer" and click Replace All
+Step1: In the Find what paste: "incorrect_answers" and in the Replace with paste "inCorrectAnswers" and click Replace All
 
-Step2: In the Find what paste: "correct_answer" and in the Replace with paste ],"addedBy": "inCorrectAnswers" and click Replace All
+Step2: In the Find what paste: "correct_answer" and in the Replace with paste "correctAnswer" and click Replace All
 
-2 steps missing for now
+Step3: In the Find what paste: "correctAnswer":"True" and in the Replace with paste "correctAnswer":"true" and click Replace All
+
+Step4: In the Find what paste: "correctAnswer":"False" and in the Replace with paste "correctAnswer":"false" and click Replace All
+
+Step5: In the Find what paste: "inCorrectAnswers":["True"] and in the Replace with paste "trueAnswer":"false" and click Replace All
+
+Step6: In the Find what paste: "inCorrectAnswers":["False"] and in the Replace with paste "trueAnswer":"true" and click Replace All
+--------------------------------------------------
+
+&#039;
+
+In the Find what paste: &#039; and in the Replace with paste ' and click Replace All
+
+--------------------------------------------------
+
+&quot;
+
+In the Find what paste: ```&quot;``` and in the Replace with paste \" and click Replace All
 
 --------------------------------------------------
 
@@ -131,6 +156,4 @@ Step2: Make a script to replace repThis with a counter or find a program that ca
 When adding questions from Trivia-Challege the "seqNo" starts over for now i have no fix exept going into mongodb an manually changing the number.
 
 --------------------------------------------------
-
-Steps for fixing ' and " will be added soon with the rest of the steps for "correctAnswer" & "inCorrectAnswers"
 
