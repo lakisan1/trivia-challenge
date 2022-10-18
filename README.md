@@ -168,3 +168,12 @@ When adding questions from Trivia-Challege the "seqNo" starts over for now i hav
 
 --------------------------------------------------
 
+IMPORT
+
+Go to your ```mongodb/trivia-challenge/questions``` (I use MongoDB Compass) click ```add data``` then ```import file``` and select the ```.json``` file.
+
+Make sure the questions collection was empty before the import.
+
+Pleas star the original ```bmcgonag/trivia-challenge``` !!!
+
+That's all enjoy! 
