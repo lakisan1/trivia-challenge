@@ -124,13 +124,13 @@ Step6: In the Find what paste ```"inCorrectAnswers":["False"]``` and in the Repl
 
 --------------------------------------------------
 
-&#039;
+```&#039;```
 
 In the Find what paste ```&#039;``` and in the Replace with paste ```'``` and click Replace All
 
 --------------------------------------------------
 
-&quot;
+```&quot;```
 
 In the Find what paste ```&quot;``` and in the Replace with paste ```\"``` and click Replace All
 
